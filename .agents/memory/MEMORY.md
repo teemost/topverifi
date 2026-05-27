@@ -1,0 +1,3 @@
+- [TopVerifi rebrand](topverifi-rebrand.md) — full rebrand from Blues Marketplace; brand color is #f97316 (orange-500), all sky/blue refs replaced with orange throughout.
+- [JAP SMM boosting](jap-boosting.md) — JustAnotherPanel API integrated; key stored as `jap_api_key` in settings; markup % via `boosting_markup_percent`; BoostingOrder model + migration created.
+- [Laravel app structure](laravel-structure.md) — Laravel app lives in blues-laravel/ subdirectory; start.sh in workspace root; Replit uses PostgreSQL, cPanel uses MySQL.

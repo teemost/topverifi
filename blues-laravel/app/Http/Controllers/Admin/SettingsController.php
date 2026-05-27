@@ -14,11 +14,14 @@ class SettingsController extends Controller
             'paystack_public_key'      => Setting::get('paystack_public_key', ''),
             'paystack_secret_key'      => Setting::get('paystack_secret_key', ''),
             'paystack_webhook_secret'  => Setting::get('paystack_webhook_secret', ''),
-            'site_name'                => Setting::get('site_name', 'Blues Marketplace'),
+            'site_name'                => Setting::get('site_name', 'TopVerifi'),
             'support_email'            => Setting::get('support_email', ''),
             'min_deposit'              => Setting::get('min_deposit', '500'),
             'max_deposit'              => Setting::get('max_deposit', '1000000'),
             'maintenance_mode'         => Setting::get('maintenance_mode', '0'),
+            'jap_api_key'              => Setting::get('jap_api_key', ''),
+            'boosting_enabled'         => Setting::get('boosting_enabled', '1'),
+            'boosting_markup_percent'  => Setting::get('boosting_markup_percent', '20'),
             'grizzlysms_api_key'       => Setting::get('grizzlysms_api_key', ''),
             'usd_to_ngn_rate'          => Setting::get('usd_to_ngn_rate', '1600'),
             'virtual_number_enabled'   => Setting::get('virtual_number_enabled', '1'),
@@ -30,7 +33,7 @@ class SettingsController extends Controller
             'mail_password'            => Setting::get('mail_password', ''),
             'mail_encryption'          => Setting::get('mail_encryption', 'tls'),
             'mail_from_address'        => Setting::get('mail_from_address', ''),
-            'mail_from_name'           => Setting::get('mail_from_name', 'Blues Marketplace'),
+            'mail_from_name'           => Setting::get('mail_from_name', 'TopVerifi'),
             'referral_bonus'                    => Setting::get('referral_bonus', '0'),
             'referral_bonus_tier2'              => Setting::get('referral_bonus_tier2', '0'),
             'referral_bonus_tier3'              => Setting::get('referral_bonus_tier3', '0'),
@@ -61,6 +64,9 @@ class SettingsController extends Controller
             'min_deposit'             => 'nullable|numeric|min:1',
             'max_deposit'             => 'nullable|numeric|min:1',
             'maintenance_mode'        => 'nullable|in:0,1',
+            'jap_api_key'             => 'nullable|string',
+            'boosting_enabled'        => 'nullable|in:0,1',
+            'boosting_markup_percent' => 'nullable|numeric|min:0|max:500',
             'grizzlysms_api_key'      => 'nullable|string',
             'usd_to_ngn_rate'         => 'nullable|numeric|min:1',
             'virtual_number_enabled'  => 'nullable|in:0,1',
@@ -90,6 +96,7 @@ class SettingsController extends Controller
         $keys = [
             'paystack_public_key', 'paystack_secret_key', 'paystack_webhook_secret',
             'site_name', 'support_email', 'min_deposit', 'max_deposit',
+            'jap_api_key', 'boosting_markup_percent',
             'grizzlysms_api_key', 'usd_to_ngn_rate', 'whatsapp_number',
             'mail_mailer', 'mail_host', 'mail_port', 'mail_username',
             'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name',
@@ -99,8 +106,10 @@ class SettingsController extends Controller
             'vn_commission_type', 'vn_commission_value',
             'bank_name', 'bank_account_number', 'bank_account_name',
         ];
+
         Setting::set('bank_transfer_enabled', $request->boolean('bank_transfer_enabled') ? '1' : '0');
         Setting::set('promo_banner_enabled', $request->boolean('promo_banner_enabled') ? '1' : '0');
+        Setting::set('boosting_enabled', $request->boolean('boosting_enabled') ? '1' : '0');
 
         foreach ($keys as $key) {
             Setting::set($key, $request->input($key, ''));
@@ -113,24 +122,17 @@ class SettingsController extends Controller
 
     public function sendTestEmail(Request $request)
     {
-        $request->validate([
-            'test_email' => 'required|email',
-        ]);
-
+        $request->validate(['test_email' => 'required|email']);
         try {
             $fromAddress = Setting::get('mail_from_address', config('mail.from.address'));
-            $fromName    = Setting::get('mail_from_name', config('mail.from.name', 'Blues Marketplace'));
-            $siteName    = Setting::get('site_name', 'Blues Marketplace');
-
+            $fromName    = Setting::get('mail_from_name', config('mail.from.name', 'TopVerifi'));
+            $siteName    = Setting::get('site_name', 'TopVerifi');
             Mail::raw(
                 "This is a test email from {$siteName}.\n\nYour SMTP settings are configured correctly.",
                 function ($message) use ($request, $fromAddress, $fromName, $siteName) {
-                    $message->to($request->test_email)
-                            ->from($fromAddress, $fromName)
-                            ->subject("Test Email from {$siteName}");
+                    $message->to($request->test_email)->from($fromAddress, $fromName)->subject("Test Email from {$siteName}");
                 }
             );
-
             return back()->with('success', "Test email sent successfully to {$request->test_email}.");
         } catch (\Exception $e) {
             return back()->with('error', 'Failed to send test email: ' . $e->getMessage());

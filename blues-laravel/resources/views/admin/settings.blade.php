@@ -49,11 +49,61 @@
         </div>
     </div>
 
+    {{-- JAP / SMM Boosting --}}
+    <div class="bg-slate-800 border border-orange-500/30 rounded-xl p-6" style="box-shadow:0 0 0 1px rgba(249,115,22,.08)">
+        <div class="flex items-center gap-3 mb-5">
+            <div class="w-9 h-9 rounded-lg bg-orange-900/50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+            </div>
+            <div>
+                <h2 class="font-semibold text-white">SMM Boosting — JustAnotherPanel</h2>
+                <p class="text-xs text-slate-400">API key and settings for social media boosting services</p>
+            </div>
+        </div>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs text-slate-400 mb-1.5">JAP API Key</label>
+                <div class="relative">
+                    <input type="password" name="jap_api_key" id="jap-key-input" value="{{ $settings['jap_api_key'] }}"
+                        placeholder="Paste your JustAnotherPanel API key here" class="font-mono text-xs pr-10">
+                    <button type="button" onclick="toggleJapKey()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    </button>
+                </div>
+                <p class="text-xs text-slate-500 mt-1">Get your API key from <a href="https://justanotherpanel.com" target="_blank" class="text-brand hover:underline">JustAnotherPanel</a> → Profile → API.</p>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1.5">Markup (%)</label>
+                    <input type="number" name="boosting_markup_percent" value="{{ $settings['boosting_markup_percent'] }}"
+                        min="0" max="500" step="0.1" placeholder="20">
+                    <p class="text-xs text-slate-500 mt-1">Added on top of JAP price. E.g. 20 = 20% markup.</p>
+                </div>
+            </div>
+            <div class="pt-3 border-t border-slate-700">
+                <label class="flex items-center gap-3 cursor-pointer">
+                    <div class="relative">
+                        <input type="checkbox" name="boosting_enabled" value="1" id="boosting-toggle"
+                            {{ $settings['boosting_enabled'] === '1' ? 'checked' : '' }} class="sr-only">
+                        <div class="w-10 h-6 rounded-full transition-colors" id="boosting-toggle-bg"
+                             style="background: {{ $settings['boosting_enabled'] === '1' ? '#f97316' : '#475569' }}"></div>
+                        <div class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform" id="boosting-toggle-dot"
+                             style="transform: {{ $settings['boosting_enabled'] === '1' ? 'translateX(1rem)' : 'translateX(0)' }}"></div>
+                    </div>
+                    <div>
+                        <p class="text-sm text-white font-medium">Enable SMM Boosting</p>
+                        <p class="text-xs text-slate-400">Toggle the SMM Boosting section in the user dashboard</p>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+
     {{-- General --}}
     <div class="bg-slate-800 border border-slate-700 rounded-xl p-6">
         <div class="flex items-center gap-3 mb-5">
-            <div class="w-9 h-9 rounded-lg bg-sky-900/50 flex items-center justify-center">
-                <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>
+            <div class="w-9 h-9 rounded-lg bg-orange-900/50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>
             </div>
             <div>
                 <h2 class="font-semibold text-white">General Settings</h2>
@@ -64,7 +114,7 @@
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs text-slate-400 mb-1.5">Site Name</label>
-                    <input type="text" name="site_name" value="{{ $settings['site_name'] }}" placeholder="Blues Marketplace">
+                    <input type="text" name="site_name" value="{{ $settings['site_name'] }}" placeholder="TopVerifi">
                 </div>
                 <div>
                     <label class="block text-xs text-slate-400 mb-1.5">Support Email</label>
@@ -192,7 +242,7 @@
                 <div>
                     <label class="block text-xs text-slate-400 mb-1.5">From Name</label>
                     <input type="text" name="mail_from_name" value="{{ $settings['mail_from_name'] }}"
-                        placeholder="Blues Marketplace">
+                        placeholder="TopVerifi">
                 </div>
             </div>
         </div>
@@ -443,7 +493,7 @@
             </div>
             <div>
                 <label class="block text-xs text-slate-400 mb-1.5">Account Name</label>
-                <input type="text" name="bank_account_name" value="{{ $settings['bank_account_name'] }}" placeholder="Blues Marketplace Ltd" class="w-full">
+                <input type="text" name="bank_account_name" value="{{ $settings['bank_account_name'] }}" placeholder="TopVerifi Ltd" class="w-full">
             </div>
         </div>
         <p class="text-xs text-slate-500 mt-3">Users will see these details when they choose bank transfer at checkout. You must confirm each payment manually in the <a href="{{ route('admin.bank-transfers') }}" class="text-brand hover:underline">Bank Transfers</a> panel.</p>
@@ -487,11 +537,15 @@ document.getElementById('maintenance-toggle').addEventListener('change', functio
     document.getElementById('toggle-dot').style.transform = this.checked ? 'translateX(1rem)' : 'translateX(0)';
 });
 document.getElementById('promo-banner-toggle').addEventListener('change', function() {
-    document.getElementById('promo-toggle-bg').style.background  = this.checked ? '#0ea5e9' : '#475569';
+    document.getElementById('promo-toggle-bg').style.background  = this.checked ? '#f97316' : '#475569';
     document.getElementById('promo-toggle-dot').style.transform  = this.checked ? 'translateX(1.25rem)' : 'translateX(0)';
 });
 function toggleSecret() {
     const inp = document.getElementById('secret-key-input');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+function toggleJapKey() {
+    const inp = document.getElementById('jap-key-input');
     inp.type = inp.type === 'password' ? 'text' : 'password';
 }
 function toggleGrizzlyKey() {
@@ -503,8 +557,12 @@ function toggleMailPassword() {
     inp.type = inp.type === 'password' ? 'text' : 'password';
 }
 document.getElementById('vn-toggle').addEventListener('change', function() {
-    document.getElementById('vn-toggle-bg').style.background = this.checked ? '#0ea5e9' : '#475569';
+    document.getElementById('vn-toggle-bg').style.background = this.checked ? '#f97316' : '#475569';
     document.getElementById('vn-toggle-dot').style.transform = this.checked ? 'translateX(1rem)' : 'translateX(0)';
+});
+document.getElementById('boosting-toggle').addEventListener('change', function() {
+    document.getElementById('boosting-toggle-bg').style.background = this.checked ? '#f97316' : '#475569';
+    document.getElementById('boosting-toggle-dot').style.transform = this.checked ? 'translateX(1rem)' : 'translateX(0)';
 });
 document.getElementById('bt-toggle').addEventListener('change', function() {
     document.getElementById('bt-toggle-bg').style.background = this.checked ? '#10b981' : '#475569';

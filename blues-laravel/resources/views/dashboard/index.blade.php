@@ -4,35 +4,46 @@
 
 @section('content')
 {{-- Stats row --}}
-<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
     <div class="bg-slate-800 border border-slate-700 rounded-xl p-5">
         <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Wallet Balance</p>
         <p class="text-2xl font-bold text-white mt-1">₦{{ number_format($wallet->balance, 2) }}</p>
         <a href="{{ route('dashboard.wallet') }}" class="text-xs text-brand hover:underline mt-1 inline-block">Top up →</a>
     </div>
     <div class="bg-slate-800 border border-slate-700 rounded-xl p-5">
-        <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Total Orders</p>
+        <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">SMM Orders</p>
         <p class="text-2xl font-bold text-white mt-1">{{ $orderCount }}</p>
+        <a href="{{ route('dashboard.boosting-orders') }}" class="text-xs text-brand hover:underline mt-1 inline-block">View all →</a>
+    </div>
+    <div class="bg-slate-800 border border-slate-700 rounded-xl p-5">
+        <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Virtual Numbers</p>
+        <p class="text-2xl font-bold text-white mt-1">{{ $vnCount ?? 0 }}</p>
+        <a href="{{ route('dashboard.virtual-numbers') }}" class="text-xs text-brand hover:underline mt-1 inline-block">Get a number →</a>
+    </div>
+    <div class="bg-slate-800 border border-slate-700 rounded-xl p-5">
+        <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Referrals</p>
+        <p class="text-2xl font-bold text-white mt-1">{{ $referralCount ?? 0 }}</p>
+        <a href="{{ route('dashboard.referrals') }}" class="text-xs text-brand hover:underline mt-1 inline-block">Invite friends →</a>
     </div>
 </div>
 
 {{-- Quick actions --}}
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-    <a href="{{ route('dashboard.marketplace') }}" class="bg-slate-800 border border-slate-700 hover:border-brand/50 rounded-xl p-4 flex items-center gap-3 transition-all group">
-        <div class="w-9 h-9 bg-brand/10 rounded-lg flex items-center justify-center group-hover:bg-brand/20 transition-colors">
-            <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-        </div>
-        <span class="text-sm font-medium text-white">Marketplace</span>
-    </a>
     <a href="{{ route('dashboard.virtual-numbers') }}" class="bg-slate-800 border border-slate-700 hover:border-brand/50 rounded-xl p-4 flex items-center gap-3 transition-all group">
         <div class="w-9 h-9 bg-green-500/10 rounded-lg flex items-center justify-center group-hover:bg-green-500/20 transition-colors">
             <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
         </div>
         <span class="text-sm font-medium text-white">Virtual Numbers</span>
     </a>
-    <a href="{{ route('dashboard.orders') }}" class="bg-slate-800 border border-slate-700 hover:border-brand/50 rounded-xl p-4 flex items-center gap-3 transition-all group">
+    <a href="{{ route('dashboard.boosting') }}" class="bg-slate-800 border border-slate-700 hover:border-brand/50 rounded-xl p-4 flex items-center gap-3 transition-all group">
+        <div class="w-9 h-9 bg-brand/10 rounded-lg flex items-center justify-center group-hover:bg-brand/20 transition-colors">
+            <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        </div>
+        <span class="text-sm font-medium text-white">SMM Boosting</span>
+    </a>
+    <a href="{{ route('dashboard.boosting-orders') }}" class="bg-slate-800 border border-slate-700 hover:border-brand/50 rounded-xl p-4 flex items-center gap-3 transition-all group">
         <div class="w-9 h-9 bg-purple-500/10 rounded-lg flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
         </div>
         <span class="text-sm font-medium text-white">My Orders</span>
     </a>
@@ -44,7 +55,7 @@
     </a>
 </div>
 
-{{-- Referral banner (only if user has a referral code) --}}
+{{-- Referral banner --}}
 @php $dashProfile = Auth::user()->profile; @endphp
 @if($dashProfile && $dashProfile->referral_code)
 <div class="bg-gradient-to-r from-brand/10 to-purple-500/10 border border-brand/20 rounded-xl p-5 mb-8 flex flex-col sm:flex-row sm:items-center gap-4">
@@ -59,50 +70,60 @@
     </div>
     <div class="flex items-center gap-2 flex-shrink-0">
         <input id="dash-ref-link" type="text" readonly value="{{ url('/r/' . $dashProfile->referral_code) }}"
-            class="hidden-input w-1 h-1 opacity-0 absolute" tabindex="-1">
+            class="w-1 h-1 opacity-0 absolute" tabindex="-1">
         <button onclick="copyDashReferral()" id="dash-copy-btn"
             class="bg-brand hover:bg-brand-dark text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors flex items-center gap-1.5">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
             Copy Link
         </button>
-        <a href="{{ route('dashboard.profile') }}" class="border border-slate-600 hover:border-brand text-slate-300 hover:text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">Details</a>
+        <a href="{{ route('dashboard.referrals') }}" class="border border-slate-600 hover:border-brand text-slate-300 hover:text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">Details</a>
     </div>
 </div>
 @endif
 
-{{-- Recent Orders --}}
-<div class="bg-slate-800 border border-slate-700 rounded-xl">
+{{-- Recent SMM Orders --}}
+<div class="bg-slate-800 border border-slate-700 rounded-xl mb-6">
     <div class="px-6 py-4 border-b border-slate-700 flex items-center justify-between">
-        <h2 class="font-semibold text-white">Recent Orders</h2>
-        <a href="{{ route('dashboard.orders') }}" class="text-xs text-brand hover:underline">View all →</a>
+        <h2 class="font-semibold text-white">Recent SMM Orders</h2>
+        <a href="{{ route('dashboard.boosting-orders') }}" class="text-xs text-brand hover:underline">View all →</a>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-sm">
-            <thead><tr class="border-b border-slate-700 text-slate-400 text-xs uppercase">
-                <th class="px-6 py-3 text-left">Item</th>
-                <th class="px-6 py-3 text-left">Amount</th>
-                <th class="px-6 py-3 text-left">Status</th>
-                <th class="px-6 py-3 text-left">Date</th>
-            </tr></thead>
+            <thead>
+                <tr class="border-b border-slate-700 text-slate-400 text-xs uppercase">
+                    <th class="px-6 py-3 text-left">Service</th>
+                    <th class="px-6 py-3 text-left">Amount</th>
+                    <th class="px-6 py-3 text-left">Status</th>
+                    <th class="px-6 py-3 text-left">Date</th>
+                </tr>
+            </thead>
             <tbody>
             @forelse($recentOrders as $order)
                 <tr class="border-b border-slate-700/50">
-                    <td class="px-6 py-3 text-slate-300">{{ $order->listing?->title ?? 'Deleted listing' }}</td>
-                    <td class="px-6 py-3 text-white font-medium">₦{{ number_format($order->amount, 2) }}</td>
+                    <td class="px-6 py-3 text-slate-300 max-w-[200px] truncate">{{ $order->service_name }}</td>
+                    <td class="px-6 py-3 text-white font-medium">₦{{ number_format($order->charge, 2) }}</td>
                     <td class="px-6 py-3">
-                        <span class="px-2 py-0.5 rounded-full text-xs font-medium {{ $order->status === 'completed' ? 'bg-green-900/50 text-green-400' : 'bg-yellow-900/50 text-yellow-400' }}">
-                            {{ ucfirst($order->status) }}
+                        <span class="px-2 py-0.5 rounded-full text-xs font-medium
+                            {{ $order->status === 'completed' ? 'bg-green-900/50 text-green-400' :
+                               ($order->status === 'pending' ? 'bg-yellow-900/50 text-yellow-400' : 'bg-blue-900/50 text-blue-400') }}">
+                            {{ ucfirst(str_replace('_', ' ', $order->status)) }}
                         </span>
                     </td>
                     <td class="px-6 py-3 text-slate-400">{{ $order->created_at->diffForHumans() }}</td>
                 </tr>
             @empty
-                <tr><td colspan="4" class="px-6 py-10 text-center text-slate-500">No orders yet — <a href="{{ route('dashboard.marketplace') }}" class="text-brand hover:underline">browse social media logs</a></td></tr>
+                <tr>
+                    <td colspan="4" class="px-6 py-10 text-center text-slate-500">
+                        No orders yet —
+                        <a href="{{ route('dashboard.boosting') }}" class="text-brand hover:underline">browse SMM services</a>
+                    </td>
+                </tr>
             @endforelse
             </tbody>
         </table>
     </div>
 </div>
+
 @endsection
 
 @push('scripts')

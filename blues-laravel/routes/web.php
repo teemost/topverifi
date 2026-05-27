@@ -7,8 +7,6 @@ use App\Http\Controllers\Admin\BankTransferController as AdminBankTransferContro
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\Admin\ListingsController;
-use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ModeratorsController;
 use App\Http\Controllers\Admin\TransactionsController;
 use App\Http\Controllers\Admin\TicketsController;
@@ -17,32 +15,28 @@ use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\VirtualNumberOrdersController;
 use App\Http\Controllers\Admin\AnnouncementsController;
 use App\Http\Controllers\Admin\ReferralLeaderboardController;
-use App\Http\Controllers\Admin\ReviewsController as AdminReviewsController;
-use App\Http\Controllers\User\ReviewController;
-use App\Http\Controllers\User\BankTransferController as UserBankTransferController;
+use App\Http\Controllers\Admin\BoostingOrdersController;
 
 // Public imports
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ReferralController;
 
 // User dashboard imports
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\WalletController;
-use App\Http\Controllers\User\OrdersController;
-use App\Http\Controllers\User\WishlistController;
 use App\Http\Controllers\User\NotificationsController;
 use App\Http\Controllers\User\SupportController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\VirtualNumberController;
 use App\Http\Controllers\User\ReferralPageController;
+use App\Http\Controllers\User\BankTransferController as UserBankTransferController;
+use App\Http\Controllers\User\BoostingController;
 
 // ── Public ────────────────────────────────────────────────────────────────────
-// Paystack webhook (no CSRF)
 Route::post('/paystack/webhook', [WalletController::class, 'webhook'])->name('paystack.webhook')->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 
 Route::get('/',          [HomeController::class,        'index'])->name('home');
@@ -75,7 +69,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/email/verify/{id}/{hash}', function (\Illuminate\Foundation\Auth\EmailVerificationRequest $request) {
         $request->fulfill();
-        return redirect()->route('dashboard.index')->with('success', 'Email verified! Welcome to BluesMarketplace.');
+        return redirect()->route('dashboard.index')->with('success', 'Email verified! Welcome to TopVerifi.');
     })->middleware('signed')->name('verification.verify');
 
     Route::post('/email/verification-notification', function (Illuminate\Http\Request $request) {
@@ -93,10 +87,6 @@ Route::middleware(\App\Http\Middleware\UserAuth::class)->prefix('dashboard')->na
     Route::get('/wallet',             [WalletController::class, 'index'])->name('wallet');
     Route::post('/wallet/initiate',   [WalletController::class, 'initiate'])->name('wallet.initiate');
     Route::get('/wallet/callback',    [WalletController::class, 'callback'])->name('wallet.callback');
-    Route::get('/orders',       [OrdersController::class,       'index'])->name('orders');
-    Route::get('/wishlist',     [WishlistController::class,     'index'])->name('wishlist');
-    Route::post('/wishlist',    [WishlistController::class,     'store'])->name('wishlist.store');
-    Route::delete('/wishlist/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
     Route::get('/notifications',[NotificationsController::class,'index'])->name('notifications');
     Route::post('/notifications/mark-all-read',[NotificationsController::class,'markAllRead'])->name('notifications.mark-all-read');
     Route::get('/support',      [SupportController::class,      'index'])->name('support');
@@ -104,10 +94,8 @@ Route::middleware(\App\Http\Middleware\UserAuth::class)->prefix('dashboard')->na
     Route::get('/profile',      [ProfileController::class,      'index'])->name('profile');
     Route::post('/profile',     [ProfileController::class,      'update'])->name('profile.update');
     Route::post('/profile/notifications', [ProfileController::class, 'updateNotifications'])->name('profile.notifications');
-    Route::post('/orders/{purchase}/review', [ReviewController::class, 'store'])->name('orders.review');
 
-    // Bank Transfer
-    Route::post('/marketplace/{id}/bank-transfer',   [UserBankTransferController::class, 'marketplace'])->name('marketplace.bank-transfer');
+    // Bank Transfer (wallet top-up)
     Route::post('/wallet/bank-transfer',             [UserBankTransferController::class, 'walletTopup'])->name('wallet.bank-transfer');
     Route::get('/bank-transfer/{id}/pending',        [UserBankTransferController::class, 'pending'])->name('bank-transfer.pending');
     Route::post('/bank-transfer/{id}/paid',          [UserBankTransferController::class, 'markPaid'])->name('bank-transfer.paid');
@@ -116,17 +104,19 @@ Route::middleware(\App\Http\Middleware\UserAuth::class)->prefix('dashboard')->na
 
     Route::get('/referrals',        [ReferralPageController::class,  'index'])->name('referrals');
 
-    // Marketplace (dashboard-only)
-    Route::get('/marketplace',           [MarketplaceController::class, 'index'])->name('marketplace');
-    Route::get('/marketplace/{id}',      [MarketplaceController::class, 'show'])->name('marketplace.show');
-    Route::post('/marketplace/{id}/buy', [MarketplaceController::class, 'buy'])->name('marketplace.buy');
-
+    // Virtual Numbers
     Route::get('/virtual-numbers',                  [VirtualNumberController::class, 'index'])->name('virtual-numbers');
     Route::get('/virtual-numbers/api/countries',    [VirtualNumberController::class, 'getCountries'])->name('virtual-numbers.countries');
     Route::get('/virtual-numbers/api/services',     [VirtualNumberController::class, 'getServices'])->name('virtual-numbers.services');
     Route::post('/virtual-numbers/order',           [VirtualNumberController::class, 'order'])->name('virtual-numbers.order');
     Route::get('/virtual-numbers/{id}/sms',         [VirtualNumberController::class, 'checkSms'])->name('virtual-numbers.sms');
     Route::delete('/virtual-numbers/{id}/cancel',   [VirtualNumberController::class, 'cancel'])->name('virtual-numbers.cancel');
+
+    // SMM Boosting
+    Route::get('/boosting',                    [BoostingController::class, 'index'])->name('boosting');
+    Route::post('/boosting/order',             [BoostingController::class, 'placeOrder'])->name('boosting.order');
+    Route::get('/boosting/orders',             [BoostingController::class, 'orders'])->name('boosting-orders');
+    Route::post('/boosting/orders/{id}/sync',  [BoostingController::class, 'checkStatus'])->name('boosting.sync');
 });
 
 // ── Admin Auth ────────────────────────────────────────────────────────────────
@@ -147,18 +137,10 @@ Route::middleware(\App\Http\Middleware\AdminAuth::class)->prefix('admin')->name(
     Route::get('/users/{user}/dashboard',       [UsersController::class, 'impersonateDashboard'])->name('impersonate.dashboard');
     Route::delete('/users/{user}',              [UsersController::class, 'destroy'])->name('users.destroy');
 
-    // Listings
-    Route::get('/listings',                     [ListingsController::class, 'index'])->name('listings');
-    Route::post('/listings',                    [ListingsController::class, 'store'])->name('listings.store');
-    Route::get('/listings/{listing}/edit',      [ListingsController::class, 'edit'])->name('listings.edit');
-    Route::post('/listings/{listing}',          [ListingsController::class, 'update'])->name('listings.update');
-    Route::delete('/listings/{listing}',        [ListingsController::class, 'destroy'])->name('listings.destroy');
-
-    // Categories
-    Route::get('/categories',                   [CategoriesController::class, 'index'])->name('categories');
-    Route::post('/categories',                  [CategoriesController::class, 'store'])->name('categories.store');
-    Route::post('/categories/{category}',       [CategoriesController::class, 'update'])->name('categories.update');
-    Route::delete('/categories/{category}',     [CategoriesController::class, 'destroy'])->name('categories.destroy');
+    // SMM Boosting Orders
+    Route::get('/boosting-orders',             [BoostingOrdersController::class, 'index'])->name('boosting-orders');
+    Route::post('/boosting-orders/{id}/sync',  [BoostingOrdersController::class, 'syncStatus'])->name('boosting-orders.sync');
+    Route::post('/boosting-orders/sync-all',   [BoostingOrdersController::class, 'syncAll'])->name('boosting-orders.sync-all');
 
     // Moderators
     Route::get('/moderators',                   [ModeratorsController::class, 'index'])->name('moderators');
@@ -185,8 +167,6 @@ Route::middleware(\App\Http\Middleware\AdminAuth::class)->prefix('admin')->name(
     Route::post('/announcements', [AnnouncementsController::class, 'store'])->name('announcements.store');
 
     Route::get('/referrals',      [ReferralLeaderboardController::class, 'index'])->name('referrals');
-    Route::get('/reviews',        [AdminReviewsController::class,        'index'])->name('reviews');
-    Route::delete('/reviews/{review}', [AdminReviewsController::class,   'destroy'])->name('reviews.destroy');
 
     // Bank Transfers
     Route::get('/bank-transfers',                [AdminBankTransferController::class, 'index'])->name('bank-transfers');

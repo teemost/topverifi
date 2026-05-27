@@ -26,7 +26,7 @@
                    class="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
                     View Wallet
                 </a>
-                <a href="{{ route('dashboard.marketplace') }}"
+                <a href="{{ route('dashboard.boosting') }}"
                    class="bg-slate-700 hover:bg-slate-600 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
                     Go to Marketplace
                 </a>
@@ -37,11 +37,11 @@
                 <p class="text-green-400/80">Check My Orders to view your login details.</p>
             </div>
             <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                <a href="{{ route('dashboard.orders') }}"
+                <a href="{{ route('dashboard.boosting-orders') }}"
                    class="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
                     View My Orders
                 </a>
-                <a href="{{ route('dashboard.marketplace') }}"
+                <a href="{{ route('dashboard.boosting') }}"
                    class="bg-slate-700 hover:bg-slate-600 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
                     Continue Shopping
                 </a>

@@ -112,7 +112,7 @@ class BankTransferController extends Controller
     private function notifyAdmin($user, BankTransferPayment $btp, string $itemName): void
     {
         $supportEmail = Setting::get('support_email', '');
-        $siteName     = Setting::get('site_name', 'Blues Marketplace');
+        $siteName     = Setting::get('site_name', 'TopVerifi');
 
         try {
             if ($supportEmail && Setting::get('mail_host', '') !== '' && Setting::get('mail_mailer', 'log') !== 'log') {
@@ -135,7 +135,7 @@ class BankTransferController extends Controller
     private function notifyAdminPaid($user, BankTransferPayment $btp): void
     {
         $supportEmail = Setting::get('support_email', '');
-        $siteName     = Setting::get('site_name', 'Blues Marketplace');
+        $siteName     = Setting::get('site_name', 'TopVerifi');
 
         try {
             if ($supportEmail && Setting::get('mail_host', '') !== '' && Setting::get('mail_mailer', 'log') !== 'log') {

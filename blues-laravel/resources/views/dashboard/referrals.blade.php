@@ -183,7 +183,7 @@
             <div class="flex flex-wrap gap-2">
                 @php
                     $link    = urlencode(url('/r/' . $profile->referral_code));
-                    $message = urlencode('Join Blues Marketplace using my referral link and start buying verified digital accounts!');
+                    $message = urlencode('Join TopVerifi using my referral link and get virtual phone numbers and social media boosting services!');
                 @endphp
                 <a href="https://wa.me/?text={{ $message }}%20{{ $link }}" target="_blank"
                     class="flex items-center gap-2 px-4 py-2 bg-green-700/20 hover:bg-green-700/40 border border-green-700/40 text-green-400 rounded-lg text-sm font-medium transition-colors">

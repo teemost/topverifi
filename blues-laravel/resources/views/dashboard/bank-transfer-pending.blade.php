@@ -98,7 +98,7 @@
         @if($btp->type === 'wallet_topup')
             <a href="{{ route('dashboard.wallet') }}" class="text-sm text-brand hover:underline">← Back to Wallet</a>
         @else
-            <a href="{{ route('dashboard.marketplace') }}" class="text-sm text-brand hover:underline">← Continue Shopping</a>
+            <a href="{{ route('dashboard.boosting') }}" class="text-sm text-brand hover:underline">← Continue Shopping</a>
         @endif
     </div>
 </div>

@@ -40,7 +40,7 @@ class ForgotPasswordController extends Controller
 
         if ($smtpConfigured) {
             try {
-                $siteName    = Setting::get('site_name', 'Blues Marketplace');
+                $siteName    = Setting::get('site_name', 'TopVerifi');
                 $fromAddress = Setting::get('mail_from_address', config('mail.from.address'));
                 $fromName    = Setting::get('mail_from_name', $siteName);
 

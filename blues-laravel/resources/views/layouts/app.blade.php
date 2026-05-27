@@ -5,51 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="format-detection" content="telephone=no">
     <script>(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);if(t==='light')document.documentElement.classList.add('light-mode');}());</script>
-    <title>@yield('title', 'Blues Marketplace') — Buy Digital Accounts</title>
-    <meta name="description" content="@yield('meta_description', 'Blues Marketplace — Buy verified Facebook, Instagram, TikTok accounts and second phone numbers.')">
+    <title>@yield('title', 'TopVerifi') — Virtual Numbers & Social Media Boosting</title>
+    <meta name="description" content="@yield('meta_description', 'TopVerifi — Virtual phone numbers and premium social media growth services.')">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brand: { DEFAULT: '#0ea5e9', dark: '#0284c7', light: '#38bdf8' }
+                        brand: { DEFAULT: '#f97316', dark: '#ea580c', light: '#fb923c' }
                     }
                 }
             }
         }
     </script>
     <style>
-        /* ── Mobile overflow / zoom prevention ── */
         *, *::before, *::after { box-sizing: border-box; }
-        html {
-            overflow-x: hidden;
-            -webkit-text-size-adjust: 100%;
-            text-size-adjust: 100%;
-        }
-        body {
-            font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
-            overflow-x: hidden;
-            max-width: 100vw;
-        }
+        html { overflow-x: hidden; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+        body { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; overflow-x: hidden; max-width: 100vw; }
         img, video, svg { max-width: 100%; height: auto; }
-
-        /* Prevent iOS auto-zoom on input focus (font-size must be ≥ 16px) */
         @media screen and (max-width: 768px) {
-            input, select, textarea {
-                font-size: 16px !important;
-            }
+            input, select, textarea { font-size: 16px !important; }
         }
-
-        /* Horizontal-scroll wrapper for tables */
         .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-
         .nav-link { @apply text-slate-300 hover:text-white transition-colors text-sm font-medium; }
         .btn-primary { @apply inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-semibold px-5 py-2.5 rounded-lg transition-colors text-sm; }
         .btn-outline { @apply inline-flex items-center gap-2 border border-slate-600 hover:border-brand text-slate-300 hover:text-white font-medium px-5 py-2.5 rounded-lg transition-colors text-sm; }
         .card { @apply bg-slate-800 border border-slate-700 rounded-xl; }
 
-        /* ── Light Mode Overrides ── */
         [data-theme="light"] body { background-color: #f1f5f9; color: #0f172a; }
         [data-theme="light"] .bg-slate-950 { background-color: #e2e8f0 !important; }
         [data-theme="light"] .bg-slate-900 { background-color: #f1f5f9 !important; }
@@ -69,36 +52,26 @@
         [data-theme="light"] .hover\:bg-slate-700:hover { background-color: #e2e8f0 !important; }
         [data-theme="light"] .hover\:bg-slate-800:hover { background-color: #f1f5f9 !important; }
         [data-theme="light"] .hover\:text-white:hover { color: #0f172a !important; }
-        [data-theme="light"] .hover\:border-brand:hover { border-color: #0ea5e9 !important; }
-        /* Navbar */
+        [data-theme="light"] .hover\:border-brand:hover { border-color: #f97316 !important; }
         [data-theme="light"] header.sticky { background-color: rgba(255,255,255,0.97) !important; border-bottom-color: #e2e8f0 !important; }
-        /* Footer */
         [data-theme="light"] footer { background-color: #f1f5f9 !important; border-top-color: #e2e8f0 !important; }
-        /* Nav links */
         [data-theme="light"] .nav-link { color: #475569 !important; }
         [data-theme="light"] .nav-link:hover { color: #0f172a !important; }
         [data-theme="light"] .btn-outline { border-color: #cbd5e1 !important; color: #475569 !important; }
-        [data-theme="light"] .btn-outline:hover { border-color: #0ea5e9 !important; color: #0f172a !important; }
-        /* Inputs */
+        [data-theme="light"] .btn-outline:hover { border-color: #f97316 !important; color: #0f172a !important; }
         [data-theme="light"] input:not([type="checkbox"]):not([type="radio"]),
         [data-theme="light"] select,
-        [data-theme="light"] textarea {
-            background-color: #ffffff !important;
-            color: #0f172a !important;
-            border-color: #cbd5e1 !important;
-        }
+        [data-theme="light"] textarea { background-color: #ffffff !important; color: #0f172a !important; border-color: #cbd5e1 !important; }
         [data-theme="light"] input::placeholder,
         [data-theme="light"] textarea::placeholder { color: #94a3b8 !important; }
-        /* Alerts */
         [data-theme="light"] .bg-green-900\/40 { background-color: #dcfce7 !important; }
         [data-theme="light"] .border-green-700 { border-color: #86efac !important; }
         [data-theme="light"] .text-green-300 { color: #16a34a !important; }
         [data-theme="light"] .bg-red-900\/40 { background-color: #fee2e2 !important; }
         [data-theme="light"] .border-red-700 { border-color: #fca5a5 !important; }
         [data-theme="light"] .text-red-300 { color: #dc2626 !important; }
-        /* Theme toggle */
         .theme-toggle { display:flex; align-items:center; justify-content:center; width:2rem; height:2rem; border-radius:0.5rem; background:transparent; border:none; cursor:pointer; color:#94a3b8; transition:background .15s,color .15s; }
-        .theme-toggle:hover { background:rgba(148,163,184,.15); color:#fff; }
+        .theme-toggle:hover { background:rgba(249,115,22,.15); color:#f97316; }
         [data-theme="light"] .theme-toggle:hover { background:#e2e8f0; color:#0f172a; }
         [data-theme="light"] .theme-toggle { color: #64748b; }
     </style>
@@ -106,30 +79,26 @@
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex flex-col">
 
-{{-- Navbar --}}
 <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
-            {{-- Logo --}}
             <a href="{{ route('home') }}" class="flex items-center gap-2">
                 <div class="w-8 h-8 bg-brand rounded-lg flex items-center justify-center">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                     </svg>
                 </div>
-                <span class="font-bold text-white text-lg">Blues <span class="text-brand">Marketplace</span></span>
+                <span class="font-bold text-white text-lg">Top<span class="text-brand">Verifi</span></span>
             </a>
 
-            {{-- Nav links --}}
             <nav class="hidden md:flex items-center gap-6">
-                <a href="{{ route('dashboard.marketplace') }}" class="nav-link {{ request()->routeIs('marketplace*') ? 'text-white' : '' }}">Marketplace</a>
+                <a href="{{ route('dashboard.virtual-numbers') }}" class="nav-link">Virtual Numbers</a>
+                <a href="{{ route('dashboard.boosting') }}" class="nav-link">SMM Boosting</a>
                 <a href="{{ route('terms') }}" class="nav-link">Terms</a>
                 <a href="{{ route('privacy') }}" class="nav-link">Privacy</a>
             </nav>
 
-            {{-- Auth buttons --}}
             <div class="flex items-center gap-3">
-                {{-- Theme toggle --}}
                 <button onclick="toggleTheme()" class="theme-toggle" title="Toggle dark / light mode">
                     <svg id="icon-sun" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
                     <svg id="icon-moon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
@@ -152,7 +121,6 @@
     </div>
 </header>
 
-{{-- Flash messages --}}
 @if(session('success'))
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
         <div class="p-4 bg-green-900/40 border border-green-700 rounded-lg text-green-300 text-sm">{{ session('success') }}</div>
@@ -164,31 +132,29 @@
     </div>
 @endif
 
-{{-- Main content --}}
 <main class="flex-1">
     @yield('content')
 </main>
 
-{{-- Footer --}}
 <footer class="bg-slate-900 border-t border-slate-800 mt-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center gap-2 mb-4">
                     <div class="w-7 h-7 bg-brand rounded-lg flex items-center justify-center">
-                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                     </div>
-                    <span class="font-bold text-white">Blues <span class="text-brand">Marketplace</span></span>
+                    <span class="font-bold text-white">Top<span class="text-brand">Verifi</span></span>
                 </div>
-                <p class="text-slate-400 text-sm leading-relaxed max-w-sm">The trusted marketplace for verified digital accounts — Facebook, Instagram, TikTok, and second phone numbers.</p>
+                <p class="text-slate-400 text-sm leading-relaxed max-w-sm">Virtual phone numbers for SMS verification and premium social media growth services — all in one platform.</p>
             </div>
             <div>
-                <h4 class="text-white font-semibold text-sm mb-3">Marketplace</h4>
+                <h4 class="text-white font-semibold text-sm mb-3">Services</h4>
                 <ul class="space-y-2 text-sm text-slate-400">
-                    <li><a href="{{ route('dashboard.marketplace') }}?category=Facebook" class="hover:text-white transition-colors">Facebook Accounts</a></li>
-                    <li><a href="{{ route('dashboard.marketplace') }}?category=Instagram" class="hover:text-white transition-colors">Instagram Accounts</a></li>
-                    <li><a href="{{ route('dashboard.marketplace') }}?category=TikTok" class="hover:text-white transition-colors">TikTok Accounts</a></li>
-                    <li><a href="{{ route('dashboard.marketplace') }}?category=2nd+Numbers" class="hover:text-white transition-colors">2nd Numbers</a></li>
+                    <li><a href="{{ route('dashboard.virtual-numbers') }}" class="hover:text-white transition-colors">Virtual Numbers</a></li>
+                    <li><a href="{{ route('dashboard.boosting') }}" class="hover:text-white transition-colors">Instagram Boosting</a></li>
+                    <li><a href="{{ route('dashboard.boosting') }}" class="hover:text-white transition-colors">YouTube Views</a></li>
+                    <li><a href="{{ route('dashboard.boosting') }}" class="hover:text-white transition-colors">TikTok Growth</a></li>
                 </ul>
             </div>
             <div>
@@ -203,97 +169,37 @@
             </div>
         </div>
         <div class="border-t border-slate-800 mt-8 pt-6 text-center text-xs text-slate-500">
-            &copy; {{ date('Y') }} Blues Marketplace. All rights reserved.
+            &copy; {{ date('Y') }} TopVerifi. All rights reserved.
         </div>
     </div>
 </footer>
 
-{{-- Floating WhatsApp Support Button --}}
 @php $waNumber = \App\Models\Setting::get('whatsapp_number', ''); @endphp
 @if($waNumber)
 <style>
-    .wa-btn {
-        position: fixed;
-        bottom: 1.5rem;
-        right: 1.5rem;
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        gap: .625rem;
-        background: #25D366;
-        color: #fff;
-        border-radius: 9999px;
-        box-shadow: 0 4px 24px rgba(37,211,102,.45);
-        cursor: pointer;
-        text-decoration: none;
-        padding: .75rem 1.25rem .75rem .875rem;
-        font-size: .875rem;
-        font-weight: 600;
-        transition: transform .2s, box-shadow .2s, padding .35s, max-width .35s;
-        max-width: 220px;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-    .wa-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 32px rgba(37,211,102,.55);
-    }
-    .wa-btn svg { flex-shrink: 0; width: 1.5rem; height: 1.5rem; }
-    .wa-label { transition: opacity .25s, max-width .35s; max-width: 160px; overflow: hidden; }
-
-    /* Pulse ring */
-    .wa-pulse {
-        position: fixed;
-        bottom: 1.5rem;
-        right: 1.5rem;
-        z-index: 9998;
-        width: 56px;
-        height: 56px;
-        border-radius: 9999px;
-        background: rgba(37,211,102,.3);
-        animation: wa-ring 2.2s ease-out infinite;
-        pointer-events: none;
-    }
-    @keyframes wa-ring {
-        0%   { transform: scale(1);   opacity: .7; }
-        70%  { transform: scale(1.55); opacity: 0; }
-        100% { transform: scale(1.55); opacity: 0; }
-    }
-
-    @media (max-width: 480px) {
-        .wa-btn { padding: .75rem; max-width: 56px; border-radius: 9999px; }
-        .wa-label { max-width: 0; opacity: 0; }
-    }
+    .wa-btn { position:fixed; bottom:1.5rem; right:1.5rem; z-index:9999; display:flex; align-items:center; gap:.625rem; background:#25D366; color:#fff; border-radius:9999px; box-shadow:0 4px 24px rgba(37,211,102,.45); cursor:pointer; text-decoration:none; padding:.75rem 1.25rem .75rem .875rem; font-size:.875rem; font-weight:600; transition:transform .2s,box-shadow .2s,padding .35s,max-width .35s; max-width:220px; overflow:hidden; white-space:nowrap; }
+    .wa-btn:hover { transform:translateY(-3px); box-shadow:0 8px 32px rgba(37,211,102,.55); }
+    .wa-btn svg { flex-shrink:0; width:1.5rem; height:1.5rem; }
+    .wa-label { transition:opacity .25s,max-width .35s; max-width:160px; overflow:hidden; }
+    .wa-pulse { position:fixed; bottom:1.5rem; right:1.5rem; z-index:9998; width:56px; height:56px; border-radius:9999px; background:rgba(37,211,102,.3); animation:wa-ring 2.2s ease-out infinite; pointer-events:none; }
+    @keyframes wa-ring { 0%{transform:scale(1);opacity:.7} 70%{transform:scale(1.55);opacity:0} 100%{transform:scale(1.55);opacity:0} }
+    @media (max-width:480px) { .wa-btn{padding:.75rem;max-width:56px;border-radius:9999px;} .wa-label{max-width:0;opacity:0;} }
 </style>
-
 <div class="wa-pulse"></div>
-<a href="https://wa.me/{{ $waNumber }}?text={{ urlencode('Hello! I need support with Blues Marketplace.') }}"
-   target="_blank"
-   rel="noopener noreferrer"
-   class="wa-btn"
-   title="Chat with us on WhatsApp">
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.847L.057 23.882l6.204-1.448A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.5-5.208-1.378l-.374-.217-3.872.904.951-3.768-.243-.389A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-    </svg>
+<a href="https://wa.me/{{ $waNumber }}?text={{ urlencode('Hello! I need support with TopVerifi.') }}" target="_blank" rel="noopener noreferrer" class="wa-btn" title="Chat with us on WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.847L.057 23.882l6.204-1.448A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.5-5.208-1.378l-.374-.217-3.872.904.951-3.768-.243-.389A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
     <span class="wa-label">Chat with us</span>
 </a>
 @endif
 
 @stack('scripts')
 <script>
-// ── Theme toggle ──
 function applyThemeIcons(theme) {
     var sun  = document.getElementById('icon-sun');
     var moon = document.getElementById('icon-moon');
     if (!sun || !moon) return;
-    if (theme === 'light') {
-        sun.classList.add('hidden');
-        moon.classList.remove('hidden');
-    } else {
-        sun.classList.remove('hidden');
-        moon.classList.add('hidden');
-    }
+    if (theme === 'light') { sun.classList.add('hidden'); moon.classList.remove('hidden'); }
+    else { sun.classList.remove('hidden'); moon.classList.add('hidden'); }
 }
 function toggleTheme() {
     var current = document.documentElement.getAttribute('data-theme') || 'dark';
@@ -302,7 +208,6 @@ function toggleTheme() {
     localStorage.setItem('theme', next);
     applyThemeIcons(next);
 }
-// Sync icon on load
 applyThemeIcons(document.documentElement.getAttribute('data-theme') || 'dark');
 </script>
 </body>
