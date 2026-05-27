@@ -23,6 +23,8 @@ if [ -n "$DATABASE_URL" ]; then
   grep -q "^DB_PASSWORD=" .env && sed -i "s|^DB_PASSWORD=.*|DB_PASSWORD=${DB_PASS}|" .env || echo "DB_PASSWORD=${DB_PASS}" >> .env
   # Remove DB_URL line if present to avoid conflict
   sed -i "/^DB_URL=/d" .env
+  # Disable SSL for Replit's internal PostgreSQL
+  grep -q "^DB_SSLMODE=" .env && sed -i "s|^DB_SSLMODE=.*|DB_SSLMODE=disable|" .env || echo "DB_SSLMODE=disable" >> .env
 fi
 
 # Inject the correct APP_URL from Replit domain
