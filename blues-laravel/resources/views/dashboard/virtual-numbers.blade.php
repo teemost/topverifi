@@ -548,40 +548,37 @@ async function loadServices() {
         let services = mapServices(primaryData, displayLabel, country || '');
 
         if (usaSelected) {
-            // For USA: remove WhatsApp from USA results, then fetch Canada and use
-            // Canada's WhatsApp numbers — displayed as "United States" with US flag
-            services = services.filter(s => !isWhatsApp(s.name));
-
+            // For USA: keep all USA services AND add Canada's WhatsApp as a fallback
+            // (Canada numbers work for US WhatsApp verification)
             try {
                 const canadaCode = findCountryCodeByPredicate(isCanada);
                 if (canadaCode && canadaCode !== country) {
-                    const canadaData = await fetchForCode(canadaCode);
-                    const canadaAll  = mapServices(canadaData, displayLabel, country || '');
-                    // Only take WhatsApp entries from Canada, relabelled as USA
+                    const canadaData     = await fetchForCode(canadaCode);
+                    const canadaAll      = mapServices(canadaData, displayLabel, country || '');
                     const canadaWhatsApp = canadaAll.filter(s => isWhatsApp(s.name));
-                    // De-duplicate against existing services
-                    const existingNames  = new Set(services.map(s => s.name.toLowerCase()));
+                    const existingIds    = new Set(services.map(s => s.serviceId));
+                    // Add Canada WhatsApp variants not already in USA list
                     canadaWhatsApp.forEach(s => {
-                        if (!existingNames.has(s.name.toLowerCase())) {
+                        if (!existingIds.has(s.serviceId)) {
                             services.push(s);
-                            existingNames.add(s.name.toLowerCase());
+                            existingIds.add(s.serviceId);
                         }
                     });
                 }
             } catch(e) { /* ignore */ }
 
         } else if (country && isCanada(selectedName)) {
-            // Canada selected: also merge USA non-WhatsApp (standard cross-list)
+            // Canada selected: also merge all USA services
             try {
                 const usaCode = findCountryCodeByPredicate(isUSA);
                 if (usaCode && usaCode !== country) {
-                    const usaData    = await fetchForCode(usaCode);
-                    const usaAll     = mapServices(usaData, displayLabel, country || '');
-                    const existingNames = new Set(services.map(s => s.name.toLowerCase()));
+                    const usaData       = await fetchForCode(usaCode);
+                    const usaAll        = mapServices(usaData, displayLabel, country || '');
+                    const existingIds   = new Set(services.map(s => s.serviceId));
                     usaAll.forEach(s => {
-                        if (!existingNames.has(s.name.toLowerCase())) {
+                        if (!existingIds.has(s.serviceId)) {
                             services.push(s);
-                            existingNames.add(s.name.toLowerCase());
+                            existingIds.add(s.serviceId);
                         }
                     });
                 }
@@ -608,9 +605,6 @@ function applyFilter() {
     const country = document.getElementById('country-select').value;
 
     let list = allServices.filter(s => {
-        // When any country is selected, only show social media services
-        if (country && !isSocialMedia(s.name)) return false;
-
         if (!q) return true;
         const name = (s.name ?? '').toLowerCase();
         const c    = (s.country ?? '').toLowerCase();
