@@ -92,6 +92,7 @@
             </a>
 
             <nav class="hidden md:flex items-center gap-6">
+                <a href="{{ route('services') }}" class="nav-link">Services</a>
                 <a href="{{ route('dashboard.virtual-numbers') }}" class="nav-link">Virtual Numbers</a>
                 <a href="{{ route('dashboard.boosting') }}" class="nav-link">SMM Boosting</a>
                 <a href="{{ route('terms') }}" class="nav-link">Terms</a>
@@ -152,9 +153,9 @@
                 <h4 class="text-white font-semibold text-sm mb-3">Services</h4>
                 <ul class="space-y-2 text-sm text-slate-400">
                     <li><a href="{{ route('dashboard.virtual-numbers') }}" class="hover:text-white transition-colors">Virtual Numbers</a></li>
-                    <li><a href="{{ route('dashboard.boosting') }}" class="hover:text-white transition-colors">Instagram Boosting</a></li>
-                    <li><a href="{{ route('dashboard.boosting') }}" class="hover:text-white transition-colors">YouTube Views</a></li>
-                    <li><a href="{{ route('dashboard.boosting') }}" class="hover:text-white transition-colors">TikTok Growth</a></li>
+                    <li><a href="{{ route('dashboard.boosting') }}" class="hover:text-white transition-colors">SMM Boosting</a></li>
+                    <li><a href="{{ route('dashboard.boosting') }}" class="hover:text-white transition-colors">Telegram Premium</a></li>
+                    <li><a href="{{ route('services') }}" class="hover:text-white transition-colors">All Services →</a></li>
                 </ul>
             </div>
             <div>

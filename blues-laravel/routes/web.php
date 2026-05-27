@@ -43,6 +43,7 @@ Route::get('/',          [HomeController::class,        'index'])->name('home');
 Route::get('/r/{code}',  [ReferralController::class,    'handle'])->name('referral');
 Route::get('/terms',     [PagesController::class,       'terms'])->name('terms');
 Route::get('/privacy',   [PagesController::class,       'privacy'])->name('privacy');
+Route::get('/services',  [PagesController::class,       'services'])->name('services');
 
 
 // ── User Auth ─────────────────────────────────────────────────────────────────
