@@ -133,10 +133,8 @@ class VirtualNumberController extends Controller
                 if (!$svc->isConfigured()) {
                     return response()->json(['success' => false, 'message' => 'Virtual number service is not available. Please contact support.']);
                 }
-                if (!$country) {
-                    return response()->json(['success' => false, 'message' => 'Please select a country first.']);
-                }
-                $result = $svc->getServices($country);
+                // No country = fetch ALL services across all countries
+                $result = $country ? $svc->getServices($country) : $svc->getAllServices();
         }
 
         if ($result['success']) {

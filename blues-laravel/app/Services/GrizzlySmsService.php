@@ -84,35 +84,246 @@ class GrizzlySmsService
         ['code' => '65',  'name' => 'Peru',              'iso' => 'pe'],
         ['code' => '91',  'name' => 'Bolivia',           'iso' => 'bo'],
         ['code' => '70',  'name' => 'Venezuela',         'iso' => 've'],
+        ['code' => '34',  'name' => 'Ethiopia',          'iso' => 'et'],
+        ['code' => '29',  'name' => 'Azerbaijan',        'iso' => 'az'],
+        ['code' => '26',  'name' => 'Lithuania',         'iso' => 'lt'],
+        ['code' => '45',  'name' => 'Slovakia',          'iso' => 'sk'],
+        ['code' => '44',  'name' => 'Serbia',            'iso' => 'rs'],
+        ['code' => '35',  'name' => 'Moldova',           'iso' => 'md'],
+        ['code' => '67',  'name' => 'Finland',           'iso' => 'fi'],
+        ['code' => '27',  'name' => 'Latvia',            'iso' => 'lv'],
+        ['code' => '28',  'name' => 'Estonia',           'iso' => 'ee'],
+        ['code' => '30',  'name' => 'Georgia',           'iso' => 'ge'],
+        ['code' => '17',  'name' => 'Hong Kong',         'iso' => 'hk'],
+        ['code' => '85',  'name' => 'Croatia',           'iso' => 'hr'],
+        ['code' => '88',  'name' => 'Norway',            'iso' => 'no'],
+        ['code' => '74',  'name' => 'Portugal',          'iso' => 'pt'],
+        ['code' => '76',  'name' => 'Greece',            'iso' => 'gr'],
+        ['code' => '77',  'name' => 'Denmark',           'iso' => 'dk'],
+        ['code' => '79',  'name' => 'Switzerland',       'iso' => 'ch'],
+        ['code' => '80',  'name' => 'Jordan',            'iso' => 'jo'],
+        ['code' => '87',  'name' => 'Kuwait',            'iso' => 'kw'],
+        ['code' => '90',  'name' => 'Sudan',             'iso' => 'sd'],
+        ['code' => '92',  'name' => 'Laos',              'iso' => 'la'],
+        ['code' => '93',  'name' => 'Haiti',             'iso' => 'ht'],
+        ['code' => '95',  'name' => 'Angola',            'iso' => 'ao'],
+        ['code' => '96',  'name' => 'Chile',             'iso' => 'cl'],
+        ['code' => '97',  'name' => 'Guatemala',         'iso' => 'gt'],
+        ['code' => '98',  'name' => 'Ivory Coast',       'iso' => 'ci'],
+        ['code' => '99',  'name' => 'Zimbabwe',          'iso' => 'zw'],
+        ['code' => '100', 'name' => 'Paraguay',          'iso' => 'py'],
+        ['code' => '101', 'name' => 'Uruguay',           'iso' => 'uy'],
+        ['code' => '102', 'name' => 'Panama',            'iso' => 'pa'],
+        ['code' => '103', 'name' => 'Cuba',              'iso' => 'cu'],
+        ['code' => '104', 'name' => 'DR Congo',          'iso' => 'cd'],
+        ['code' => '105', 'name' => 'Honduras',          'iso' => 'hn'],
+        ['code' => '106', 'name' => 'Rwanda',            'iso' => 'rw'],
+        ['code' => '107', 'name' => 'Mozambique',        'iso' => 'mz'],
+        ['code' => '108', 'name' => 'Zambia',            'iso' => 'zm'],
     ];
 
-    // Short service codes → human-readable display names
+    // Comprehensive service codes → human-readable display names
+    // Compatible with SMS-Activate / GrizzlySMS API codes
     private const SERVICE_NAMES = [
-        'go'  => 'Google',
-        'tg'  => 'Telegram',
-        'wa'  => 'WhatsApp',
-        'wv'  => 'WhatsApp',
-        'wb'  => 'WhatsApp',
-        'wp'  => 'WhatsApp',
-        'fb'  => 'Facebook',
-        'tw'  => 'Twitter / X',
-        'ig'  => 'Instagram',
-        'tk'  => 'TikTok',
-        'am'  => 'Amazon',
-        'vi'  => 'Viber',
-        'ln'  => 'LinkedIn',
-        'ub'  => 'Uber',
-        'mm'  => 'Microsoft',
-        'ya'  => 'Yandex',
-        'vk'  => 'VKontakte',
-        'we'  => 'WeChat',
-        'nf'  => 'Netflix',
-        'dr'  => 'Discord',
-        'sn'  => 'Snapchat',
-        'ma'  => 'Mail.ru',
-        'ok'  => 'Odnoklassniki',
-        'av'  => 'Avito',
-        'ot'  => 'Other',
+        // ── Social & Messaging ────────────────────────────────────────
+        'tg'   => 'Telegram',
+        'wa'   => 'WhatsApp',
+        'wv'   => 'WhatsApp Business',
+        'wb'   => 'WhatsApp',
+        'wp'   => 'WhatsApp',
+        'fb'   => 'Facebook',
+        'tw'   => 'Twitter / X',
+        'ig'   => 'Instagram',
+        'tk'   => 'TikTok',
+        'vi'   => 'Viber',
+        'we'   => 'WeChat',
+        'sn'   => 'Snapchat',
+        'dr'   => 'Discord',
+        'li'   => 'Line',
+        'im'   => 'IMO',
+        'sg'   => 'Signal',
+        'me'   => 'MeWe',
+        'sk'   => 'Skype',
+        'ok'   => 'Odnoklassniki',
+        'vk'   => 'VKontakte',
+        'tb'   => 'Twitch',
+        'rd'   => 'Reddit',
+        'pi'   => 'Pinterest',
+        'tu'   => 'Tumblr',
+        'cl'   => 'Clubhouse',
+        'kk'   => 'KakaoTalk',
+        'zh'   => 'Zalo',
+        'zi'   => 'Zalo',
+        'zo'   => 'Zoosk',
+        'be'   => 'BeReal',
+        'lt'   => 'Locket',
+        'hi'   => 'Hinge',
+        'bu'   => 'Bumble',
+        'td'   => 'Tinder',
+        'bp'   => 'Badoo',
+        'ta'   => 'Tagged',
+        'gn'   => 'Grindr',
+        'po'   => 'Poshmark',
+        'pf'   => 'PicsArt',
+        'sc'   => 'Snapchat',
+        'tt'   => 'TruthSocial',
+
+        // ── Google / Apple / Microsoft ────────────────────────────────
+        'go'   => 'Google',
+        'gm'   => 'Gmail',
+        'ga'   => 'Google Ads',
+        'gv'   => 'Google Voice',
+        'gc'   => 'Google Cloud',
+        'gs'   => 'Google Pay',
+        'ap'   => 'Apple',
+        'mm'   => 'Microsoft',
+        'az'   => 'Microsoft Azure',
+        'of'   => 'Office 365',
+        'ou'   => 'Outlook',
+        'gl'   => 'Grammarly',
+
+        // ── Crypto & Finance ──────────────────────────────────────────
+        'bn'   => 'Binance',
+        'cb'   => 'Coinbase',
+        'kc'   => 'KuCoin',
+        'kr'   => 'Kraken',
+        'hu'   => 'Huobi',
+        'gt'   => 'Gate.io',
+        'cx'   => 'OKX',
+        'cy'   => 'Bybit',
+        'tr'   => 'Trust Wallet',
+        'me2'  => 'MetaMask',
+        'ce'   => 'CoinEx',
+        'ci'   => 'Circle',
+        'pe'   => 'Paxful',
+        'pa'   => 'PayPal',
+        'rb'   => 'Robinhood',
+        'rv'   => 'Revolut',
+        'ws'   => 'Wise',
+        'mo'   => 'Monese',
+        'mn'   => 'Monzo',
+        'ef'   => 'eToro',
+        'iq'   => 'IQ Option',
+        'mt'   => 'MetaTrader',
+        'xm'   => 'XM Trading',
+        'su'   => 'Stripe',
+        'ca'   => 'Cash App',
+        'zl'   => 'Zelle',
+        'mp'   => 'Mercado Pago',
+        'kb'   => 'Kaspi Bank',
+        'mc'   => 'Monobank',
+        'nk'   => 'Neobank',
+        'pp'   => 'Paytm',
+        'ph'   => 'PhonePe',
+        'gp'   => 'GPay',
+        'sp'   => 'SamsungPay',
+        'yw'   => 'Yandex Wallet',
+        'qw'   => 'QIWI',
+        'wm'   => 'WebMoney',
+
+        // ── E-commerce & Delivery ─────────────────────────────────────
+        'am'   => 'Amazon',
+        'eb'   => 'eBay',
+        'al'   => 'AliExpress',
+        'la'   => 'Lazada',
+        'sh'   => 'Shopify',
+        'et'   => 'Etsy',
+        'ai'   => 'Airbnb',
+        'bk'   => 'Booking.com',
+        'xp'   => 'Expedia',
+        'jd'   => 'JD.com',
+        'sw'   => 'Swiggy',
+        'zt'   => 'Zomato',
+        'gr'   => 'Grab',
+        'bl'   => 'Bolt',
+        'ds'   => 'DoorDash',
+        'ue'   => 'Uber Eats',
+        'fd'   => 'Foodpanda',
+        'ra'   => 'Rappi',
+        'jb'   => 'Jumia',
+        'mc2'  => 'Mercado Libre',
+        'sp2'  => 'Shopee',
+        'fl'   => 'Flipkart',
+        'wl'   => 'Wolt',
+        'dd'   => 'Deliveroo',
+        'gf'   => 'GrabFood',
+        'kf'   => 'KFC',
+        'mcd'  => 'McDonald\'s',
+        'di'   => 'DiDi',
+        'ca2'  => 'Careem',
+
+        // ── Entertainment & Gaming ────────────────────────────────────
+        'nf'   => 'Netflix',
+        'sa'   => 'Spotify',
+        'st'   => 'Steam',
+        'ps'   => 'PlayStation',
+        'ro'   => 'Roblox',
+        'yu'   => 'YouTube',
+        'so'   => 'SoundCloud',
+        'dz'   => 'Deezer',
+        'ti'   => 'Tidal',
+        'hp'   => 'Hulu',
+        'mx'   => 'Disney+',
+        'pr'   => 'Prime Video',
+        'at'   => 'Apple TV',
+        'hs'   => 'Hotstar',
+        'bg'   => 'BIGO Live',
+        'lk'   => 'Likee',
+        'kw'   => 'Kwai',
+        'lo'   => 'LOVO',
+        'xb'   => 'Xbox',
+        'ep'   => 'Epic Games',
+        'va'   => 'Valorant',
+
+        // ── Work & Productivity ───────────────────────────────────────
+        'ln'   => 'LinkedIn',
+        'ub'   => 'Uber',
+        'fi'   => 'Fiverr',
+        'up'   => 'Upwork',
+        'no'   => 'Notion',
+        'sl'   => 'Slack',
+        'gi'   => 'GitHub',
+        'sf'   => 'Salesforce',
+        'pm'   => 'ProtonMail',
+        'ne'   => 'Indeed',
+        'lm'   => 'Lemfi',
+        'zo2'  => 'Zoom',
+        'zm'   => 'Zoom',
+        'lo2'  => 'Loom',
+        'cv'   => 'Canva',
+        'dp'   => 'Dropbox',
+        'db'   => 'Dribbble',
+        'mi'   => 'Miro',
+
+        // ── Yandex ecosystem ─────────────────────────────────────────
+        'ya'   => 'Yandex',
+        'yt'   => 'Yandex Taxi',
+        'ym'   => 'Yandex Music',
+        'yp'   => 'Yandex Plus',
+        'yd'   => 'Yandex Disk',
+        'yg'   => 'Yandex Go',
+        'ma'   => 'Mail.ru',
+        'av'   => 'Avito',
+
+        // ── Other / Miscellaneous ─────────────────────────────────────
+        'tc'   => 'TrueCaller',
+        'ct'   => 'ChatGPT',
+        'nt'   => 'NordVPN',
+        'gj'   => 'GoDaddy',
+        'gu'   => 'Gumtree',
+        'cl2'  => 'Craigslist',
+        'ns'   => 'Nextdoor',
+        'ot'   => 'Other',
+        'ny'   => 'Any Service',
+        'lp'   => 'LetyShops',
+        'rc'   => 'Revolut',
+        'rl'   => 'Roulettebet',
+        'va2'  => 'Vavada',
+        '1x'   => '1xBet',
+        '1xb'  => '1xBet',
+        'bw'   => 'Bet365',
+        'mz'   => 'Mostbet',
+        'ml'   => 'Melbet',
     ];
 
     public function __construct()
@@ -135,9 +346,16 @@ class GrizzlySmsService
     private function request(array $params): string
     {
         $params['api_key'] = $this->apiKey;
-        $response = Http::timeout(20)->get($this->baseUrl, $params);
+        $response = Http::timeout(30)->get($this->baseUrl, $params);
         Log::info('GrizzlySMS [' . ($params['action'] ?? '?') . '] HTTP ' . $response->status() . ' | ' . substr($response->body(), 0, 200));
         return trim($response->body());
+    }
+
+    private function resolveServiceName(string $code): string
+    {
+        return self::SERVICE_NAMES[$code]
+            ?? self::SERVICE_NAMES[strtolower($code)]
+            ?? ucwords(str_replace(['_', '-'], ' ', (string) $code));
     }
 
     // ── Balance ────────────────────────────────────────────────────────────────
@@ -146,7 +364,6 @@ class GrizzlySmsService
     {
         try {
             $resp = $this->request(['action' => 'getBalance']);
-            // Response: "ACCESS_BALANCE:12.50"
             if (str_starts_with($resp, 'ACCESS_BALANCE:')) {
                 $bal = (float) explode(':', $resp)[1];
                 return ['success' => true, 'data' => [
@@ -175,15 +392,12 @@ class GrizzlySmsService
     // ── Services ──────────────────────────────────────────────────────────────
 
     /**
-     * Fetches available services + prices for a given numeric country code.
-     * Uses getPrices action; response is JSON.
+     * Fetches services for a specific country.
      * [{serviceId, name, count, cost_usd, cost_ngn}]
      */
     public function getServices(string $countryCode): array
     {
         try {
-            // API returns: {countryCode: {serviceCode: {count, cost, retry}}}
-            // Fetch with country param so the response is smaller/faster.
             $resp = $this->request(['action' => 'getPrices', 'country' => $countryCode]);
             $data = json_decode($resp, true);
 
@@ -191,11 +405,9 @@ class GrizzlySmsService
                 return ['success' => false, 'message' => 'No services available. Please try again.'];
             }
 
-            // The outer key is the country code (as integer after json_decode).
             $countryInt      = (int) $countryCode;
             $countryServices = $data[$countryInt] ?? $data[$countryCode] ?? null;
 
-            // If still not found, try any single key (some responses wrap in one country key)
             if (!$countryServices && count($data) === 1) {
                 $countryServices = reset($data);
             }
@@ -207,17 +419,13 @@ class GrizzlySmsService
             $services = [];
             foreach ($countryServices as $serviceCode => $priceInfo) {
                 if (!is_array($priceInfo)) continue;
-
-                $count    = (int)($priceInfo['count'] ?? 0);
-                $priceUsd = (float)($priceInfo['cost'] ?? 0);
-
+                $count    = (int) ($priceInfo['count'] ?? 0);
+                $priceUsd = (float) ($priceInfo['cost'] ?? 0);
                 if ($count <= 0) continue;
 
-                $name = self::SERVICE_NAMES[$serviceCode] ?? ucwords(str_replace('_', ' ', (string)$serviceCode));
-
                 $services[] = [
-                    'serviceId' => (string)$serviceCode,
-                    'name'      => $name,
+                    'serviceId' => (string) $serviceCode,
+                    'name'      => $this->resolveServiceName((string) $serviceCode),
                     'count'     => $count,
                     'cost_usd'  => $priceUsd,
                     'cost_ngn'  => $this->usdToNgn($priceUsd),
@@ -236,6 +444,82 @@ class GrizzlySmsService
         }
     }
 
+    /**
+     * Fetches ALL services across ALL countries (no country filter).
+     * For each service code, picks the cheapest country with stock > 0.
+     * Returns [{serviceId, name, count, cost_usd, cost_ngn, best_country_code}]
+     */
+    public function getAllServices(): array
+    {
+        try {
+            $resp = $this->request(['action' => 'getPrices']);
+            $data = json_decode($resp, true);
+
+            if (!is_array($data) || empty($data)) {
+                return ['success' => false, 'message' => 'No services available. Please try again.'];
+            }
+
+            // Build country code lookup for name resolution
+            $countryMap = [];
+            foreach (self::COUNTRIES as $c) {
+                $countryMap[(string) $c['code']] = $c['name'];
+            }
+
+            // Aggregate: for each service code, find cheapest option with stock
+            // $best[serviceCode] = ['cost_usd'=>X, 'count'=>N, 'country_code'=>'C']
+            $best = [];
+
+            foreach ($data as $countryCode => $services) {
+                if (!is_array($services)) continue;
+                $countryStr = (string) $countryCode;
+
+                foreach ($services as $serviceCode => $priceInfo) {
+                    if (!is_array($priceInfo)) continue;
+                    $count    = (int) ($priceInfo['count'] ?? 0);
+                    $priceUsd = (float) ($priceInfo['cost'] ?? 0);
+
+                    if ($count <= 0) continue;
+
+                    $code = (string) $serviceCode;
+                    if (
+                        !isset($best[$code]) ||
+                        $priceUsd < $best[$code]['cost_usd'] ||
+                        ($priceUsd === $best[$code]['cost_usd'] && $count > $best[$code]['count'])
+                    ) {
+                        $best[$code] = [
+                            'cost_usd'     => $priceUsd,
+                            'count'        => $count,
+                            'country_code' => $countryStr,
+                        ];
+                    }
+                }
+            }
+
+            if (empty($best)) {
+                return ['success' => false, 'message' => 'No services available at this time.'];
+            }
+
+            $services = [];
+            foreach ($best as $serviceCode => $info) {
+                $services[] = [
+                    'serviceId'         => $serviceCode,
+                    'name'              => $this->resolveServiceName($serviceCode),
+                    'count'             => $info['count'],
+                    'cost_usd'          => $info['cost_usd'],
+                    'cost_ngn'          => $this->usdToNgn($info['cost_usd']),
+                    'best_country_code' => $info['country_code'],
+                    'best_country_name' => $countryMap[$info['country_code']] ?? 'International',
+                ];
+            }
+
+            usort($services, fn($a, $b) => strcmp($a['name'], $b['name']));
+            return ['success' => true, 'data' => $services];
+        } catch (\Exception $e) {
+            Log::error('GrizzlySMS getAllServices: ' . $e->getMessage());
+            return ['success' => false, 'message' => 'Service temporarily unavailable. Please try again.'];
+        }
+    }
+
     // ── Order ─────────────────────────────────────────────────────────────────
 
     /**
@@ -245,14 +529,17 @@ class GrizzlySmsService
     public function orderNumber(string $countryCode, string $serviceCode): array
     {
         try {
-            $resp = $this->request([
+            $params = [
                 'action'  => 'getNumber',
                 'service' => $serviceCode,
-                'country' => $countryCode,
-            ]);
+            ];
+            if ($countryCode !== '') {
+                $params['country'] = $countryCode;
+            }
+
+            $resp = $this->request($params);
             Log::info('GrizzlySMS orderNumber [' . $countryCode . '/' . $serviceCode . '] response: ' . $resp);
 
-            // Response: "ACCESS_NUMBER:38496653:66846426435"
             if (str_starts_with($resp, 'ACCESS_NUMBER:')) {
                 $parts = explode(':', $resp, 3);
                 return ['success' => true, 'data' => [
@@ -262,12 +549,12 @@ class GrizzlySmsService
             }
 
             $msg = match($resp) {
-                'NO_NUMBERS' => 'Out of stock. Please try again later.',
-                'NO_BALANCE' => 'Out of stock. Please try again later.',
-                'BAD_KEY'    => 'Service configuration error. Please contact support.',
-                'BAD_SERVICE'=> 'Out of stock. Please try again later.',
-                'BAD_COUNTRY'=> 'This country is not supported.',
-                default      => 'Could not get a number. Please try again.',
+                'NO_NUMBERS'  => 'Out of stock. Please try again later.',
+                'NO_BALANCE'  => 'Out of stock. Please try again later.',
+                'BAD_KEY'     => 'Service configuration error. Please contact support.',
+                'BAD_SERVICE' => 'Out of stock. Please try again later.',
+                'BAD_COUNTRY' => 'This country is not supported.',
+                default       => 'Could not get a number. Please try again.',
             };
             return ['success' => false, 'message' => $msg, 'raw' => $resp];
         } catch (\Exception $e) {
@@ -298,12 +585,10 @@ class GrizzlySmsService
             if ($resp === 'STATUS_CANCEL') {
                 return ['success' => true, 'data' => ['status' => 'cancelled', 'sms' => null]];
             }
-            // API-level errors — treat as pending so the UI can keep polling
             if (in_array($resp, ['BAD_KEY', 'BAD_ACTION', 'NO_ACTIVATION', 'WRONG_ACTIVATION_ID'])) {
                 Log::warning('GrizzlySMS checkSms error response: ' . $resp . ' for order ' . $orderId);
                 return ['success' => false, 'message' => 'Activation error: ' . $resp];
             }
-            // STATUS_WAIT_CODE, STATUS_WAIT_RESEND, or any other waiting state
             return ['success' => true, 'data' => ['status' => 'pending', 'sms' => null]];
         } catch (\Exception $e) {
             Log::error('GrizzlySMS checkSms: ' . $e->getMessage());
@@ -316,19 +601,17 @@ class GrizzlySmsService
     public function cancelOrder(string $orderId): array
     {
         try {
-            // Status 8 = cancel and return money (SMS-Activate compatible standard)
             $resp = $this->request(['action' => 'setStatus', 'id' => $orderId, 'status' => 8]);
             if ($resp === 'ACCESS_CANCEL') {
                 return ['success' => true, 'message' => 'Order cancelled successfully.'];
             }
             $msg = match($resp) {
-                'BAD_KEY'        => 'Invalid GrizzlySMS API key.',
-                'BAD_ACTION'     => 'Invalid action.',
-                'NO_ACTIVATION'  => 'Activation not found.',
-                'BAD_STATUS'     => 'Cannot cancel at this stage.',
-                default          => 'Cancel response: ' . $resp,
+                'BAD_KEY'       => 'Invalid GrizzlySMS API key.',
+                'BAD_ACTION'    => 'Invalid action.',
+                'NO_ACTIVATION' => 'Activation not found.',
+                'BAD_STATUS'    => 'Cannot cancel at this stage.',
+                default         => 'Cancel response: ' . $resp,
             };
-            // If already cancelled or completed, treat as success
             if (in_array($resp, ['ACCESS_CANCEL', 'STATUS_CANCEL', 'STATUS_OK'])) {
                 return ['success' => true, 'message' => $resp];
             }

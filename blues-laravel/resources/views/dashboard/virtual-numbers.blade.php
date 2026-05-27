@@ -425,7 +425,7 @@ async function loadCountries() {
 
         if (data.success && data.data?.length) {
             const sel = document.getElementById('country-select');
-            sel.innerHTML = '<option value="">— Select a country —</option>';
+            sel.innerHTML = '<option value="">— All Countries —</option>';
 
             // GrizzlySMS: [{code, name, iso}]
             data.data.forEach(c => {
@@ -437,7 +437,8 @@ async function loadCountries() {
                 sel.appendChild(opt);
             });
 
-            showState('empty', 'Select a country above to see available services.');
+            // Auto-load all services immediately (no country filter)
+            loadServices('');
         } else {
             showState('empty', data.message || 'No countries returned.');
         }
@@ -522,14 +523,22 @@ async function loadServices() {
     }
 
     function mapServices(data, label, code) {
-        return (data?.success && Array.isArray(data.data)) ? data.data.map(s => ({
-            serviceId:   String(s.serviceId ?? ''),
-            name:        s.name ?? '',
-            apiPrice:    parseFloat(s.cost_ngn ?? 0),
-            country:     label,
-            countryCode: code,
-            _provider:   currentProvider,
-        })) : [];
+        return (data?.success && Array.isArray(data.data)) ? data.data.map(s => {
+            // When fetched without a country, API returns best_country_code
+            const bestCode = s.best_country_code ? String(s.best_country_code) : code;
+            const bestName = s.best_country_name
+                || (bestCode && countriesCache[bestCode]?.name)
+                || label
+                || 'International';
+            return {
+                serviceId:   String(s.serviceId ?? ''),
+                name:        s.name ?? '',
+                apiPrice:    parseFloat(s.cost_ngn ?? 0),
+                country:     bestName,
+                countryCode: bestCode,
+                _provider:   currentProvider,
+            };
+        }) : [];
     }
 
     try {
