@@ -69,12 +69,19 @@
 
     {{-- Server selector + filters --}}
     <div class="flex flex-wrap gap-3 mb-5">
-        {{-- Provider label --}}
+        {{-- Provider tabs --}}
+        @if(count($availableProviders) > 0)
         <div class="flex gap-1 bg-slate-800 border border-slate-700 rounded-xl p-1">
-            <span class="stab px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand text-white">
-                🟢 Server 1
-            </span>
+            @foreach($availableProviders as $i => $prov)
+            <button
+                id="stab-{{ $prov['key'] }}"
+                onclick="switchServer('{{ $prov['key'] }}', '{{ $prov['label'] }}')"
+                class="stab px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors {{ $i === 0 ? 'bg-brand text-white' : 'text-slate-400 hover:text-white' }}">
+                🟢 {{ $prov['label'] }}
+            </button>
+            @endforeach
         </div>
+        @endif
 
         {{-- Search --}}
         <div class="relative flex-1 min-w-[180px]">
@@ -327,10 +334,11 @@
 
 <script>
 // ── State ─────────────────────────────────────────────────────────────────────
-const COUNTRIES_URL  = '/dashboard/virtual-numbers/api/countries';
-const SERVICES_URL   = '/dashboard/virtual-numbers/api/services';
-let currentServer    = 'grizzlysms';
-let currentProvider  = 'grizzlysms';
+const COUNTRIES_URL     = '/dashboard/virtual-numbers/api/countries';
+const SERVICES_URL      = '/dashboard/virtual-numbers/api/services';
+const AVAILABLE_PROVIDERS = @json($availableProviders);
+let currentServer    = AVAILABLE_PROVIDERS.length ? AVAILABLE_PROVIDERS[0].key : 'grizzlysms';
+let currentProvider  = currentServer;
 const USD_TO_NGN     = {{ $usdToNgn }};
 let allServices      = [];
 let walletBalance    = {{ $wallet->balance }};
@@ -376,7 +384,32 @@ function switchTab(tab) {
     else stopPolling();
 }
 
-// ── (single provider — no server switching needed) ─────────────────────────
+// ── Server switching ──────────────────────────────────────────────────────────
+function switchServer(providerKey, label) {
+    if (currentProvider === providerKey) return;
+    currentServer   = providerKey;
+    currentProvider = providerKey;
+
+    // Update tab styles
+    AVAILABLE_PROVIDERS.forEach(p => {
+        const btn = document.getElementById('stab-' + p.key);
+        if (!btn) return;
+        if (p.key === providerKey) {
+            btn.classList.add('bg-brand', 'text-white');
+            btn.classList.remove('text-slate-400');
+        } else {
+            btn.classList.remove('bg-brand', 'text-white');
+            btn.classList.add('text-slate-400');
+        }
+    });
+
+    // Reset country dropdown and reload
+    const sel = document.getElementById('country-select');
+    if (sel) sel.innerHTML = '<option value="">— Select a country —</option>';
+    allServices  = [];
+    countriesCache = {};
+    loadCountries();
+}
 
 // ── Load countries ────────────────────────────────────────────────────────────
 async function loadCountries() {
@@ -495,7 +528,7 @@ async function loadServices() {
             apiPrice:    parseFloat(s.cost_ngn ?? 0),
             country:     label,
             countryCode: code,
-            _provider:   'grizzlysms',
+            _provider:   currentProvider,
         })) : [];
     }
 
