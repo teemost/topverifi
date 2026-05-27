@@ -70,6 +70,22 @@ class VirtualNumberOrdersController extends Controller
         return response()->json(['success' => false, 'message' => $result['message'] ?? 'Could not fetch balance.']);
     }
 
+    public function japBalance()
+    {
+        $apiKey = trim(\App\Models\Setting::get('jap_api_key', ''));
+        if (empty($apiKey)) {
+            return response()->json(['success' => false, 'message' => 'JustAnotherPanel API not configured. Add your key in Settings.']);
+        }
+        try {
+            $svc     = new \App\Services\JapService();
+            $balance = $svc->getBalance();
+            return response()->json(['success' => true, 'balance' => $balance]);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('JAP balance fetch: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Could not fetch JAP balance. Check your API key.']);
+        }
+    }
+
     public function exportCsv(Request $request)
     {
         $query = VirtualNumberOrder::with('user');

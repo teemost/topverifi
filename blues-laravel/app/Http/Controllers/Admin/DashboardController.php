@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\{User, Listing, Purchase, SupportTicket, WalletTransaction, VirtualNumberOrder};
 use App\Services\GrizzlySmsService;
+use App\Services\JapService;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -73,9 +74,25 @@ class DashboardController extends Controller
             $grizzlyError = 'API not configured. Add your GrizzlySMS key in Settings.';
         }
 
+        // Fetch JustAnotherPanel balance server-side
+        $japBalance = null;
+        $japError   = null;
+        $japApiKey  = trim(\App\Models\Setting::get('jap_api_key', ''));
+        if (!empty($japApiKey)) {
+            try {
+                $japSvc     = new JapService();
+                $japBalance = $japSvc->getBalance();
+            } catch (\Throwable $e) {
+                $japError = 'Balance fetch failed. Check API connectivity.';
+            }
+        } else {
+            $japError = 'API not configured. Add your JAP key in Settings.';
+        }
+
         return view('admin.dashboard', compact(
             'stats', 'chartLabels', 'chartRevenue', 'chartOrders',
-            'grizzlyBalance', 'grizzlyError'
+            'grizzlyBalance', 'grizzlyError',
+            'japBalance', 'japError'
         ));
     }
 }
