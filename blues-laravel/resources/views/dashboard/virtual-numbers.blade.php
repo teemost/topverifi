@@ -534,6 +534,7 @@ async function loadServices() {
                 serviceId:   String(s.serviceId ?? ''),
                 name:        s.name ?? '',
                 apiPrice:    parseFloat(s.cost_ngn ?? 0),
+                count:       parseInt(s.count ?? 0, 10),
                 country:     bestName,
                 countryCode: bestCode,
                 _provider:   currentProvider,
@@ -649,19 +650,30 @@ function renderServices(list) {
         const code  = g.countryCode;
         const info  = countriesCache[code] || {};
         const emoji = info.iso ? flagEmoji(info.iso) : '🌍';
-        const cards = g.services.map(s => buildCard(s, country, emoji)).join('');
+        const rows  = g.services.map(s => buildCard(s, country, emoji)).join('');
         return `
-        <div>
-            <div class="flex items-center gap-3 mb-3">
-                <span class="text-xl">${emoji}</span>
-                <h3 class="font-bold text-white text-base">${escHtml(country)}</h3>
-                <span class="text-xs bg-brand/20 text-brand px-2 py-0.5 rounded-full font-semibold">${g.services.length} Service${g.services.length !== 1 ? 's' : ''}</span>
+        <div class="mb-2">
+            <div class="flex items-center gap-2 mb-2 px-1">
+                <span class="text-base">${emoji}</span>
+                <h3 class="font-semibold text-slate-300 text-sm">${escHtml(country)}</h3>
+                <span class="text-[11px] bg-slate-700/60 text-slate-400 px-2 py-0.5 rounded-full">${g.services.length}</span>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                ${cards}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                ${rows}
             </div>
         </div>`;
     }).join('');
+}
+
+// Deterministic avatar color from service id
+const AVATAR_COLORS = [
+    '#6366f1','#8b5cf6','#ec4899','#f59e0b',
+    '#10b981','#3b82f6','#ef4444','#14b8a6',
+    '#f97316','#06b6d4','#a855f7','#84cc16',
+];
+function avatarColor(str) {
+    const h = (str || '').split('').reduce((a,c) => a + c.charCodeAt(0), 0);
+    return AVATAR_COLORS[h % AVATAR_COLORS.length];
 }
 
 function buildCard(s, countryName, emoji) {
@@ -672,40 +684,54 @@ function buildCard(s, countryName, emoji) {
     const total      = Math.round((apiPrice + commission) * 100) / 100;
     const country    = s.country ?? countryName;
     const code       = s.countryCode ?? '';
+    const stock      = parseInt(s.count ?? 0, 10);
+    const color      = avatarColor(id);
+    const initial    = (name[0] || '?').toUpperCase();
+    const priceStr   = total > 0
+        ? '₦' + total.toLocaleString('en-NG', {minimumFractionDigits: 0, maximumFractionDigits: 0})
+        : 'Free';
 
-    // Deterministic popularity from service name hash
-    const pop = ((id.split('').reduce((a,c) => a + c.charCodeAt(0), 0)) % 180) + 10;
+    // Stock pill: green if plenty, yellow if low, red if critical
+    const stockColor = stock > 100 ? 'text-emerald-400 bg-emerald-400/10'
+                     : stock > 10  ? 'text-yellow-400 bg-yellow-400/10'
+                     : stock > 0   ? 'text-red-400 bg-red-400/10'
+                     : 'text-slate-500 bg-slate-700/40';
+    const stockLabel = stock > 0 ? stock.toLocaleString() + ' pcs' : 'Check live';
 
     return `
-    <div class="service-card bg-[#131929] border border-slate-700/60 rounded-2xl p-4 flex flex-col gap-3">
-        <div class="flex items-start justify-between gap-2">
-            <div class="min-w-0 flex-1">
-                <p class="font-bold text-[#7b8cde] text-base truncate">${escHtml(name)}</p>
-                <div class="flex items-center gap-1 mt-0.5">
-                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                    <span class="text-xs text-slate-400">${pop}</span>
-                </div>
-            </div>
-            <div class="flex-shrink-0 flex flex-col items-end gap-1">
-                <span class="text-2xl leading-none" title="${escHtml(country)}">${emoji}</span>
-                <span class="text-[10px] text-slate-500 font-medium max-w-[64px] truncate text-right leading-tight">${escHtml(country)}</span>
+    <div class="service-card group flex items-center gap-3 bg-[#0d1526] border border-slate-700/40 rounded-xl px-4 py-3 hover:border-brand/50 hover:bg-[#111d35] transition-all cursor-default">
+
+        <!-- Avatar -->
+        <div class="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center text-white font-bold text-sm select-none" style="background:${color}20;color:${color};border:1.5px solid ${color}40">
+            ${initial}
+        </div>
+
+        <!-- Info -->
+        <div class="flex-1 min-w-0">
+            <p class="font-semibold text-white text-[13px] truncate leading-tight">${escHtml(name)}</p>
+            <div class="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                <span class="text-xs">${emoji}</span>
+                <span class="text-[11px] text-slate-400 truncate max-w-[90px]">${escHtml(country)}</span>
+                <span class="text-slate-700 text-[10px]">·</span>
+                <span class="text-[11px] font-medium px-1.5 py-px rounded-full ${stockColor}">${stockLabel}</span>
             </div>
         </div>
-        <div>
-            <span class="inline-block bg-brand/20 text-brand font-bold text-sm px-3 py-1 rounded-lg">
-                NGN ${total > 0 ? total.toLocaleString('en-NG', {minimumFractionDigits: 0, maximumFractionDigits: 2}) : 'Free'}
-            </span>
+
+        <!-- Price + Button -->
+        <div class="flex-shrink-0 flex flex-col items-end gap-1.5">
+            <span class="text-brand font-bold text-sm tabular-nums">${priceStr}</span>
+            <button onclick="openModalFromData(this)"
+                data-id="${escHtml(id)}"
+                data-name="${escHtml(name)}"
+                data-price="${apiPrice}"
+                data-country="${escHtml(country)}"
+                data-code="${escHtml(code)}"
+                class="rent-btn text-white text-[11px] font-bold px-3 py-1 rounded-lg flex items-center gap-1 whitespace-nowrap">
+                Buy
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </button>
         </div>
-        <button onclick="openModalFromData(this)"
-            data-id="${escHtml(id)}"
-            data-name="${escHtml(name)}"
-            data-price="${apiPrice}"
-            data-country="${escHtml(country)}"
-            data-code="${escHtml(code)}"
-            class="rent-btn w-full py-2.5 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-            Rent Number
-        </button>
+
     </div>`;
 }
 
