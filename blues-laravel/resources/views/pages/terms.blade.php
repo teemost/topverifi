@@ -10,12 +10,12 @@
 
         <section>
             <h2 class="text-lg font-semibold text-white mb-3">1. Acceptance of Terms</h2>
-            <p>By accessing and using BluesMarketplace ("the Platform"), you agree to be bound by these Terms of Service. If you do not agree, please do not use the Platform.</p>
+            <p>By accessing and using TopVerifi ("the Platform"), you agree to be bound by these Terms of Service. If you do not agree, please do not use the Platform.</p>
         </section>
 
         <section>
             <h2 class="text-lg font-semibold text-white mb-3">2. Description of Service</h2>
-            <p>BluesMarketplace is a digital marketplace that facilitates the buying and selling of digital accounts including Facebook, Instagram, TikTok accounts, and secondary phone numbers. We act solely as an intermediary and are not responsible for the content of any listing.</p>
+            <p>TopVerifi is a digital services platform that provides virtual phone numbers for SMS verification and social media marketing (SMM) boosting services. We act as a service provider and intermediary with third-party APIs to fulfill orders.</p>
         </section>
 
         <section>
@@ -25,22 +25,22 @@
 
         <section>
             <h2 class="text-lg font-semibold text-white mb-3">4. Purchases and Payments</h2>
-            <p>All purchases are made using wallet funds loaded onto the Platform. Prices are displayed in USD. All sales are final unless a dispute is raised and found to be valid. We do not guarantee the ongoing availability of purchased accounts on third-party platforms.</p>
+            <p>All purchases are made using wallet funds loaded onto the Platform. Prices are displayed in NGN. All sales are final once an order is placed and submitted to our service providers. We do not guarantee specific delivery timelines as these depend on third-party providers.</p>
         </section>
 
         <section>
             <h2 class="text-lg font-semibold text-white mb-3">5. Prohibited Conduct</h2>
-            <p>You agree not to: use the Platform for any illegal purpose; attempt to circumvent platform security; create multiple accounts to abuse referral or promotional systems; use purchased accounts for spam, fraud, or any activity that violates third-party platform terms.</p>
+            <p>You agree not to: use the Platform for any illegal purpose; attempt to circumvent platform security; create multiple accounts to abuse referral or promotional systems; use our services to violate the terms of any third-party platform or applicable law.</p>
         </section>
 
         <section>
             <h2 class="text-lg font-semibold text-white mb-3">6. Disclaimer of Warranties</h2>
-            <p>The Platform is provided "as is" without warranties of any kind. We do not warrant that the service will be uninterrupted, error-free, or that purchased accounts will remain accessible indefinitely on their respective platforms.</p>
+            <p>The Platform is provided "as is" without warranties of any kind. We do not warrant that the service will be uninterrupted or error-free. SMM results and virtual number availability depend on third-party providers and may vary.</p>
         </section>
 
         <section>
             <h2 class="text-lg font-semibold text-white mb-3">7. Limitation of Liability</h2>
-            <p>BluesMarketplace shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the Platform or purchase of any digital accounts.</p>
+            <p>TopVerifi shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the Platform or any SMM or virtual number services obtained through it.</p>
         </section>
 
         <section>

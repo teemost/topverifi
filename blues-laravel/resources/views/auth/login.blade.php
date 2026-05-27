@@ -9,7 +9,7 @@
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </div>
             <h1 class="text-2xl font-bold text-white">Welcome back</h1>
-            <p class="text-slate-400 text-sm mt-1">Sign in to your BluesMarketplace account</p>
+            <p class="text-slate-400 text-sm mt-1">Sign in to your TopVerifi account</p>
         </div>
 
         <div class="bg-slate-800 border border-slate-700 rounded-2xl p-8">

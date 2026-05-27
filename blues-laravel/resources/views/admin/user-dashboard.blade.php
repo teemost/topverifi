@@ -6,10 +6,10 @@
 {{-- Banner --}}
 <div class="mb-6 p-4 bg-sky-900/30 border border-sky-700 rounded-xl flex items-center justify-between">
     <div class="flex items-center gap-3">
-        <svg class="w-5 h-5 text-sky-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <svg class="w-5 h-5 text-brand shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
         <p class="text-sky-300 text-sm">Viewing dashboard of <strong class="text-white">{{ $user->name }}</strong> ({{ $user->email }})</p>
     </div>
-    <a href="{{ route('admin.users') }}" class="text-xs text-sky-400 hover:underline">← Back to Users</a>
+    <a href="{{ route('admin.users') }}" class="text-xs text-brand hover:underline">← Back to Users</a>
 </div>
 
 {{-- Profile + Stats --}}
@@ -164,7 +164,7 @@
             <form method="POST" action="{{ route('admin.users.status', $user) }}">
                 @csrf
                 <input type="hidden" name="status" value="{{ $st }}">
-                <button type="submit" class="w-full py-2 rounded-lg text-sm font-medium border border-slate-600 text-slate-300 hover:border-sky-500 hover:text-white transition-colors">
+                <button type="submit" class="w-full py-2 rounded-lg text-sm font-medium border border-slate-600 text-slate-300 hover:border-brand hover:text-white transition-colors">
                     {{ ucfirst($st) }}
                 </button>
             </form>

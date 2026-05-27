@@ -193,7 +193,7 @@
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs text-slate-400 mb-1.5">Mail Driver</label>
-                    <select name="mail_mailer" class="w-full bg-slate-900 border border-slate-600 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-sky-500">
+                    <select name="mail_mailer" class="w-full bg-slate-900 border border-slate-600 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-brand">
                         <option value="smtp"    {{ $settings['mail_mailer'] === 'smtp'    ? 'selected' : '' }}>SMTP</option>
                         <option value="log"     {{ $settings['mail_mailer'] === 'log'     ? 'selected' : '' }}>Log (testing only)</option>
                         <option value="sendmail"{{ $settings['mail_mailer'] === 'sendmail'? 'selected' : '' }}>Sendmail</option>
@@ -202,7 +202,7 @@
                 </div>
                 <div>
                     <label class="block text-xs text-slate-400 mb-1.5">Encryption</label>
-                    <select name="mail_encryption" class="w-full bg-slate-900 border border-slate-600 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-sky-500">
+                    <select name="mail_encryption" class="w-full bg-slate-900 border border-slate-600 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-brand">
                         <option value="tls" {{ $settings['mail_encryption'] === 'tls' ? 'selected' : '' }}>TLS (port 587)</option>
                         <option value="ssl" {{ $settings['mail_encryption'] === 'ssl' ? 'selected' : '' }}>SSL (port 465)</option>
                         <option value=""    {{ $settings['mail_encryption'] === ''    ? 'selected' : '' }}>None (port 25)</option>
@@ -296,7 +296,7 @@
     <div class="bg-slate-800 border border-slate-700 rounded-xl p-6">
         <div class="flex items-center gap-3 mb-5">
             <div class="w-9 h-9 rounded-lg bg-sky-900/50 flex items-center justify-center">
-                <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
             <div>
                 <h2 class="font-semibold text-white">Virtual Numbers — Commission & Controls</h2>
@@ -310,7 +310,7 @@
                 <div>
                     <label class="block text-xs text-slate-400 mb-1.5">Commission Type</label>
                     <select name="vn_commission_type" id="vn-commission-type"
-                        class="w-full bg-slate-900 border border-slate-600 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-sky-500">
+                        class="w-full bg-slate-900 border border-slate-600 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-brand">
                         <option value="flat"    {{ $settings['vn_commission_type'] === 'flat'    ? 'selected' : '' }}>Flat amount (₦)</option>
                         <option value="percent" {{ $settings['vn_commission_type'] === 'percent' ? 'selected' : '' }}>Percentage (%)</option>
                     </select>

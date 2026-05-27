@@ -140,4 +140,60 @@ class BoostingController extends Controller
 
         return back()->with('success', 'Order status refreshed.');
     }
+
+    public function pollStatus(Request $request)
+    {
+        $activeStatuses = ['pending', 'in_progress', 'processing'];
+
+        $orders = BoostingOrder::where('user_id', Auth::id())
+            ->latest()
+            ->take(50)
+            ->get(['id', 'jap_order_id', 'status', 'remains', 'start_count', 'quantity']);
+
+        // Auto-sync active orders with JAP (up to 5 per poll to avoid rate limits)
+        $toSync = $orders->filter(fn($o) => in_array($o->status, $activeStatuses) && $o->jap_order_id)->take(5);
+
+        if ($toSync->isNotEmpty()) {
+            try {
+                $jap = new JapService();
+                foreach ($toSync as $order) {
+                    try {
+                        $status = $jap->getOrderStatus($order->jap_order_id);
+                        $order->update([
+                            'status'      => strtolower($status['status'] ?? $order->status),
+                            'start_count' => $status['start_count'] ?? $order->start_count,
+                            'remains'     => $status['remains'] ?? $order->remains,
+                        ]);
+                        $order->refresh();
+                    } catch (\Exception $e) {
+                        // skip individual failures
+                    }
+                }
+            } catch (\Exception $e) {
+                // JAP unavailable — return current DB state
+            }
+        }
+
+        $payload = $orders->map(function ($order) {
+            return [
+                'id'          => $order->id,
+                'status'      => $order->status,
+                'status_label'=> ucfirst(str_replace('_', ' ', $order->status)),
+                'status_badge'=> $order->status_badge,
+                'remains'     => $order->remains,
+                'start_count' => $order->start_count,
+                'progress'    => $order->start_count && $order->quantity
+                    ? round((($order->quantity - max(0, $order->remains ?? $order->quantity)) / $order->quantity) * 100)
+                    : null,
+            ];
+        });
+
+        $hasActive = $orders->contains(fn($o) => in_array($o->status, $activeStatuses));
+
+        return response()->json([
+            'orders'    => $payload,
+            'has_active'=> $hasActive,
+            'polled_at' => now()->toISOString(),
+        ]);
+    }
 }

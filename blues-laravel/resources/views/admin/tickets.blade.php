@@ -17,24 +17,24 @@
         </div>
         <p class="text-sm text-slate-300 mb-4">{{ $ticket->message }}</p>
         @if($ticket->admin_reply)
-            <div class="bg-slate-700/50 rounded-lg p-3 mb-4 border-l-2 border-sky-500">
-                <p class="text-xs text-sky-400 mb-1 font-medium">Admin reply</p>
+            <div class="bg-slate-700/50 rounded-lg p-3 mb-4 border-l-2 border-brand">
+                <p class="text-xs text-brand mb-1 font-medium">Admin reply</p>
                 <p class="text-sm text-slate-300">{{ $ticket->admin_reply }}</p>
             </div>
         @endif
         <form method="POST" action="{{ route('admin.tickets.reply', $ticket) }}" class="flex gap-3 items-end">
             @csrf
             <div class="flex-1"><label class="block text-xs text-slate-400 mb-1">Reply</label>
-                <textarea name="admin_reply" rows="2" required class="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-sky-500">{{ $ticket->admin_reply }}</textarea>
+                <textarea name="admin_reply" rows="2" required class="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-brand">{{ $ticket->admin_reply }}</textarea>
             </div>
             <div><label class="block text-xs text-slate-400 mb-1">Status</label>
-                <select name="status" class="bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-sky-500">
+                <select name="status" class="bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-brand">
                     @foreach(['open','in_progress','resolved','closed'] as $s)
                         <option value="{{ $s }}" {{ $ticket->status === $s ? 'selected' : '' }}>{{ ucfirst(str_replace('_',' ',$s)) }}</option>
                     @endforeach
                 </select>
             </div>
-            <button class="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-lg text-sm font-medium h-[38px]">Send</button>
+            <button class="bg-brand hover:bg-brand-dark text-white px-4 py-2 rounded-lg text-sm font-medium h-[38px]">Send</button>
         </form>
     </div>
 @empty

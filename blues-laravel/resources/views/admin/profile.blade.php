@@ -8,14 +8,14 @@
     {{-- Profile Info --}}
     <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6">
         <div class="flex items-center gap-4 mb-6">
-            <div class="w-16 h-16 rounded-2xl bg-sky-600 flex items-center justify-center text-white text-2xl font-bold shrink-0">
+            <div class="w-16 h-16 rounded-2xl bg-brand-dark flex items-center justify-center text-white text-2xl font-bold shrink-0">
                 {{ strtoupper(substr($admin->display_name ?? $admin->email, 0, 1)) }}
             </div>
             <div>
                 <h2 class="text-lg font-bold text-white">{{ $admin->display_name ?? 'Admin' }}</h2>
                 <p class="text-slate-400 text-sm">{{ $admin->email }}</p>
                 <span class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-medium
-                    {{ $admin->role === 'moderator' ? 'bg-yellow-500/15 text-yellow-400' : 'bg-sky-500/15 text-sky-400' }}">
+                    {{ $admin->role === 'moderator' ? 'bg-yellow-500/15 text-yellow-400' : 'bg-brand/15 text-brand' }}">
                     {{ ucfirst($admin->role ?: 'admin') }}
                 </span>
             </div>

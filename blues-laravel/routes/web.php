@@ -113,10 +113,11 @@ Route::middleware(\App\Http\Middleware\UserAuth::class)->prefix('dashboard')->na
     Route::delete('/virtual-numbers/{id}/cancel',   [VirtualNumberController::class, 'cancel'])->name('virtual-numbers.cancel');
 
     // SMM Boosting
-    Route::get('/boosting',                    [BoostingController::class, 'index'])->name('boosting');
-    Route::post('/boosting/order',             [BoostingController::class, 'placeOrder'])->name('boosting.order');
-    Route::get('/boosting/orders',             [BoostingController::class, 'orders'])->name('boosting-orders');
-    Route::post('/boosting/orders/{id}/sync',  [BoostingController::class, 'checkStatus'])->name('boosting.sync');
+    Route::get('/boosting',                        [BoostingController::class, 'index'])->name('boosting');
+    Route::post('/boosting/order',                 [BoostingController::class, 'placeOrder'])->name('boosting.order');
+    Route::get('/boosting/orders',                 [BoostingController::class, 'orders'])->name('boosting-orders');
+    Route::post('/boosting/orders/{id}/sync',      [BoostingController::class, 'checkStatus'])->name('boosting.sync');
+    Route::get('/boosting/orders/poll',            [BoostingController::class, 'pollStatus'])->name('boosting.poll');
 });
 
 // ── Admin Auth ────────────────────────────────────────────────────────────────

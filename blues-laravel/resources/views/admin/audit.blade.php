@@ -59,7 +59,7 @@
                             <div>
                                 <p class="text-white text-xs font-medium leading-none">{{ $log->admin_display ?? 'System' }}</p>
                                 @if(($log->admin_role ?? '') === 'moderator')
-                                    <span class="text-sky-400 text-xs">Moderator</span>
+                                    <span class="text-brand text-xs">Moderator</span>
                                 @elseif($log->admin_display)
                                     <span class="text-purple-400 text-xs">Admin</span>
                                 @endif

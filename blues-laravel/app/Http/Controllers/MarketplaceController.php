@@ -120,7 +120,7 @@ class MarketplaceController extends Controller
 
         if ($user->email_notifications) {
             try {
-                $siteName    = \App\Models\Setting::get('site_name', 'Blues Marketplace');
+                $siteName    = \App\Models\Setting::get('site_name', 'TopVerifi');
                 $fromAddress = \App\Models\Setting::get('mail_from_address', config('mail.from.address'));
                 $fromName    = \App\Models\Setting::get('mail_from_name', $siteName);
 

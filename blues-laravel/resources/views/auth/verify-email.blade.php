@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify Email — BluesMarketplace</title>
+    <title>Verify Email — TopVerifi</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#0ea5e9' } } } } }</script>
+    <script>tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#f97316', dark: '#ea580c' } } } } }</script>
 </head>
 <body class="bg-slate-900 min-h-screen flex items-center justify-center px-4">
 <div class="w-full max-w-md">
@@ -14,7 +14,7 @@
             <div class="w-9 h-9 bg-brand rounded-xl flex items-center justify-center">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </div>
-            <span class="font-bold text-white text-xl">Blues<span class="text-brand">Market</span></span>
+            <span class="font-bold text-white text-xl">Top<span class="text-brand">Verifi</span></span>
         </a>
     </div>
 
@@ -51,7 +51,7 @@
         <form method="POST" action="{{ route('verification.send') }}">
             @csrf
             <button type="submit"
-                class="w-full py-3 bg-brand hover:bg-brand/80 text-white font-bold rounded-xl transition-colors text-sm">
+                class="w-full py-3 bg-brand hover:bg-brand-dark text-white font-bold rounded-xl transition-colors text-sm">
                 Resend Verification Email
             </button>
         </form>

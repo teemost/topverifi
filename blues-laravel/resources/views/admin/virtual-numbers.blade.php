@@ -101,7 +101,7 @@
                     <td class="px-5 py-3">
                         <div class="flex items-center gap-1">
                             <button onclick="openModal('modal-status-{{ $order->id }}')"
-                                class="p-1.5 rounded text-slate-400 hover:text-sky-400 hover:bg-slate-700 transition-colors" title="Change status">
+                                class="p-1.5 rounded text-slate-400 hover:text-brand hover:bg-slate-700 transition-colors" title="Change status">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                             </button>
                             <button onclick="openModal('modal-delete-vn-{{ $order->id }}')"
