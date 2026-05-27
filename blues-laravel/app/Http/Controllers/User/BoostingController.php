@@ -10,6 +10,7 @@ use App\Services\JapService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class BoostingController extends Controller
 {
@@ -35,7 +36,8 @@ class BoostingController extends Controller
                 }
                 ksort($categories);
             } catch (\Exception $e) {
-                $error = $e->getMessage();
+                Log::error('JAP getServices failed: ' . $e->getMessage());
+                $error = 'SMM Boosting is temporarily unavailable. Please try again later.';
             }
         } else {
             $error = 'SMM Boosting is being set up. Check back soon!';

@@ -6,7 +6,7 @@ use App\Models\Setting;
 
 class JapService
 {
-    protected string $apiUrl = 'https://justanotherpanel.com/api';
+    protected string $apiUrl = 'https://justanotherpanel.com/api/v2';
     protected string $apiKey;
 
     public function __construct()
@@ -24,14 +24,22 @@ class JapService
             'key' => $this->apiKey,
         ], $params));
 
+        $data = null;
+        try {
+            $data = $response->json();
+        } catch (\Throwable) {
+        }
+
         if (!$response->successful()) {
+            $japError = $data['error'] ?? null;
+            if ($japError) {
+                throw new \Exception('JAP error: ' . $japError);
+            }
             throw new \Exception('JAP API request failed: HTTP ' . $response->status());
         }
 
-        $data = $response->json();
-
         if (isset($data['error'])) {
-            throw new \Exception('JAP API error: ' . $data['error']);
+            throw new \Exception('JAP error: ' . $data['error']);
         }
 
         return $data;
