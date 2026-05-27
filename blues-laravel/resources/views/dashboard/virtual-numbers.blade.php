@@ -679,17 +679,17 @@ function buildCard(s, countryName, emoji) {
     return `
     <div class="service-card bg-[#131929] border border-slate-700/60 rounded-2xl p-4 flex flex-col gap-3">
         <div class="flex items-start justify-between gap-2">
-            <div class="min-w-0">
+            <div class="min-w-0 flex-1">
                 <p class="font-bold text-[#7b8cde] text-base truncate">${escHtml(name)}</p>
                 <div class="flex items-center gap-1 mt-0.5">
                     <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                     <span class="text-xs text-slate-400">${pop}</span>
                 </div>
             </div>
-        </div>
-        <div class="flex items-center gap-1.5 text-xs text-slate-400">
-            <span>${emoji}</span>
-            <span>${escHtml(country)}</span>
+            <div class="flex-shrink-0 flex flex-col items-end gap-1">
+                <span class="text-2xl leading-none" title="${escHtml(country)}">${emoji}</span>
+                <span class="text-[10px] text-slate-500 font-medium max-w-[64px] truncate text-right leading-tight">${escHtml(country)}</span>
+            </div>
         </div>
         <div>
             <span class="inline-block bg-brand/20 text-brand font-bold text-sm px-3 py-1 rounded-lg">
