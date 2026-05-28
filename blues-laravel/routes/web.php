@@ -123,11 +123,12 @@ Route::middleware(\App\Http\Middleware\UserAuth::class)->prefix('dashboard')->na
     Route::post('/boosting/orders/{id}/sync',      [BoostingController::class, 'checkStatus'])->name('boosting.sync');
     Route::get('/boosting/orders/poll',            [BoostingController::class, 'pollStatus'])->name('boosting.poll');
 
-    // API Keys
-    Route::get('/api-keys',            [ApiKeyController::class, 'index'])->name('api-keys');
-    Route::post('/api-keys',           [ApiKeyController::class, 'store'])->name('api-keys.store');
+    // API Keys & Guide
+    Route::get('/api-keys',              [ApiKeyController::class, 'index'])->name('api-keys');
+    Route::post('/api-keys',             [ApiKeyController::class, 'store'])->name('api-keys.store');
     Route::post('/api-keys/{id}/toggle', [ApiKeyController::class, 'toggle'])->name('api-keys.toggle');
-    Route::delete('/api-keys/{id}',    [ApiKeyController::class, 'destroy'])->name('api-keys.destroy');
+    Route::delete('/api-keys/{id}',      [ApiKeyController::class, 'destroy'])->name('api-keys.destroy');
+    Route::get('/api-guide',             fn() => view('dashboard.api-guide'))->name('api-guide');
 });
 
 // ── Admin Auth ────────────────────────────────────────────────────────────────

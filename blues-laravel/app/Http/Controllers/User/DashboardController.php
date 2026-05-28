@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\{BoostingOrder, Notification, Wallet, VirtualNumberOrder, User};
+use App\Models\{ApiKey, BoostingOrder, Notification, Wallet, VirtualNumberOrder, User};
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -16,7 +16,8 @@ class DashboardController extends Controller
         $vnCount       = VirtualNumberOrder::where('user_id', $user->id)->count();
         $referralCount = User::where('referred_by', $user->id)->count();
         $unreadCount   = Notification::where('user_id', $user->id)->where('is_read', false)->count();
+        $apiKeyCount   = ApiKey::where('user_id', $user->id)->where('is_active', true)->count();
 
-        return view('dashboard.index', compact('wallet', 'recentOrders', 'unreadCount', 'orderCount', 'vnCount', 'referralCount'));
+        return view('dashboard.index', compact('wallet', 'recentOrders', 'unreadCount', 'orderCount', 'vnCount', 'referralCount', 'apiKeyCount'));
     }
 }

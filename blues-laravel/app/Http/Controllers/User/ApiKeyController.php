@@ -3,6 +3,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\ApiKey;
+use App\Models\ApiRequestLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,18 +12,27 @@ class ApiKeyController extends Controller
     public function index()
     {
         $keys = ApiKey::where('user_id', Auth::id())->latest()->get();
-        return view('dashboard.api-keys', compact('keys'));
+
+        $logs = ApiRequestLog::where('user_id', Auth::id())
+            ->with('apiKey:id,name')
+            ->orderByDesc('created_at')
+            ->limit(100)
+            ->get();
+
+        $totalCalls   = $logs->count();
+        $successCalls = $logs->where('status_code', '<', 300)->count();
+        $errorCalls   = $logs->where('status_code', '>=', 400)->count();
+        $avgMs        = $logs->avg('response_ms') ? (int) round($logs->avg('response_ms')) : 0;
+
+        return view('dashboard.api-keys', compact('keys', 'logs', 'totalCalls', 'successCalls', 'errorCalls', 'avgMs'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:100',
-        ]);
+        $request->validate(['name' => 'required|string|max:100']);
 
-        $limit = 5;
-        if (ApiKey::where('user_id', Auth::id())->count() >= $limit) {
-            return back()->with('error', "You can only have up to {$limit} API keys.");
+        if (ApiKey::where('user_id', Auth::id())->count() >= 5) {
+            return back()->with('error', 'You can only have up to 5 API keys.');
         }
 
         ApiKey::create([
@@ -32,7 +42,7 @@ class ApiKeyController extends Controller
             'is_active' => true,
         ]);
 
-        return back()->with('success', 'API key created successfully.');
+        return back()->with('success', 'API key created. Copy it now — it will be masked after this page loads.');
     }
 
     public function toggle(int $id)
@@ -45,6 +55,6 @@ class ApiKeyController extends Controller
     public function destroy(int $id)
     {
         ApiKey::where('user_id', Auth::id())->findOrFail($id)->delete();
-        return back()->with('success', 'API key revoked.');
+        return back()->with('success', 'API key permanently revoked.');
     }
 }

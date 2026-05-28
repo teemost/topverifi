@@ -85,6 +85,50 @@
     </a>
 </div>
 
+{{-- API Access Banner --}}
+@if($apiKeyCount === 0)
+<div class="bg-slate-800/60 border border-slate-700 hover:border-brand/30 rounded-2xl p-4 mb-6 flex flex-col sm:flex-row sm:items-center gap-4 transition-colors group">
+    <div class="flex items-center gap-3 flex-1 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        </div>
+        <div class="min-w-0">
+            <p class="text-white text-sm font-semibold">Reseller API available</p>
+            <p class="text-slate-400 text-xs mt-0.5">Integrate TopVerifi into your own platform using our API. Create a key to get started.</p>
+        </div>
+    </div>
+    <a href="{{ route('dashboard.api-keys') }}"
+       class="shrink-0 inline-flex items-center gap-1.5 bg-brand hover:bg-brand-dark text-white text-xs font-bold px-4 py-2 rounded-xl transition-colors">
+        Get API Key →
+    </a>
+</div>
+@else
+<div class="bg-slate-800/60 border border-slate-700 rounded-2xl p-4 mb-6 flex flex-col sm:flex-row sm:items-center gap-4">
+    <div class="flex items-center gap-3 flex-1 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        </div>
+        <div class="min-w-0">
+            <p class="text-white text-sm font-semibold">Reseller API active</p>
+            <p class="text-slate-400 text-xs mt-0.5">
+                <span class="text-green-400 font-semibold">{{ $apiKeyCount }} active key{{ $apiKeyCount > 1 ? 's' : '' }}</span>
+                — your platform is connected to TopVerifi.
+            </p>
+        </div>
+    </div>
+    <div class="flex items-center gap-2 shrink-0">
+        <a href="{{ route('dashboard.api-keys') }}#logs"
+           class="inline-flex items-center gap-1.5 border border-slate-600 hover:border-brand text-slate-300 hover:text-white text-xs font-semibold px-3 py-2 rounded-xl transition-colors">
+            View Logs
+        </a>
+        <a href="{{ route('dashboard.api-keys') }}"
+           class="inline-flex items-center gap-1.5 bg-brand/10 hover:bg-brand/20 text-brand text-xs font-bold px-3 py-2 rounded-xl transition-colors border border-brand/20">
+            Manage Keys →
+        </a>
+    </div>
+</div>
+@endif
+
 {{-- Referral Banner --}}
 @php $dashProfile = Auth::user()->profile; @endphp
 @if($dashProfile && $dashProfile->referral_code)
