@@ -69,7 +69,7 @@
     <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-1.5 mb-8">
             <span class="w-2 h-2 bg-brand rounded-full animate-pulse"></span>
-            <span class="text-orange-300 text-sm font-medium">Nigeria's #1 Digital Services Platform</span>
+            <span class="text-orange-300 text-sm font-medium">#1 Digital Services Platform</span>
         </div>
         <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-white mb-6 leading-none tracking-tight">
             Grow Faster.<br>
@@ -199,7 +199,7 @@
                 ['⚡','Instant Delivery','Numbers and SMM orders start within seconds of payment.','rgba(249,115,22,.12)','rgba(249,115,22,.2)','text-brand'],
                 ['🔒','Secure Wallet','Your funds are safe. Top up with card, bank transfer, or USSD.','rgba(34,197,94,.12)','rgba(34,197,94,.2)','text-green-400'],
                 ['📦','500+ Services','From WhatsApp verification to Instagram followers — one platform for everything.','rgba(99,102,241,.12)','rgba(99,102,241,.2)','text-indigo-400'],
-                ['🇳🇬','Made for Nigeria','Prices in naira. Payments via Nigerian banks. Built for the Nigerian market.','rgba(239,68,68,.12)','rgba(239,68,68,.2)','text-red-400'],
+                ['🌍','Global Access','Prices in your local currency. Fast payments. Built for everyone, everywhere.','rgba(239,68,68,.12)','rgba(239,68,68,.2)','text-red-400'],
             ] as [$icon, $title, $desc, $bg, $border, $tc])
             <div class="feature-wrap bg-slate-800 border border-slate-700 rounded-2xl p-6 text-center reveal hover:border-slate-600 transition-colors">
                 <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 feature-icon text-2xl" style="background:{{ $bg }};border:1px solid {{ $border }}">
@@ -277,7 +277,7 @@
         <h2 class="text-3xl font-black text-white text-center mb-12 reveal">Frequently Asked Questions</h2>
         <div class="space-y-3">
             @foreach([
-                ['What is TopVerifi?','TopVerifi is a Nigerian digital services platform offering virtual phone numbers for SMS verification, social media growth services, and a digital accounts marketplace — all powered by your naira wallet.'],
+                ['What is TopVerifi?','TopVerifi is a digital services platform offering virtual phone numbers for SMS verification, social media growth services, and a digital accounts marketplace — all powered by your TopVerifi wallet.'],
                 ['How do I fund my wallet?','Add funds using card payment, bank transfer, or USSD. Your balance is credited instantly on payment confirmation.'],
                 ['Are the virtual numbers real?','Yes. We provide real temporary numbers from 80+ countries that can receive SMS messages for any platform.'],
                 ['How fast are SMM orders?','Most orders start within minutes of placing. SMS numbers are instant.'],
@@ -304,7 +304,7 @@
     <div class="max-w-3xl mx-auto px-4 text-center reveal">
         <div class="bg-gradient-to-br from-orange-500/10 to-indigo-900/20 border border-orange-500/20 rounded-3xl p-12">
             <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">Ready to get started?</h2>
-            <p class="text-slate-400 mb-8 leading-relaxed">Join thousands of Nigerians using TopVerifi for virtual numbers and social media growth.</p>
+            <p class="text-slate-400 mb-8 leading-relaxed">Join thousands of users on TopVerifi for virtual numbers and social media growth.</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="{{ route('register') }}" class="inline-flex items-center justify-center gap-2 bg-brand hover:bg-brand-dark text-white font-bold px-8 py-4 rounded-xl text-base transition-all hover:scale-105">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
