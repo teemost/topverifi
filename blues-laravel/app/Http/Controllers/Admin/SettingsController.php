@@ -49,6 +49,7 @@ class SettingsController extends Controller
             'bank_name'                => Setting::get('bank_name', ''),
             'bank_account_number'      => Setting::get('bank_account_number', ''),
             'bank_account_name'        => Setting::get('bank_account_name', ''),
+            'google_site_verification' => Setting::get('google_site_verification', ''),
         ];
         return view('admin.settings', compact('settings'));
     }
@@ -88,9 +89,10 @@ class SettingsController extends Controller
             'low_balance_threshold'   => 'nullable|numeric|min:0',
             'vn_commission_type'      => 'nullable|in:flat,percent',
             'vn_commission_value'     => 'nullable|numeric|min:0',
-            'bank_name'               => 'nullable|string|max:100',
-            'bank_account_number'     => 'nullable|string|max:50',
-            'bank_account_name'       => 'nullable|string|max:100',
+            'bank_name'                => 'nullable|string|max:100',
+            'bank_account_number'      => 'nullable|string|max:50',
+            'bank_account_name'        => 'nullable|string|max:100',
+            'google_site_verification' => 'nullable|string|max:200',
         ]);
 
         $keys = [
@@ -105,6 +107,7 @@ class SettingsController extends Controller
             'promo_banner_text', 'promo_banner_color', 'low_balance_threshold',
             'vn_commission_type', 'vn_commission_value',
             'bank_name', 'bank_account_number', 'bank_account_name',
+            'google_site_verification',
         ];
 
         Setting::set('bank_transfer_enabled', $request->boolean('bank_transfer_enabled') ? '1' : '0');
@@ -118,6 +121,31 @@ class SettingsController extends Controller
         Setting::set('virtual_number_enabled', $request->boolean('virtual_number_enabled') ? '1' : '0');
 
         return back()->with('success', 'Settings saved successfully.');
+    }
+
+    public function pingSitemap()
+    {
+        $sitemapUrl = urlencode(url('/sitemap.xml'));
+        $pingUrl    = 'https://www.google.com/ping?sitemap=' . $sitemapUrl;
+        try {
+            $ch = curl_init($pingUrl);
+            curl_setopt_array($ch, [
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_TIMEOUT        => 10,
+                CURLOPT_USERAGENT      => 'TopVerifi-SitemapPing/1.0',
+            ]);
+            $response = curl_exec($ch);
+            $status   = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($status >= 200 && $status < 400) {
+                return back()->with('success', 'Sitemap successfully submitted to Google! It may take a few days to be crawled.');
+            }
+            return back()->with('error', "Google ping returned HTTP {$status}. Try again later.");
+        } catch (\Exception $e) {
+            return back()->with('error', 'Ping failed: ' . $e->getMessage());
+        }
     }
 
     public function sendTestEmail(Request $request)

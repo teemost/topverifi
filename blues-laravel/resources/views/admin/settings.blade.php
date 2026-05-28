@@ -499,6 +499,30 @@
         <p class="text-xs text-slate-500 mt-3">Users will see these details when they choose bank transfer at checkout. You must confirm each payment manually in the <a href="{{ route('admin.bank-transfers') }}" class="text-brand hover:underline">Bank Transfers</a> panel.</p>
     </div>
 
+    {{-- SEO --}}
+    <div class="mb-8 bg-slate-800 border border-slate-700 rounded-xl p-6">
+        <div class="flex items-center gap-3 mb-5">
+            <div class="w-9 h-9 rounded-lg bg-violet-900/50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+            <div>
+                <h2 class="font-semibold text-white">SEO &amp; Search Console</h2>
+                <p class="text-xs text-slate-400">Google Search Console site ownership verification</p>
+            </div>
+        </div>
+        <div>
+            <label class="block text-xs text-slate-400 mb-1.5">Google Site Verification Code</label>
+            <input type="text" name="google_site_verification"
+                   value="{{ $settings['google_site_verification'] }}"
+                   placeholder="e.g. abc123xyz (content value only, not the full tag)"
+                   class="w-full font-mono text-xs">
+            <p class="text-xs text-slate-500 mt-1.5">
+                In Google Search Console → Add Property → HTML tag method, copy only the <code class="bg-slate-700 px-1 rounded text-slate-300">content="..."</code> value — not the full tag.
+                Save settings, then use the <strong class="text-slate-300">Ping Google</strong> tool below to submit your sitemap.
+            </p>
+        </div>
+    </div>
+
     <button type="submit" class="btn-primary px-8 py-3 text-base">Save All Settings</button>
 </form>
 
@@ -528,6 +552,33 @@
             </button>
         </form>
         <p class="text-xs text-slate-500 mt-3">Make sure you save your SMTP settings above before sending a test email.</p>
+    </div>
+</div>
+
+{{-- Ping Google --}}
+<div class="max-w-2xl mt-4">
+    <div class="bg-slate-800 border border-slate-700 rounded-xl p-6">
+        <div class="flex items-center gap-3 mb-5">
+            <div class="w-9 h-9 rounded-lg bg-violet-900/50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+            </div>
+            <div>
+                <h2 class="font-semibold text-white">Submit Sitemap to Google</h2>
+                <p class="text-xs text-slate-400">Notify Google about your sitemap so it gets crawled faster</p>
+            </div>
+        </div>
+        <form method="POST" action="{{ route('admin.settings.ping-sitemap') }}" class="flex gap-3 items-center">
+            @csrf
+            <div class="flex-1">
+                <p class="text-sm text-slate-300">Sitemap URL: <code class="bg-slate-700 px-1.5 py-0.5 rounded text-xs text-brand">{{ url('/sitemap.xml') }}</code></p>
+                <p class="text-xs text-slate-500 mt-1">Sends a ping request to <code class="text-slate-400">google.com/ping</code>. Use this after publishing the site or adding new content.</p>
+            </div>
+            <button type="submit"
+                class="shrink-0 flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                Ping Google
+            </button>
+        </form>
     </div>
 </div>
 

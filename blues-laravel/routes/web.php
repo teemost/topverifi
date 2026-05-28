@@ -170,6 +170,7 @@ Route::middleware(\App\Http\Middleware\AdminAuth::class)->prefix('admin')->name(
     Route::get('/settings',                     [SettingsController::class,          'index'])->name('settings');
     Route::post('/settings',                    [SettingsController::class,          'update'])->name('settings.update');
     Route::post('/settings/test-email',         [SettingsController::class,          'sendTestEmail'])->name('settings.test-email');
+    Route::post('/settings/ping-sitemap',       [SettingsController::class,          'pingSitemap'])->name('settings.ping-sitemap');
 
     Route::get('/virtual-numbers',                              [VirtualNumberOrdersController::class, 'index'])->name('virtual-numbers');
     Route::get('/virtual-numbers/grizzlysms-balance',          [VirtualNumberOrdersController::class, 'grizzlySmsBalance'])->name('virtual-numbers.grizzlysms-balance');

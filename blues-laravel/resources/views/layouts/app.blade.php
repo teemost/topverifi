@@ -14,6 +14,10 @@
     <meta name="keywords"    content="@yield('meta_keywords', 'virtual numbers, SMS verification, social media boosting, buy virtual number, SMM panel, phone number for verification, TopVerifi')">
     <meta name="robots"      content="@yield('meta_robots', 'index, follow')">
     <meta name="author"      content="TopVerifi">
+    @php $googleVerify = \App\Models\Setting::get('google_site_verification',''); @endphp
+    @if($googleVerify)
+    <meta name="google-site-verification" content="{{ $googleVerify }}">
+    @endif
     <link rel="canonical"    href="@yield('canonical', url()->current())">
 
     {{-- ── Open Graph (Facebook, WhatsApp, LinkedIn, iMessage) ───────────── --}}
