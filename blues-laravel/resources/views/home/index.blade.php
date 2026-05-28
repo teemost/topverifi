@@ -1,6 +1,26 @@
 @extends('layouts.app')
 @section('title', 'TopVerifi — Virtual Numbers & Social Media Boosting')
-@section('meta_description', 'TopVerifi — Get virtual phone numbers for SMS verification and grow your social media with premium boosting services.')
+@section('meta_description', 'TopVerifi — Get virtual phone numbers for instant SMS verification and grow your social media with premium boosting services. Fast, secure, and affordable.')
+@section('meta_keywords', 'virtual phone numbers, SMS verification, buy virtual number, social media boosting, SMM panel, instagram followers, TopVerifi')
+@section('canonical', url('/'))
+@section('og_title', 'TopVerifi — Virtual Numbers & Social Media Boosting')
+@section('og_description', 'Get virtual phone numbers for instant SMS verification and grow your social media with premium boosting services. Fast, secure, and affordable.')
+@push('schema')
+<script type="application/ld+json">
+{
+    "@@context": "https://schema.org",
+    "@@type": "WebSite",
+    "name": "TopVerifi",
+    "url": "{{ url('/') }}",
+    "description": "Virtual phone numbers for SMS verification and premium social media boosting services.",
+    "potentialAction": {
+        "@@type": "SearchAction",
+        "target": "{{ url('/services') }}?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+    }
+}
+</script>
+@endpush
 
 @push('head')
 <style>

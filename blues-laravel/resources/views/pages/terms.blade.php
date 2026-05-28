@@ -1,5 +1,7 @@
 @extends('layouts.app')
-@section('title', 'Terms of Service')
+@section('title', 'Terms of Service — TopVerifi')
+@section('meta_description', 'Read the TopVerifi Terms of Service. Understand your rights and responsibilities when using our virtual number and social media boosting platform.')
+@section('canonical', url('/terms'))
 
 @section('content')
 <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

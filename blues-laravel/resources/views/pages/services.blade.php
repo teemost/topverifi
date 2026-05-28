@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('title', 'All Services — TopVerifi')
-@section('meta_description', 'Virtual phone numbers, SMM boosting, and digital accounts — everything on TopVerifi.')
+@section('meta_description', 'Explore all TopVerifi services: virtual phone numbers for SMS verification, social media boosting for Instagram, Twitter, TikTok, and more. Sign up free.')
+@section('meta_keywords', 'TopVerifi services, virtual numbers, SMS verification, social media boosting, SMM panel, buy followers, instagram growth')
+@section('canonical', url('/services'))
+@section('og_title', 'All Services — TopVerifi')
+@section('og_description', 'Virtual phone numbers, social media boosting, and more — all in one place. Powered by TopVerifi.')
 
 @push('head')
 <style>

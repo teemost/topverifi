@@ -1,5 +1,7 @@
 @extends('layouts.app')
-@section('title', 'Privacy Policy & Refund Policy')
+@section('title', 'Privacy Policy & Refund Policy — TopVerifi')
+@section('meta_description', 'TopVerifi Privacy Policy and Refund Policy. Learn how we protect your data and handle refund requests for virtual numbers and SMM services.')
+@section('canonical', url('/privacy'))
 
 @section('content')
 <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

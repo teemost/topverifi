@@ -7,8 +7,53 @@
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <script>(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);if(t==='light')document.documentElement.classList.add('light-mode');}());</script>
+
+    {{-- ── Primary SEO ─────────────────────────────────────────────────────── --}}
     <title>@yield('title', 'TopVerifi') — Virtual Numbers & Social Media Boosting</title>
-    <meta name="description" content="@yield('meta_description', 'TopVerifi — Virtual phone numbers and premium social media growth services.')">
+    <meta name="description" content="@yield('meta_description', 'TopVerifi — Get virtual phone numbers for instant SMS verification and grow your social media with premium boosting services.')">
+    <meta name="keywords"    content="@yield('meta_keywords', 'virtual numbers, SMS verification, social media boosting, buy virtual number, SMM panel, phone number for verification, TopVerifi')">
+    <meta name="robots"      content="@yield('meta_robots', 'index, follow')">
+    <meta name="author"      content="TopVerifi">
+    <link rel="canonical"    href="@yield('canonical', url()->current())">
+
+    {{-- ── Open Graph (Facebook, WhatsApp, LinkedIn, iMessage) ───────────── --}}
+    <meta property="og:type"        content="@yield('og_type', 'website')">
+    <meta property="og:site_name"   content="TopVerifi">
+    <meta property="og:title"       content="@yield('og_title', 'TopVerifi — Virtual Numbers & Social Media Boosting')">
+    <meta property="og:description" content="@yield('og_description', 'Get virtual phone numbers for SMS verification and grow your social media with premium boosting services — all from your TopVerifi wallet.')">
+    <meta property="og:url"         content="@yield('canonical', url()->current())">
+    <meta property="og:image"       content="@yield('og_image', url('/og-image.png'))">
+    <meta property="og:image:width"  content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt"    content="TopVerifi — Virtual Numbers & Social Media Boosting">
+    <meta property="og:locale"       content="en_US">
+
+    {{-- ── Twitter / X Card ───────────────────────────────────────────────── --}}
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:site"        content="@topverifi">
+    <meta name="twitter:title"       content="@yield('og_title', 'TopVerifi — Virtual Numbers & Social Media Boosting')">
+    <meta name="twitter:description" content="@yield('og_description', 'Get virtual phone numbers for SMS verification and grow your social media with premium boosting services — all from your TopVerifi wallet.')">
+    <meta name="twitter:image"       content="@yield('og_image', url('/og-image.png'))">
+
+    {{-- ── JSON-LD Structured Data ────────────────────────────────────────── --}}
+    @stack('schema')
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "Organization",
+        "name": "TopVerifi",
+        "url": "{{ url('/') }}",
+        "logo": "{{ url('/favicon-logo.png') }}",
+        "description": "Virtual phone numbers for SMS verification and premium social media boosting services.",
+        "sameAs": [],
+        "contactPoint": {
+            "@@type": "ContactPoint",
+            "contactType": "customer support",
+            "availableLanguage": "English"
+        }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {

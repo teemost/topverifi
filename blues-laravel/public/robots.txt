@@ -1,2 +1,21 @@
 User-agent: *
-Disallow:
+Allow: /
+Allow: /services
+Allow: /terms
+Allow: /privacy
+Allow: /login
+Allow: /register
+Allow: /sitemap.xml
+
+# Block private/authenticated areas
+Disallow: /dashboard/
+Disallow: /admin/
+Disallow: /adminlogin
+Disallow: /api/
+Disallow: /paystack/
+Disallow: /r/
+
+# Block internal Laravel paths
+Disallow: /_ignition/
+Disallow: /storage/
+Disallow: /build/

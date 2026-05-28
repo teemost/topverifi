@@ -27,6 +27,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ReferralController;
+use App\Http\Controllers\SitemapController;
 
 // User dashboard imports
 use App\Http\Controllers\User\DashboardController;
@@ -42,11 +43,12 @@ use App\Http\Controllers\User\BoostingController;
 // ── Public ────────────────────────────────────────────────────────────────────
 Route::post('/paystack/webhook', [WalletController::class, 'webhook'])->name('paystack.webhook')->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 
-Route::get('/',          [HomeController::class,        'index'])->name('home');
-Route::get('/r/{code}',  [ReferralController::class,    'handle'])->name('referral');
-Route::get('/terms',     [PagesController::class,       'terms'])->name('terms');
-Route::get('/privacy',   [PagesController::class,       'privacy'])->name('privacy');
-Route::get('/services',  [PagesController::class,       'services'])->name('services');
+Route::get('/',           [HomeController::class,    'index'])->name('home');
+Route::get('/r/{code}',   [ReferralController::class, 'handle'])->name('referral');
+Route::get('/terms',      [PagesController::class,    'terms'])->name('terms');
+Route::get('/privacy',    [PagesController::class,    'privacy'])->name('privacy');
+Route::get('/services',   [PagesController::class,    'services'])->name('services');
+Route::get('/sitemap.xml',[SitemapController::class,  'index'])->name('sitemap');
 
 
 // ── User Auth ─────────────────────────────────────────────────────────────────
