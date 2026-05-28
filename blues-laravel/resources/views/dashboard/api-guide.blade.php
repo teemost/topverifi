@@ -66,7 +66,7 @@
     </div>
     <div class="px-5 py-4">
         <div class="bg-slate-900 rounded-xl p-4 border border-slate-700 mb-3">
-            <pre class="lang-block text-xs text-slate-300 font-mono overflow-x-auto" data-lang="php"><?php
+            <pre class="lang-block text-xs text-slate-300 font-mono overflow-x-auto" data-lang="php">&lt;?php
 $ch = curl_init('{{ url('/api/v1/balance') }}');
 curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true,
