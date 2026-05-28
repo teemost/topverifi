@@ -39,7 +39,7 @@ fi
 
 # Generate app key if not set
 if ! grep -q "APP_KEY=base64:" .env 2>/dev/null; then
-  php artisan key:generate --ansi
+  php artisan key:generate --force
 fi
 
 # Set up storage directories
