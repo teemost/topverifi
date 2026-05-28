@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\Setting;
+use App\Models\Listing;
+use App\Observers\ListingObserver;
 use Illuminate\Support\Facades\Config;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,6 +17,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        Listing::observe(ListingObserver::class);
+
         try {
             $mailer = Setting::get('mail_mailer', '');
             if ($mailer) {

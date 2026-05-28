@@ -53,16 +53,16 @@ Route::get('/sitemap.xml',[SitemapController::class,  'index'])->name('sitemap')
 
 // ── User Auth ─────────────────────────────────────────────────────────────────
 Route::get('/login',    [LoginController::class,    'show'])->name('login');
-Route::post('/login',   [LoginController::class,    'login'])->name('login.post');
+Route::post('/login',   [LoginController::class,    'login'])->middleware('throttle:10,1')->name('login.post');
 Route::post('/logout',  [LoginController::class,    'logout'])->name('logout');
 Route::get('/register', [RegisterController::class, 'show'])->name('register');
-Route::post('/register',[RegisterController::class, 'register'])->name('register.post');
+Route::post('/register',[RegisterController::class, 'register'])->middleware('throttle:5,1')->name('register.post');
 
 // Forgot / Reset Password
 Route::get('/forgot-password',  [ForgotPasswordController::class, 'showForgotForm'])->name('forgot-password');
-Route::post('/forgot-password', [ForgotPasswordController::class, 'sendReset'])->name('forgot-password.send');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendReset'])->middleware('throttle:5,1')->name('forgot-password.send');
 Route::get('/reset-password',   [ForgotPasswordController::class, 'showResetForm'])->name('reset-password');
-Route::post('/reset-password',  [ForgotPasswordController::class, 'resetPassword'])->name('reset-password.update');
+Route::post('/reset-password',  [ForgotPasswordController::class, 'resetPassword'])->middleware('throttle:5,1')->name('reset-password.update');
 
 // ── Email Verification ────────────────────────────────────────────────────────
 Route::middleware('auth')->group(function () {
@@ -135,7 +135,7 @@ Route::middleware(\App\Http\Middleware\UserAuth::class)->prefix('dashboard')->na
 
 // ── Admin Auth ────────────────────────────────────────────────────────────────
 Route::get('/adminlogin',      [AdminLoginController::class,    'show'])->name('admin.login');
-Route::post('/adminlogin',     [AdminLoginController::class,    'login'])->name('admin.login.post');
+Route::post('/adminlogin',     [AdminLoginController::class,    'login'])->middleware('throttle:5,1')->name('admin.login.post');
 Route::post('/admin/logout',   [AdminLoginController::class,    'logout'])->name('admin.logout');
 
 // ── Admin Panel ───────────────────────────────────────────────────────────────

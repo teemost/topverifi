@@ -18,6 +18,10 @@ if ! grep -q "APP_KEY=base64:" .env 2>/dev/null; then
   php artisan key:generate --ansi
 fi
 
+echo "==> Enforcing production security settings..."
+sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env
+sed -i 's/^APP_ENV=.*/APP_ENV=production/' .env
+
 echo "==> Running database migrations..."
 php artisan migrate --force
 

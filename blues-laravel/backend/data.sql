@@ -1131,7 +1131,7 @@ COPY public.settings (id, key, value, created_at, updated_at) FROM stdin;
 5	support_email	\N	2026-05-24 02:19:33	2026-05-24 02:19:33
 6	min_deposit	500	2026-05-24 02:19:33	2026-05-24 02:19:33
 7	max_deposit	1000000	2026-05-24 02:19:33	2026-05-24 02:19:33
-8	logsplug_api_key	sk_live_9282a206e65070fcd9108e1a6eb359534c4714d7814dead8e054d0fd6d52547b	2026-05-24 02:19:33	2026-05-24 02:19:33
+8	logsplug_api_key	REDACTED	2026-05-24 02:19:33	2026-05-24 02:19:33
 9	logsplug_api_url	https://logsplug.com/api	2026-05-24 02:19:33	2026-05-24 02:19:33
 10	maintenance_mode	0	2026-05-24 02:19:33	2026-05-24 02:19:33
 11	virtual_number_enabled	1	2026-05-24 02:19:33	2026-05-24 02:19:33
