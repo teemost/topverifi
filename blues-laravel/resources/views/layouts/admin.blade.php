@@ -49,9 +49,7 @@
     <div class="px-6 py-5 border-b border-slate-700 flex items-center justify-between">
         <div>
             <div class="flex items-center gap-2">
-                <div class="w-7 h-7 bg-brand rounded-lg flex items-center justify-center">
-                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                </div>
+                <img src="/favicon-logo.png" alt="TopVerifi" class="w-7 h-7 object-contain">
                 <span class="font-bold text-white">Top<span class="text-brand">Verifi</span></span>
             </div>
             <p class="text-xs text-slate-400 mt-1">Admin Panel</p>
@@ -155,7 +153,11 @@
             <button onclick="openMobileSidebar()" class="lg:hidden text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-700 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
-            <h1 class="text-base lg:text-lg font-semibold text-white">@yield('page-title', 'Dashboard')</h1>
+            <a href="{{ route('home') }}" class="flex items-center gap-1.5 lg:hidden">
+                <img src="/favicon-logo.png" alt="TopVerifi" class="w-6 h-6 object-contain">
+                <span class="font-bold text-white text-sm">Top<span class="text-brand">Verifi</span></span>
+            </a>
+            <h1 class="hidden lg:block text-base lg:text-lg font-semibold text-white">@yield('page-title', 'Dashboard')</h1>
         </div>
         <div class="flex items-center gap-2 lg:gap-3">
             <a href="{{ route('home') }}" target="_blank" class="hidden sm:block text-xs text-slate-400 hover:text-brand transition-colors">View Site →</a>
