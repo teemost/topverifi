@@ -17,6 +17,9 @@ use App\Http\Controllers\Admin\AnnouncementsController;
 use App\Http\Controllers\Admin\ReferralLeaderboardController;
 use App\Http\Controllers\Admin\BoostingOrdersController;
 
+// User API key management
+use App\Http\Controllers\User\ApiKeyController;
+
 // Public imports
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -119,6 +122,12 @@ Route::middleware(\App\Http\Middleware\UserAuth::class)->prefix('dashboard')->na
     Route::get('/boosting/orders',                 [BoostingController::class, 'orders'])->name('boosting-orders');
     Route::post('/boosting/orders/{id}/sync',      [BoostingController::class, 'checkStatus'])->name('boosting.sync');
     Route::get('/boosting/orders/poll',            [BoostingController::class, 'pollStatus'])->name('boosting.poll');
+
+    // API Keys
+    Route::get('/api-keys',            [ApiKeyController::class, 'index'])->name('api-keys');
+    Route::post('/api-keys',           [ApiKeyController::class, 'store'])->name('api-keys.store');
+    Route::post('/api-keys/{id}/toggle', [ApiKeyController::class, 'toggle'])->name('api-keys.toggle');
+    Route::delete('/api-keys/{id}',    [ApiKeyController::class, 'destroy'])->name('api-keys.destroy');
 });
 
 // ── Admin Auth ────────────────────────────────────────────────────────────────
