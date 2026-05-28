@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title', 'All Services — TopVerifi')
-@section('meta_description', 'Virtual phone numbers, Telegram Premium, SMM boosting, and digital accounts — everything on TopVerifi.')
+@section('meta_description', 'Virtual phone numbers, SMM boosting, and digital accounts — everything on TopVerifi.')
 
 @push('head')
 <style>
@@ -31,7 +31,7 @@
             Everything You Need<br><span class="shimmer-text">In One Platform</span>
         </h1>
         <p class="text-slate-400 text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-            From SMS verification to Telegram Premium to social media growth — TopVerifi covers it all, powered by your secure naira wallet.
+            From SMS verification to social media growth — TopVerifi covers it all, powered by your secure naira wallet.
         </p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
             <a href="{{ route('register') }}" class="btn-primary !px-8 !py-3.5 !text-base">Get Started Free →</a>
@@ -113,61 +113,6 @@
                 </div>
             </div>
 
-            {{-- 2. Telegram Premium --}}
-            <div class="svc-card bg-slate-800 border border-blue-500/30 hover:border-blue-400/50 rounded-2xl p-6 sm:p-8 reveal" style="background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%)">
-                <div class="flex flex-col lg:flex-row gap-8">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-4 mb-5">
-                            <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0" style="background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3)">
-                                <svg class="w-7 h-7 text-indigo-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.038 9.586c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L6.32 14.902l-2.96-.924c-.643-.203-.658-.643.136-.953l11.56-4.461c.537-.194 1.006.131.506.684z"/></svg>
-                            </div>
-                            <div>
-                                <div class="flex items-center gap-2 flex-wrap">
-                                    <h3 class="text-xl font-bold text-white">Telegram Premium</h3>
-                                    <span class="text-[11px] bg-indigo-500/15 text-indigo-400 border border-indigo-500/25 px-2 py-0.5 rounded-full font-semibold">✨ Auto-Delivery</span>
-                                    <span class="text-[11px] bg-yellow-500/15 text-yellow-400 border border-yellow-500/25 px-2 py-0.5 rounded-full font-semibold">🔥 Popular</span>
-                                </div>
-                                <p class="text-slate-400 text-sm mt-0.5">Gift Telegram Premium to any username instantly</p>
-                            </div>
-                        </div>
-                        <p class="text-slate-300 leading-relaxed mb-5">
-                            Yes — <strong class="text-white">users can automatically receive Telegram Premium</strong> from our platform. Simply provide your Telegram username, choose how many months, and the subscription is delivered automatically through our JAP panel integration. No manual steps needed.
-                        </p>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6">
-                            @foreach(['No Ads','4GB File Uploads','Voice-to-Text','Animated Emoji','Premium Stickers','Faster Downloads','Exclusive Reactions','Stories','Auto-Delivery'] as $f)
-                            <div class="flex items-center gap-2 text-sm text-slate-300">
-                                <svg class="w-3.5 h-3.5 text-indigo-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                {{ $f }}
-                            </div>
-                            @endforeach
-                        </div>
-                        <div class="flex flex-wrap gap-3">
-                            <a href="{{ route('register') }}" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors">
-                                Get Telegram Premium →
-                            </a>
-                            <div class="inline-flex items-center gap-2 bg-slate-700/50 text-slate-300 px-4 py-2.5 rounded-xl text-sm border border-slate-600">
-                                <span class="text-indigo-400 font-bold">How:</span> Login → SMM Boosting → Search "Telegram Premium"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lg:w-64 shrink-0 space-y-3">
-                        <div class="bg-indigo-900/30 rounded-xl p-4 border border-indigo-500/20">
-                            <p class="text-xs text-indigo-300 uppercase tracking-wider mb-1">Starting from</p>
-                            <p class="text-2xl font-black text-indigo-400">₦2,500</p>
-                            <p class="text-xs text-slate-400 mt-0.5">per month subscription</p>
-                        </div>
-                        <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-700 space-y-2">
-                            @foreach(['Instant auto-delivery','Gift to any username','1, 3 or 6 months','No Telegram account needed','Works worldwide'] as $f)
-                            <div class="flex items-center gap-2 text-sm text-slate-300">
-                                <svg class="w-3.5 h-3.5 text-indigo-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                {{ $f }}
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             {{-- 3. SMM Boosting --}}
             <div class="svc-card bg-slate-800 border border-slate-700 hover:border-brand/40 rounded-2xl p-6 sm:p-8 reveal">
                 <div class="flex flex-col lg:flex-row gap-8">
@@ -181,12 +126,12 @@
                                     <h3 class="text-xl font-bold text-white">Social Media Boosting</h3>
                                     <span class="text-[11px] bg-orange-500/15 text-brand border border-orange-500/25 px-2 py-0.5 rounded-full font-semibold">1000+ Services</span>
                                 </div>
-                                <p class="text-slate-400 text-sm mt-0.5">Powered by JustAnotherPanel</p>
+                                <p class="text-slate-400 text-sm mt-0.5">Grow your social media presence instantly</p>
                             </div>
                         </div>
                         <p class="text-slate-300 leading-relaxed mb-5">Grow your social media presence with real, high-quality engagement. Choose from over 1,000 services across all major platforms — followers, likes, views, comments, and more.</p>
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6">
-                            @foreach(['Instagram Followers','YouTube Views','TikTok Likes','Twitter Followers','Facebook Likes','Spotify Streams','LinkedIn Connections','Telegram Members','Pinterest Saves','SoundCloud Plays','Twitch Viewers','Any Platform'] as $p)
+                            @foreach(['Instagram Followers','YouTube Views','TikTok Likes','Twitter Followers','Facebook Likes','Spotify Streams','LinkedIn Connections','Pinterest Saves','SoundCloud Plays','Twitch Viewers','Discord Members','Any Platform'] as $p)
                             <div class="flex items-center gap-2 text-sm text-slate-300">
                                 <svg class="w-3.5 h-3.5 text-brand shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
                                 {{ $p }}
@@ -277,7 +222,7 @@
             @foreach([
                 ['1','Create Account','Sign up free. No credit card needed.','M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'],
                 ['2','Fund Wallet','Add ₦ via card, bank transfer, or USSD.','M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z'],
-                ['3','Pick a Service','Virtual numbers, Telegram Premium, SMM, or marketplace.','M4 6h16M4 12h16M4 18h16'],
+                ['3','Pick a Service','Virtual numbers, SMM boosting, or marketplace accounts.','M4 6h16M4 12h16M4 18h16'],
                 ['4','Instant Delivery','Get your number, account, or SMM order immediately.','M13 10V3L4 14h7v7l9-11h-7z'],
             ] as [$num, $title, $desc, $icon])
             <div class="text-center reveal">
@@ -322,9 +267,8 @@
         <h2 class="text-3xl font-black text-white text-center mb-10 reveal">Common Questions</h2>
         <div class="space-y-3">
             @foreach([
-                ['Can I buy Telegram Premium automatically?','Yes! Through our SMM Boosting section (powered by JustAnotherPanel), simply search for "Telegram Premium", enter your Telegram username, select how many months, and submit. The subscription is delivered automatically — no manual steps.'],
                 ['What countries are virtual numbers available from?','We offer numbers from 80+ countries including USA, UK, Russia, India, Indonesia, Philippines, Nigeria, Brazil, Germany, France, and many more.'],
-                ['How fast is delivery?','Virtual numbers are instant. Telegram Premium is typically delivered within minutes. SMM orders start within minutes, completion depends on quantity.'],
+                ['How fast is delivery?','Virtual numbers are instant. SMM orders start within minutes, completion depends on quantity.'],
                 ['Is there a minimum order?','No minimum. Buy one number for ₦80, or order 1,000 Instagram followers starting from ₦50. You only pay for what you use.'],
                 ['What if the SMS code doesn\'t arrive?','For virtual numbers, you can wait and retry — the number stays active for several minutes. If no SMS arrives you can cancel for a refund to your wallet.'],
                 ['How do I fund my wallet?','Go to Dashboard → Wallet and choose from card payment (Paystack), bank transfer, or USSD. Funds are credited instantly.'],
