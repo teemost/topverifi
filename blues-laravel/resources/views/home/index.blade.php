@@ -98,15 +98,15 @@
         {{-- Stats --}}
         <div class="grid grid-cols-3 gap-6 mt-14 max-w-lg mx-auto">
             <div class="text-center">
-                <p class="text-2xl sm:text-3xl font-black text-white">{{ number_format($stats['users']) }}+</p>
+                <p class="text-2xl sm:text-3xl font-black text-white stat-counter" data-target="{{ $stats['users'] }}">0+</p>
                 <p class="text-xs text-slate-500 mt-1 uppercase tracking-wider">Users</p>
             </div>
             <div class="text-center border-x border-slate-800">
-                <p class="text-2xl sm:text-3xl font-black text-white">{{ number_format($stats['orders']) }}+</p>
+                <p class="text-2xl sm:text-3xl font-black text-white stat-counter" data-target="{{ $stats['orders'] }}">0+</p>
                 <p class="text-xs text-slate-500 mt-1 uppercase tracking-wider">Orders</p>
             </div>
             <div class="text-center">
-                <p class="text-2xl sm:text-3xl font-black text-white">{{ number_format($stats['numbers']) }}+</p>
+                <p class="text-2xl sm:text-3xl font-black text-white stat-counter" data-target="{{ $stats['numbers'] }}">0+</p>
                 <p class="text-xs text-slate-500 mt-1 uppercase tracking-wider">Numbers</p>
             </div>
         </div>
@@ -326,5 +326,30 @@ const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Count-up animation for stats
+function animateCounter(el) {
+    const target = parseInt(el.dataset.target, 10) || 0;
+    const duration = 1800;
+    const start = performance.now();
+    const easeOut = t => 1 - Math.pow(1 - t, 3);
+    function step(now) {
+        const elapsed = Math.min((now - start) / duration, 1);
+        const value = Math.round(easeOut(elapsed) * target);
+        el.textContent = value.toLocaleString() + '+';
+        if (elapsed < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+}
+
+const statObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            animateCounter(e.target);
+            statObserver.unobserve(e.target);
+        }
+    });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat-counter').forEach(el => statObserver.observe(el));
 </script>
 @endpush
