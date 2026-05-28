@@ -299,6 +299,140 @@
     </div>
 </section>
 
+{{-- Mobile Preview --}}
+<section class="py-24 bg-slate-950 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+
+            {{-- Text side --}}
+            <div class="flex-1 text-center lg:text-left reveal">
+                <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-1.5 mb-6">
+                    <span class="w-2 h-2 bg-brand rounded-full animate-pulse"></span>
+                    <span class="text-orange-300 text-sm font-medium">Works on any device</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-black text-white mb-5 leading-tight">
+                    Everything in your<br><span class="shimmer-text">pocket</span>
+                </h2>
+                <p class="text-slate-400 text-lg leading-relaxed mb-8 max-w-lg">
+                    TopVerifi works seamlessly on mobile, tablet, and desktop. Order virtual numbers, track boosting orders, and manage your wallet — wherever you are.
+                </p>
+                <div class="space-y-3 mb-10">
+                    @foreach([
+                        ['📱','Mobile-first design','Fast and responsive on every screen size'],
+                        ['⚡','Instant notifications','Get alerted the moment your SMS arrives'],
+                        ['💼','Full wallet control','Top up, spend, and track your balance on the go'],
+                    ] as [$icon, $title, $desc])
+                    <div class="flex items-start gap-3 text-left">
+                        <span class="text-xl mt-0.5">{{ $icon }}</span>
+                        <div>
+                            <p class="text-white font-semibold text-sm">{{ $title }}</p>
+                            <p class="text-slate-400 text-sm">{{ $desc }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                <a href="{{ route('register') }}" class="inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-bold px-7 py-3.5 rounded-xl text-sm transition-all hover:scale-105">
+                    Get Started Free →
+                </a>
+            </div>
+
+            {{-- Phone mockup --}}
+            <div class="shrink-0 flex justify-center reveal">
+                <div class="relative">
+                    {{-- Glow --}}
+                    <div class="absolute inset-0 rounded-[3rem] blur-3xl opacity-30" style="background:radial-gradient(ellipse,#f97316 0%,transparent 70%)"></div>
+
+                    {{-- Phone frame --}}
+                    <div class="relative w-64 sm:w-72 rounded-[2.8rem] border-[6px] border-slate-700 bg-slate-900 shadow-2xl overflow-hidden" style="box-shadow:0 0 0 1px rgba(249,115,22,.15),0 40px 80px rgba(0,0,0,.6)">
+
+                        {{-- Status bar --}}
+                        <div class="bg-slate-950 px-5 pt-3 pb-1 flex items-center justify-between">
+                            <span class="text-white text-[10px] font-semibold">9:41</span>
+                            <div class="w-16 h-4 bg-slate-950 rounded-full border border-slate-800 mx-auto absolute left-1/2 -translate-x-1/2 top-0"></div>
+                            <div class="flex items-center gap-1">
+                                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M1.5 8.5a13 13 0 0121 0M5 12a10 10 0 0114 0M8.5 15.5a6 6 0 017 0M12 19h.01"/></svg>
+                                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17 7H7a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M19 9h1a1 1 0 011 1v4a1 1 0 01-1 1h-1"/></svg>
+                            </div>
+                        </div>
+
+                        {{-- App header --}}
+                        <div class="bg-slate-900 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+                            <span class="font-bold text-white text-sm">Top<span class="text-brand">Verifi</span></span>
+                            <div class="w-7 h-7 rounded-full bg-brand/20 border border-brand/30 flex items-center justify-center">
+                                <svg class="w-3.5 h-3.5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                            </div>
+                        </div>
+
+                        {{-- Wallet card --}}
+                        <div class="px-4 pt-4 pb-2">
+                            <div class="rounded-2xl p-4 mb-3" style="background:linear-gradient(135deg,#ea580c,#f97316)">
+                                <p class="text-white/70 text-[10px] font-medium uppercase tracking-wider mb-1">Wallet Balance</p>
+                                <p class="text-white font-black text-2xl">₦12,450.00</p>
+                                <div class="flex justify-between items-end mt-3">
+                                    <p class="text-white/70 text-[9px]">TopVerifi Wallet</p>
+                                    <div class="flex gap-1">
+                                        <div class="w-5 h-5 rounded-full bg-white/20"></div>
+                                        <div class="w-5 h-5 rounded-full bg-white/30 -ml-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Quick actions --}}
+                            <div class="grid grid-cols-3 gap-2 mb-3">
+                                @foreach([['📱','Numbers'],['📈','Boost'],['🛒','Market']] as [$i,$l])
+                                <div class="bg-slate-800 rounded-xl p-2.5 text-center border border-slate-700">
+                                    <span class="text-lg">{{ $i }}</span>
+                                    <p class="text-slate-400 text-[9px] mt-1 font-medium">{{ $l }}</p>
+                                </div>
+                                @endforeach
+                            </div>
+
+                            {{-- Recent orders --}}
+                            <p class="text-slate-500 text-[9px] uppercase tracking-wider font-semibold mb-2">Recent Activity</p>
+                            @foreach([
+                                ['WhatsApp Number','Delivered','text-green-400','bg-green-500/10'],
+                                ['Instagram Boost','Processing','text-brand','bg-orange-500/10'],
+                                ['WhatsApp Number','Delivered','text-green-400','bg-green-500/10'],
+                            ] as [$name, $status, $tc, $bg])
+                            <div class="flex items-center justify-between py-1.5 border-b border-slate-800 last:border-0">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded-lg {{ $bg }} flex items-center justify-center">
+                                        <svg class="w-3 h-3 {{ $tc }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    </div>
+                                    <span class="text-slate-300 text-[10px] font-medium">{{ $name }}</span>
+                                </div>
+                                <span class="{{ $tc }} text-[9px] font-semibold">{{ $status }}</span>
+                            </div>
+                            @endforeach
+                        </div>
+
+                        {{-- Bottom nav --}}
+                        <div class="bg-slate-950 border-t border-slate-800 px-4 py-3 flex justify-around">
+                            @foreach([
+                                ['M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6','text-brand'],
+                                ['M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z','text-slate-600'],
+                                ['M13 7h8m0 0v8m0-8l-8 8-4-4-6 6','text-slate-600'],
+                                ['M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z','text-slate-600'],
+                            ] as [$path, $color])
+                            <svg class="w-5 h-5 {{ $color }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $path }}"/></svg>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    {{-- Floating badge --}}
+                    <div class="absolute -right-4 top-16 bg-green-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg animate-bounce">
+                        SMS Received! ✓
+                    </div>
+                    <div class="absolute -left-4 bottom-24 bg-slate-800 border border-slate-700 text-white text-[10px] font-semibold px-3 py-1.5 rounded-xl shadow-lg">
+                        ⚡ Order placed
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
 {{-- CTA --}}
 <section class="py-24 bg-slate-900">
     <div class="max-w-3xl mx-auto px-4 text-center reveal">
