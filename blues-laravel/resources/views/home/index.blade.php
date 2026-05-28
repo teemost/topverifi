@@ -90,7 +90,7 @@
 
         {{-- Trust badges --}}
         <div class="flex flex-wrap justify-center gap-3 mt-10">
-            @foreach(['🔒 SSL Secured','⚡ Instant Delivery','🇳🇬 Naira Payments','💬 24/7 Support'] as $badge)
+            @foreach(['🔒 SSL Secured','⚡ Instant Delivery','💳 Fast Payments','💬 24/7 Support'] as $badge)
             <span class="text-xs text-slate-400 bg-slate-800/60 border border-slate-700 px-3 py-1.5 rounded-full">{{ $badge }}</span>
             @endforeach
         </div>
