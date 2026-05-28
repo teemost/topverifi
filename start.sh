@@ -3,6 +3,11 @@ set -e
 
 cd blues-laravel
 
+# Create .env from example if it doesn't exist
+if [ ! -f .env ]; then
+  cp .env.example .env
+fi
+
 # Inject PostgreSQL connection from Replit environment into .env
 if [ -n "$DATABASE_URL" ]; then
   # Parse DATABASE_URL: postgresql://user:password@host/dbname?params
