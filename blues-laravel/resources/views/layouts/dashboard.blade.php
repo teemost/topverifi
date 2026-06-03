@@ -114,12 +114,12 @@
                 <a href="{{ route('dashboard.virtual-numbers') }}"
                     class="sidebar-link text-xs {{ request()->routeIs('dashboard.virtual-numbers') && !request()->routeIs('dashboard.virtual-numbers.server2') ? 'active' : '' }}">
                     <span class="w-1.5 h-1.5 rounded-full bg-current flex-shrink-0"></span>
-                    Server 1 — GrizzlySMS
+                    Server 1
                 </a>
                 <a href="{{ route('dashboard.virtual-numbers.server2') }}"
                     class="sidebar-link text-xs {{ request()->routeIs('dashboard.virtual-numbers.server2') ? 'active' : '' }}">
                     <span class="w-1.5 h-1.5 rounded-full bg-current flex-shrink-0"></span>
-                    Server 2 — HeroSMS
+                    Server 2
                 </a>
             </div>
         </div>

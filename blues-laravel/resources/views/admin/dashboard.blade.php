@@ -76,15 +76,16 @@
 </div>
 
 {{-- API Balance Widget --}}
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-    {{-- GrizzlySMS Balance --}}
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    {{-- Server 1 (GrizzlySMS) Balance --}}
     <div id="grizzly-balance-card" class="bg-slate-800 border border-slate-700 rounded-xl p-5 flex items-center justify-between">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-green-900/40 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
             <div>
-                <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">GrizzlySMS API Wallet</p>
+                <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Server 1 API Wallet</p>
+                <p class="text-slate-500 text-[10px] -mt-0.5 mb-0.5">GrizzlySMS</p>
                 <p id="grizzly-balance-value" class="text-2xl font-bold text-white mt-0.5">
                     @if($grizzlyBalance !== null)
                         ${{ number_format((float)$grizzlyBalance, 4) }}
@@ -109,6 +110,39 @@
         </div>
     </div>
 
+    {{-- Server 2 (HeroSMS) Balance --}}
+    <div id="hero-balance-card" class="bg-slate-800 border border-slate-700 rounded-xl p-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-brand/20 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            </div>
+            <div>
+                <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Server 2 API Wallet</p>
+                <p class="text-slate-500 text-[10px] -mt-0.5 mb-0.5">HeroSMS</p>
+                <p id="hero-balance-value" class="text-2xl font-bold text-white mt-0.5">
+                    @if($heroBalance !== null)
+                        ${{ number_format((float)$heroBalance, 4) }}
+                    @else —
+                    @endif
+                </p>
+                <p id="hero-balance-note" class="text-xs mt-0.5 {{ $heroBalance !== null ? 'text-slate-500' : 'text-yellow-400' }}">
+                    @if($heroBalance !== null)
+                        USD balance · loaded at {{ now()->format('H:i') }}
+                    @else
+                        {{ $heroError ?? 'Could not load balance.' }}
+                    @endif
+                </p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="{{ route('admin.settings') }}#server2" class="text-xs text-brand hover:underline">Configure →</a>
+            <button onclick="refreshHeroBalance()" id="hero-refresh-btn"
+                class="p-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-400 hover:text-white transition-colors" title="Refresh balance">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            </button>
+        </div>
+    </div>
+
     {{-- JustAnotherPanel Balance --}}
     <div id="jap-balance-card" class="bg-slate-800 border border-slate-700 rounded-xl p-5 flex items-center justify-between">
         <div class="flex items-center gap-3">
@@ -116,7 +150,8 @@
                 <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
             </div>
             <div>
-                <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">JustAnotherPanel (JAP) Wallet</p>
+                <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">SMM Panel Wallet</p>
+                <p class="text-slate-500 text-[10px] -mt-0.5 mb-0.5">JustAnotherPanel</p>
                 <p id="jap-balance-value" class="text-2xl font-bold text-white mt-0.5">
                     @if($japBalance !== null)
                         ${{ number_format((float)$japBalance, 4) }}
@@ -294,6 +329,40 @@ async function refreshJapBalance() {
             valueEl.textContent = isNaN(balance) ? data.balance : ('$' + balance.toLocaleString('en-US', { minimumFractionDigits: 4, maximumFractionDigits: 4 }));
             noteEl.textContent = 'USD balance · updated just now';
             document.getElementById('jap-balance-card').classList.remove('border-red-700/50');
+        } else {
+            valueEl.textContent = '—';
+            noteEl.textContent = data.message || 'Could not load balance.';
+        }
+    } catch (e) {
+        valueEl.textContent = '—';
+        noteEl.textContent = 'Refresh failed. Check network.';
+    } finally {
+        btn.disabled = false;
+    }
+}
+
+async function refreshHeroBalance() {
+    const valueEl = document.getElementById('hero-balance-value');
+    const noteEl  = document.getElementById('hero-balance-note');
+    const btn     = document.getElementById('hero-refresh-btn');
+    if (!valueEl) return;
+
+    valueEl.innerHTML = '<span class="inline-block w-5 h-5 border-2 border-brand border-t-transparent rounded-full animate-spin align-middle"></span>';
+    noteEl.textContent = 'Refreshing…';
+    btn.disabled = true;
+
+    try {
+        const res  = await fetch('/admin/virtual-numbers/herosms-balance', {
+            credentials: 'same-origin',
+            headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        const data = await res.json();
+
+        if (data.success && data.balance !== null && data.balance !== undefined) {
+            const balance = parseFloat(data.balance);
+            valueEl.textContent = isNaN(balance) ? data.balance : ('$' + balance.toLocaleString('en-US', { minimumFractionDigits: 4, maximumFractionDigits: 4 }));
+            noteEl.textContent = 'USD balance · updated just now';
+            document.getElementById('hero-balance-card').classList.remove('border-red-700/50');
         } else {
             valueEl.textContent = '—';
             noteEl.textContent = data.message || 'Could not load balance.';

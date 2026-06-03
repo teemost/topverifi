@@ -30,7 +30,7 @@
         <div>
             <div class="flex items-center gap-2">
                 <p class="font-bold text-white text-base">Virtual Numbers</p>
-                <span class="text-xs font-semibold bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30">Server 1 — GrizzlySMS</span>
+                <span class="text-xs font-semibold bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30">Server 1</span>
             </div>
             <p class="text-xs text-slate-400">Receive SMS codes for any service worldwide</p>
         </div>
@@ -75,7 +75,7 @@
         {{-- Server badge --}}
         <div class="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-xl px-3 py-2">
             <span class="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0"></span>
-            <span class="text-xs font-semibold text-slate-300">Server 1 — GrizzlySMS</span>
+            <span class="text-xs font-semibold text-slate-300">Server 1</span>
         </div>
 
         {{-- Search --}}

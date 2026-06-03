@@ -86,6 +86,25 @@ class VirtualNumberOrdersController extends Controller
         }
     }
 
+    public function heroSmsBalance()
+    {
+        $svc = new \App\Services\HeroSmsService();
+        if (!$svc->isConfigured()) {
+            return response()->json(['success' => false, 'message' => 'Server 2 API not configured. Add your key in Settings.']);
+        }
+        try {
+            $result = $svc->getBalance();
+            if ($result['success']) {
+                $balance = $result['data']['balance'] ?? null;
+                return response()->json(['success' => true, 'balance' => $balance]);
+            }
+            return response()->json(['success' => false, 'message' => $result['message'] ?? 'Could not fetch balance.']);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('HeroSMS balance fetch: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Could not fetch balance. Check API connectivity.']);
+        }
+    }
+
     public function exportCsv(Request $request)
     {
         $query = VirtualNumberOrder::with('user');

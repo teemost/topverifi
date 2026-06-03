@@ -89,10 +89,30 @@ class DashboardController extends Controller
             $japError = 'API not configured. Add your JAP key in Settings.';
         }
 
+        // Fetch HeroSMS (Server 2) balance server-side
+        $heroBalance = null;
+        $heroError   = null;
+        $heroSvc = new \App\Services\HeroSmsService();
+        if ($heroSvc->isConfigured()) {
+            try {
+                $result = $heroSvc->getBalance();
+                if ($result['success']) {
+                    $heroBalance = $result['data']['balance'] ?? null;
+                } else {
+                    $heroError = $result['message'] ?? 'Could not fetch balance.';
+                }
+            } catch (\Throwable $e) {
+                $heroError = 'Balance fetch failed. Check API connectivity.';
+            }
+        } else {
+            $heroError = 'API not configured. Add your Server 2 key in Settings.';
+        }
+
         return view('admin.dashboard', compact(
             'stats', 'chartLabels', 'chartRevenue', 'chartOrders',
             'grizzlyBalance', 'grizzlyError',
-            'japBalance', 'japError'
+            'japBalance', 'japError',
+            'heroBalance', 'heroError'
         ));
     }
 }
