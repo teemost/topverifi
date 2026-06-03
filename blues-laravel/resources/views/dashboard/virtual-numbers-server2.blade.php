@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
-@section('title', 'Virtual Numbers')
-@section('page-title', 'Virtual Numbers')
+@section('title', 'Virtual Numbers — Server 2')
+@section('page-title', 'Virtual Numbers — Server 2')
 @section('content')
 
 @if(!$enabled)
@@ -11,13 +11,13 @@
     <h2 class="text-xl font-semibold text-white mb-2">Virtual Numbers Unavailable</h2>
     <p class="text-slate-400 max-w-sm">This feature is currently disabled. Please check back later.</p>
 </div>
-@elseif(!$configured)
+@elseif(!$heroSmsConfigured)
 <div class="flex flex-col items-center justify-center py-24 text-center">
     <div class="w-16 h-16 rounded-2xl bg-yellow-900/40 flex items-center justify-center mb-4">
         <svg class="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
     </div>
-    <h2 class="text-xl font-semibold text-white mb-2">Setup Required</h2>
-    <p class="text-slate-400 max-w-sm">The virtual number API hasn't been configured yet. Please contact support.</p>
+    <h2 class="text-xl font-semibold text-white mb-2">Server 2 Not Configured</h2>
+    <p class="text-slate-400 max-w-sm">HeroSMS API hasn't been configured yet. Please contact support.</p>
 </div>
 @else
 
@@ -30,7 +30,7 @@
         <div>
             <div class="flex items-center gap-2">
                 <p class="font-bold text-white text-base">Virtual Numbers</p>
-                <span class="text-xs font-semibold bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30">Server 1 — GrizzlySMS</span>
+                <span class="text-xs font-semibold bg-brand/20 text-brand px-2 py-0.5 rounded-full border border-brand/30">Server 2 — HeroSMS</span>
             </div>
             <p class="text-xs text-slate-400">Receive SMS codes for any service worldwide</p>
         </div>
@@ -70,14 +70,8 @@
 ════════════════════════════════════════════════════════════ --}}
 <div id="pane-browse">
 
-    {{-- Filters --}}
+    {{-- Filters row --}}
     <div class="flex flex-wrap gap-3 mb-5">
-        {{-- Server badge --}}
-        <div class="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-xl px-3 py-2">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0"></span>
-            <span class="text-xs font-semibold text-slate-300">Server 1 — GrizzlySMS</span>
-        </div>
-
         {{-- Search --}}
         <div class="relative flex-1 min-w-[180px]">
             <svg class="absolute left-3 top-2.5 w-4 h-4 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -105,6 +99,7 @@
                 <option value="name">Sort: A–Z</option>
                 <option value="price_asc">Price: Low–High</option>
                 <option value="price_desc">Price: High–Low</option>
+                <option value="count_desc">Stock: High–Low</option>
             </select>
             <svg class="pointer-events-none absolute right-2.5 top-2.5 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </div>
@@ -115,7 +110,7 @@
     {{-- Services state --}}
     <div id="svc-state" class="flex flex-col items-center justify-center py-24 bg-slate-800/40 rounded-2xl border border-slate-700">
         <div class="w-10 h-10 border-4 border-brand border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p class="text-slate-400 text-sm">Loading services…</p>
+        <p class="text-slate-400 text-sm">Loading all services…</p>
     </div>
 
     {{-- Services grid (populated by JS) --}}
@@ -138,8 +133,6 @@
         @foreach($activeOrders as $order)
         <div id="active-card-{{ $order->id }}"
             class="bg-slate-800 border border-slate-700 rounded-2xl p-4 flex flex-col gap-3">
-
-            {{-- Service header --}}
             <div class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse flex-shrink-0"></span>
                 <p class="font-bold text-white capitalize truncate">{{ $order->service }}</p>
@@ -148,8 +141,6 @@
                 @endif
                 <span class="ml-auto text-xs text-slate-500 flex-shrink-0">₦{{ number_format($order->cost, 2) }}</span>
             </div>
-
-            {{-- Phone number row with copy --}}
             <div class="flex items-center gap-2 bg-slate-700/40 rounded-xl px-3 py-2.5">
                 <svg class="w-4 h-4 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                 <span class="font-mono text-base text-brand flex-1 select-all min-w-0 truncate" id="phone-{{ $order->id }}">{{ $order->phone_number ?? 'Assigning…' }}</span>
@@ -158,8 +149,6 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                 </button>
             </div>
-
-            {{-- SMS code row with copy --}}
             <div class="flex items-center gap-2 bg-slate-700/40 rounded-xl px-3 py-2.5">
                 <svg class="w-4 h-4 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
                 <div class="flex-1 min-w-0">
@@ -171,14 +160,10 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                 </button>
             </div>
-
-            {{-- Status row --}}
             <div class="flex items-center justify-between">
                 <p id="poll-status-{{ $order->id }}" class="text-xs text-slate-500">Auto-checking…</p>
                 <p class="text-xs text-slate-600">{{ $order->created_at->diffForHumans() }}</p>
             </div>
-
-            {{-- Action buttons --}}
             <div class="flex gap-2">
                 <button onclick="checkSmsOnce({{ $order->id }}, this)"
                     class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-brand/10 hover:bg-brand/20 text-brand border border-brand/30 rounded-xl text-sm font-semibold transition-colors">
@@ -259,17 +244,15 @@
         <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
-
         <div class="flex items-center gap-3 mb-5">
             <div class="w-10 h-10 rounded-xl bg-brand/20 flex items-center justify-center">
                 <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
             </div>
             <div>
                 <p class="font-bold text-white text-base">Rent a Number</p>
-                <p class="text-xs text-slate-400">Confirm your order below</p>
+                <p class="text-xs text-slate-400">via HeroSMS — Server 2</p>
             </div>
         </div>
-
         <div class="bg-slate-800 rounded-xl p-4 mb-5 space-y-2.5">
             <div class="flex justify-between items-center">
                 <span class="text-sm text-slate-400">Service</span>
@@ -288,28 +271,24 @@
                 <span id="modal-balance" class="text-sm font-semibold text-green-400"></span>
             </div>
         </div>
-
         <p id="modal-warn" class="hidden text-xs text-red-400 bg-red-900/20 border border-red-700/30 rounded-lg p-2 mb-4">
             ⚠️ Insufficient balance. Please top up your wallet first.
         </p>
-
         <form method="POST" action="{{ route('dashboard.virtual-numbers.order') }}" id="rent-form">
             @csrf
-            <input type="hidden" name="provider"     id="f-provider">
-            <input type="hidden" name="server"       id="f-server">
+            <input type="hidden" name="provider"     value="herosms">
+            <input type="hidden" name="server"       value="server2">
             <input type="hidden" name="service_id"   id="f-service-id">
             <input type="hidden" name="country"      id="f-country">
             <input type="hidden" name="price"        id="f-price">
             <input type="hidden" name="service_name" id="f-svc-name">
-
             <button type="submit" id="rent-confirm-btn"
                 class="w-full py-3 rounded-xl font-bold text-white text-sm flex items-center justify-center gap-2 transition-all"
-                style="background: linear-gradient(135deg, #3b82f6, #8b5cf6)">
+                style="background: linear-gradient(135deg, #f97316, #ea580c)">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 Rent Number
             </button>
         </form>
-
         <p class="text-xs text-slate-500 text-center mt-3">Valid for ~20 min to receive one SMS code</p>
     </div>
 </div>
@@ -320,42 +299,25 @@
 .service-card { transition: transform 0.15s, box-shadow 0.15s; }
 .service-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
 .rent-btn {
-    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    background: linear-gradient(135deg, #f97316, #ea580c);
     transition: opacity 0.15s, transform 0.1s;
 }
 .rent-btn:hover { opacity: 0.9; transform: scale(1.02); }
 .rent-btn:active { transform: scale(0.98); }
 </style>
 
+@push('scripts')
 <script>
-// ── State ─────────────────────────────────────────────────────────────────────
-const COUNTRIES_URL     = '/dashboard/virtual-numbers/api/countries';
-const SERVICES_URL      = '/dashboard/virtual-numbers/api/services';
-let currentServer    = 'grizzlysms';
-let currentProvider  = 'grizzlysms';
-const USD_TO_NGN     = {{ $usdToNgn }};
-let allServices      = [];
-let walletBalance    = {{ $wallet->balance }};
-let pollInterval     = null;
-let countriesCache   = {};  // code → { name, flag }
-const COMM_TYPE      = '{{ $commissionType }}';
-const COMM_VALUE     = {{ $commissionValue }};
-
-// ── Social-media service keywords ─────────────────────────────────────────────
-const SOCIAL_MEDIA_KEYWORDS = [
-    'whatsapp','telegram','tiktok','instagram','facebook','twitter','snapchat',
-    'discord','viber','wechat','signal','youtube','linkedin','pinterest',
-    'threads','reddit','twitch','skype','imo','line','zalo','clubhouse',
-    'tumblr','kik','vk','weibo','hike','bigo','likee','kwai','shein',
-    'x.com','messenger','fbmessenger'
-];
-function isSocialMedia(name) {
-    const n = (name || '').toLowerCase();
-    return SOCIAL_MEDIA_KEYWORDS.some(k => n.includes(k));
-}
-function isWhatsApp(name) {
-    return (name || '').toLowerCase().includes('whatsapp');
-}
+const COUNTRIES_URL   = '{{ route('dashboard.virtual-numbers.countries') }}';
+const SERVICES_URL    = '{{ route('dashboard.virtual-numbers.services') }}';
+const PROVIDER        = 'herosms';
+const USD_TO_NGN      = {{ $usdToNgn }};
+const COMM_TYPE       = '{{ $commissionType }}';
+const COMM_VALUE      = {{ $commissionValue }};
+let allServices       = [];
+let walletBalance     = {{ $wallet->balance }};
+let countriesCache    = {};
+let pollInterval      = null;
 
 // ── Tab switching ─────────────────────────────────────────────────────────────
 function switchTab(tab) {
@@ -373,19 +335,15 @@ function switchTab(tab) {
         active.classList.add('border-brand','text-brand');
         active.classList.remove('border-transparent','text-slate-400');
     }
-
     if (tab === 'active') startPolling();
     else stopPolling();
 }
-
-// Server 1 is always GrizzlySMS — no switching needed
 
 // ── Load countries ────────────────────────────────────────────────────────────
 async function loadCountries() {
     showState('loading');
     try {
-        const url  = COUNTRIES_URL + '?server=' + currentServer + '&provider=' + currentProvider;
-        const res  = await fetch(url, {
+        const res  = await fetch(COUNTRIES_URL + '?provider=' + PROVIDER, {
             credentials: 'same-origin',
             headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
         });
@@ -395,172 +353,61 @@ async function loadCountries() {
         if (data.success && data.data?.length) {
             const sel = document.getElementById('country-select');
             sel.innerHTML = '<option value="">— All Countries —</option>';
-
-            // GrizzlySMS: [{code, name, iso}]
             data.data.forEach(c => {
-                const code = String(c.code);
+                const code = String(c.code ?? c.id ?? '');
                 countriesCache[code] = { name: c.name, iso: c.iso || '' };
-                const opt  = document.createElement('option');
-                opt.value  = code;
+                const opt = document.createElement('option');
+                opt.value = code;
                 opt.textContent = c.name;
                 sel.appendChild(opt);
             });
-
-            // Auto-load all services immediately (no country filter)
-            loadServices('');
+            loadServices();
         } else {
-            showState('empty', data.message || 'No countries returned.');
+            showState('empty', data.message || 'No countries available.');
         }
     } catch(e) {
         console.error('Countries error:', e);
-        showState('error', 'Could not load countries. Check your connection.');
+        showState('error', 'Could not load countries.');
     }
-}
-
-// Extract 2-letter ISO code from flagcdn URL e.g. "https://flagcdn.com/w80/ao.png" → "ao"
-function flagFromUrl(url) {
-    if (!url) return '';
-    const m = url.match(/\/([a-z]{2})\.png$/);
-    return m ? m[1] : '';
-}
-
-// Generate flag emoji from 2-letter ISO code
-function flagEmoji(iso) {
-    if (!iso || iso.length !== 2) return '🌍';
-    return iso.toUpperCase().split('').map(c =>
-        String.fromCodePoint(c.charCodeAt(0) - 65 + 0x1F1E6)
-    ).join('');
-}
-
-// ── Search helpers ────────────────────────────────────────────────────────────
-let searchDebounceTimer = null;
-
-function handleSearchInput() {
-    const q        = document.getElementById('svc-search').value;
-    const clearBtn = document.getElementById('svc-search-clear');
-    clearBtn.classList.toggle('hidden', q.length === 0);
-
-    // If services aren't loaded yet and user is typing, auto-load (no country filter)
-    if (allServices.length === 0 && q.length >= 2) {
-        clearTimeout(searchDebounceTimer);
-        searchDebounceTimer = setTimeout(() => loadServices(), 400);
-        return;
-    }
-    applyFilter();
-}
-
-function clearSearch() {
-    const input    = document.getElementById('svc-search');
-    const clearBtn = document.getElementById('svc-search-clear');
-    input.value    = '';
-    clearBtn.classList.add('hidden');
-    applyFilter();
-    input.focus();
-}
-
-// ── USA ↔ Canada cross-listing helpers ────────────────────────────────────────
-function isUSA(name) {
-    const n = (name || '').toLowerCase();
-    return n.includes('usa') || n.includes('united states') || n === 'us';
-}
-function isCanada(name) {
-    const n = (name || '').toLowerCase();
-    return n.includes('canada') || n === 'ca';
-}
-function findCountryCodeByPredicate(predicate) {
-    return Object.entries(countriesCache).find(([code, info]) => predicate(info.name))?.[0] || null;
 }
 
 // ── Load services ─────────────────────────────────────────────────────────────
 async function loadServices() {
     showState('loading');
+    const country = document.getElementById('country-select').value;
 
-    const country      = document.getElementById('country-select').value;
-    const selectedName = country ? (countriesCache[country]?.name || '') : '';
-    const displayLabel = country ? selectedName : 'All Countries';
-    const usaSelected  = country && isUSA(selectedName);
+    let url = SERVICES_URL + '?provider=' + PROVIDER;
+    if (country) url += '&country=' + encodeURIComponent(country);
 
-    async function fetchForCode(code) {
-        let url = SERVICES_URL + '?server=' + currentServer + '&provider=' + currentProvider;
-        if (code) url += '&country=' + encodeURIComponent(code);
-        const res = await fetch(url, {
+    try {
+        const res  = await fetch(url, {
             credentials: 'same-origin',
             headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
         });
-        if (!res.ok) return null;
-        return await res.json();
-    }
+        if (!res.ok) { showState('error', 'API error (' + res.status + ').'); return; }
+        const data = await res.json();
 
-    function mapServices(data, label, code) {
-        return (data?.success && Array.isArray(data.data)) ? data.data.map(s => {
-            // When fetched without a country, API returns best_country_code
-            const bestCode = s.best_country_code ? String(s.best_country_code) : code;
-            const bestName = s.best_country_name
-                || (bestCode && countriesCache[bestCode]?.name)
-                || label
-                || 'International';
-            return {
-                serviceId:   String(s.serviceId ?? ''),
-                name:        s.name ?? '',
-                apiPrice:    parseFloat(s.cost_ngn ?? 0),
-                count:       parseInt(s.count ?? 0, 10),
-                country:     bestName,
-                countryCode: bestCode,
-                _provider:   currentProvider,
-            };
-        }) : [];
-    }
-
-    try {
-        let primaryData = await fetchForCode(country);
-        if (!primaryData) { showState('error', 'API error.'); return; }
-
-        let services = mapServices(primaryData, displayLabel, country || '');
-
-        if (usaSelected) {
-            // For USA: keep all USA services AND add Canada's WhatsApp as a fallback
-            // (Canada numbers work for US WhatsApp verification)
-            try {
-                const canadaCode = findCountryCodeByPredicate(isCanada);
-                if (canadaCode && canadaCode !== country) {
-                    const canadaData     = await fetchForCode(canadaCode);
-                    const canadaAll      = mapServices(canadaData, displayLabel, country || '');
-                    const canadaWhatsApp = canadaAll.filter(s => isWhatsApp(s.name));
-                    const existingIds    = new Set(services.map(s => s.serviceId));
-                    // Add Canada WhatsApp variants not already in USA list
-                    canadaWhatsApp.forEach(s => {
-                        if (!existingIds.has(s.serviceId)) {
-                            services.push(s);
-                            existingIds.add(s.serviceId);
-                        }
-                    });
-                }
-            } catch(e) { /* ignore */ }
-
-        } else if (country && isCanada(selectedName)) {
-            // Canada selected: also merge all USA services
-            try {
-                const usaCode = findCountryCodeByPredicate(isUSA);
-                if (usaCode && usaCode !== country) {
-                    const usaData       = await fetchForCode(usaCode);
-                    const usaAll        = mapServices(usaData, displayLabel, country || '');
-                    const existingIds   = new Set(services.map(s => s.serviceId));
-                    usaAll.forEach(s => {
-                        if (!existingIds.has(s.serviceId)) {
-                            services.push(s);
-                            existingIds.add(s.serviceId);
-                        }
-                    });
-                }
-            } catch(e) { /* ignore */ }
+        if (!data.success) {
+            showState('empty', data.message || 'No services available.');
+            return;
         }
 
-        if (services.length) {
-            allServices = services;
+        const selectedName = country ? (countriesCache[country]?.name || 'Selected Country') : 'All Countries';
+
+        allServices = (data.data || []).map(s => ({
+            serviceId:   String(s.serviceId ?? ''),
+            name:        s.name ?? s.serviceId ?? '',
+            apiPrice:    parseFloat(s.cost_ngn ?? (parseFloat(s.cost_usd ?? s.cost ?? 0) * USD_TO_NGN)),
+            costUsd:     parseFloat(s.cost_usd ?? s.cost ?? 0),
+            count:       parseInt(s.count ?? 0, 10),
+            country:     selectedName,
+            countryCode: country || '',
+        }));
+
+        if (allServices.length) {
             applyFilter();
         } else {
-            allServices = [];
-            showState('empty', primaryData.message || 'No services available for this selection.');
+            showState('empty', 'No services available for this selection.');
         }
     } catch(e) {
         console.error('Services error:', e);
@@ -568,22 +415,35 @@ async function loadServices() {
     }
 }
 
+// ── Search helpers ────────────────────────────────────────────────────────────
+let searchDebounceTimer = null;
+function handleSearchInput() {
+    const q = document.getElementById('svc-search').value;
+    document.getElementById('svc-search-clear').classList.toggle('hidden', q.length === 0);
+    clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = setTimeout(applyFilter, 200);
+}
+function clearSearch() {
+    document.getElementById('svc-search').value = '';
+    document.getElementById('svc-search-clear').classList.add('hidden');
+    applyFilter();
+    document.getElementById('svc-search').focus();
+}
+
 // ── Filter + render ───────────────────────────────────────────────────────────
 function applyFilter() {
-    const q       = document.getElementById('svc-search').value.toLowerCase().trim();
-    const sort    = document.getElementById('svc-sort').value;
-    const country = document.getElementById('country-select').value;
+    const q    = document.getElementById('svc-search').value.toLowerCase().trim();
+    const sort = document.getElementById('svc-sort').value;
 
     let list = allServices.filter(s => {
         if (!q) return true;
-        const name = (s.name ?? '').toLowerCase();
-        const c    = (s.country ?? '').toLowerCase();
-        return name.includes(q) || c.includes(q);
+        return (s.name ?? '').toLowerCase().includes(q) || (s.country ?? '').toLowerCase().includes(q);
     });
 
-    if (sort === 'price_asc')  list.sort((a,b) => (a.apiPrice||0) - (b.apiPrice||0));
-    if (sort === 'price_desc') list.sort((a,b) => (b.apiPrice||0) - (a.apiPrice||0));
-    if (sort === 'name')       list.sort((a,b) => (a.name||'').localeCompare(b.name||''));
+    if (sort === 'price_asc')   list.sort((a,b) => (a.apiPrice||0) - (b.apiPrice||0));
+    else if (sort === 'price_desc') list.sort((a,b) => (b.apiPrice||0) - (a.apiPrice||0));
+    else if (sort === 'count_desc') list.sort((a,b) => (b.count||0) - (a.count||0));
+    else list.sort((a,b) => (a.name||'').localeCompare(b.name||''));
 
     renderServices(list);
 }
@@ -607,60 +467,75 @@ function renderServices(list) {
     grid.classList.remove('hidden');
     count.textContent = list.length + ' service' + (list.length !== 1 ? 's' : '');
 
-    // Group by country
-    const grouped = {};
-    list.forEach(s => {
-        const key = s.country || 'Unknown';
-        if (!grouped[key]) grouped[key] = { countryCode: s.countryCode, services: [] };
-        grouped[key].services.push(s);
-    });
-
-    grid.innerHTML = Object.entries(grouped).map(([country, g]) => {
-        const code  = g.countryCode;
-        const info  = countriesCache[code] || {};
-        const emoji = info.iso ? flagEmoji(info.iso) : '🌍';
-        const rows  = g.services.map(s => buildCard(s, country, emoji)).join('');
-        return `
-        <div class="mb-2">
+    // When a country is selected, show flat grid; otherwise group by name initial
+    const country = document.getElementById('country-select').value;
+    if (country) {
+        // Single country view — flat grid
+        const countryName = countriesCache[country]?.name || 'Selected Country';
+        const iso = countriesCache[country]?.iso || '';
+        const emoji = flagEmoji(iso);
+        grid.innerHTML = `
+        <div>
             <div class="flex items-center gap-2 mb-2 px-1">
                 <span class="text-base">${emoji}</span>
-                <h3 class="font-semibold text-slate-300 text-sm">${escHtml(country)}</h3>
-                <span class="text-[11px] bg-slate-700/60 text-slate-400 px-2 py-0.5 rounded-full">${g.services.length}</span>
+                <h3 class="font-semibold text-slate-300 text-sm">${escHtml(countryName)}</h3>
+                <span class="text-[11px] bg-slate-700/60 text-slate-400 px-2 py-0.5 rounded-full">${list.length}</span>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                ${rows}
+                ${list.map(s => buildCard(s, countryName, emoji)).join('')}
             </div>
         </div>`;
-    }).join('');
+    } else {
+        // All countries — flat grid, no grouping
+        grid.innerHTML = `
+        <div>
+            <div class="flex items-center gap-2 mb-2 px-1">
+                <span class="text-base">🌍</span>
+                <h3 class="font-semibold text-slate-300 text-sm">All Countries</h3>
+                <span class="text-[11px] bg-slate-700/60 text-slate-400 px-2 py-0.5 rounded-full">${list.length}</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                ${list.map(s => buildCard(s, 'All Countries', '🌍')).join('')}
+            </div>
+        </div>`;
+    }
 }
 
-// Deterministic avatar color from service id
 const AVATAR_COLORS = [
     '#6366f1','#8b5cf6','#ec4899','#f59e0b',
     '#10b981','#3b82f6','#ef4444','#14b8a6',
     '#f97316','#06b6d4','#a855f7','#84cc16',
 ];
 function avatarColor(str) {
-    const h = (str || '').split('').reduce((a,c) => a + c.charCodeAt(0), 0);
+    const h = (str||'').split('').reduce((a,c)=>a+c.charCodeAt(0),0);
     return AVATAR_COLORS[h % AVATAR_COLORS.length];
 }
+function flagEmoji(iso) {
+    if (!iso || iso.length !== 2) return '🌍';
+    return iso.toUpperCase().split('').map(c => String.fromCodePoint(c.charCodeAt(0) - 65 + 0x1F1E6)).join('');
+}
+function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
-function buildCard(s, countryName, emoji) {
-    const id         = s.serviceId ?? '';
-    const name       = s.name ?? id;
-    const apiPrice   = parseFloat(s.apiPrice ?? 0);
-    const commission = calcCommission(apiPrice);
-    const total      = Math.round((apiPrice + commission) * 100) / 100;
-    const country    = s.country ?? countryName;
-    const code       = s.countryCode ?? '';
-    const stock      = parseInt(s.count ?? 0, 10);
-    const color      = avatarColor(id);
-    const initial    = (name[0] || '?').toUpperCase();
-    const priceStr   = total > 0
+function calcCommission(price) {
+    if (COMM_VALUE <= 0) return 0;
+    return COMM_TYPE === 'percent' ? Math.round(price * COMM_VALUE / 100 * 100) / 100 : COMM_VALUE;
+}
+
+function buildCard(s) {
+    const id       = s.serviceId ?? '';
+    const name     = s.name ?? id;
+    const apiPrice = parseFloat(s.apiPrice ?? 0);
+    const comm     = calcCommission(apiPrice);
+    const total    = Math.round((apiPrice + comm) * 100) / 100;
+    const stock    = parseInt(s.count ?? 0, 10);
+    const color    = avatarColor(id);
+    const initial  = (name[0] || '?').toUpperCase();
+    const priceStr = total > 0
         ? '₦' + total.toLocaleString('en-NG', {minimumFractionDigits: 0, maximumFractionDigits: 0})
         : 'Free';
 
-    // Stock pill: green if plenty, yellow if low, red if critical
     const stockColor = stock > 100 ? 'text-emerald-400 bg-emerald-400/10'
                      : stock > 10  ? 'text-yellow-400 bg-yellow-400/10'
                      : stock > 0   ? 'text-red-400 bg-red-400/10'
@@ -669,43 +544,26 @@ function buildCard(s, countryName, emoji) {
 
     return `
     <div class="service-card group flex items-center gap-3 bg-[#0d1526] border border-slate-700/40 rounded-xl px-4 py-3 hover:border-brand/50 hover:bg-[#111d35] transition-all cursor-default">
-
-        <!-- Avatar -->
         <div class="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center text-white font-bold text-sm select-none" style="background:${color}20;color:${color};border:1.5px solid ${color}40">
             ${initial}
         </div>
-
-        <!-- Info -->
         <div class="flex-1 min-w-0">
             <p class="font-semibold text-white text-[13px] truncate leading-tight">${escHtml(name)}</p>
-            <div class="flex items-center gap-1.5 mt-0.5 flex-wrap">
-                <span class="text-xs">${emoji}</span>
-                <span class="text-[11px] text-slate-400 truncate max-w-[90px]">${escHtml(country)}</span>
-                <span class="text-slate-700 text-[10px]">·</span>
+            <div class="flex items-center gap-1.5 mt-0.5">
                 <span class="text-[11px] font-medium px-1.5 py-px rounded-full ${stockColor}">${stockLabel}</span>
+                <span class="text-slate-700 text-[10px]">·</span>
+                <span class="text-[11px] text-slate-500 font-mono">~${s.costUsd > 0 ? '$' + parseFloat(s.costUsd).toFixed(2) : 'free'}</span>
             </div>
         </div>
-
-        <!-- Price + Button -->
         <div class="flex-shrink-0 flex flex-col items-end gap-1.5">
             <span class="text-brand font-bold text-sm tabular-nums">${priceStr}</span>
-            <button onclick="openModalFromData(this)"
-                data-id="${escHtml(id)}"
-                data-name="${escHtml(name)}"
-                data-price="${apiPrice}"
-                data-country="${escHtml(country)}"
-                data-code="${escHtml(code)}"
+            <button onclick="openModal('${escHtml(id)}','${escHtml(name)}',${apiPrice},'${escHtml(s.country||'')}','${escHtml(s.countryCode||'')}')"
                 class="rent-btn text-white text-[11px] font-bold px-3 py-1 rounded-lg flex items-center gap-1 whitespace-nowrap">
                 Buy
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
             </button>
         </div>
-
     </div>`;
-}
-
-function escHtml(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 // ── State placeholder ─────────────────────────────────────────────────────────
@@ -715,7 +573,6 @@ function showState(type, msg) {
     grid.classList.add('hidden');
     state.classList.remove('hidden');
     document.getElementById('svc-count').textContent = '';
-
     if (type === 'loading') {
         state.innerHTML = `<div class="w-10 h-10 border-4 border-brand border-t-transparent rounded-full animate-spin mb-4"></div><p class="text-slate-400 text-sm">Loading services…</p>`;
     } else if (type === 'empty') {
@@ -726,26 +583,14 @@ function showState(type, msg) {
 }
 
 // ── Confirmation modal ────────────────────────────────────────────────────────
-function openModalFromData(btn) {
-    openModal(btn.dataset.id, btn.dataset.name, parseFloat(btn.dataset.price), btn.dataset.country, btn.dataset.code);
-}
-
-function calcCommission(price) {
-    if (COMM_VALUE <= 0) return 0;
-    return COMM_TYPE === 'percent' ? Math.round(price * COMM_VALUE / 100 * 100) / 100 : COMM_VALUE;
-}
-
 function openModal(serviceId, serviceName, price, country, countryCode) {
-    const commission = calcCommission(price);
-    const total      = Math.round((price + commission) * 100) / 100;
+    const comm  = calcCommission(price);
+    const total = Math.round((price + comm) * 100) / 100;
 
     document.getElementById('modal-svc-name').textContent = serviceName;
-    document.getElementById('modal-country').textContent  = country;
-
-    const priceEl = document.getElementById('modal-price');
-    priceEl.textContent = total > 0 ? '₦' + total.toLocaleString('en-NG', { minimumFractionDigits: 2 }) : 'Free';
-
-    document.getElementById('modal-balance').textContent  = '₦' + walletBalance.toLocaleString('en-NG', { minimumFractionDigits: 2 });
+    document.getElementById('modal-country').textContent  = country || 'All Countries';
+    document.getElementById('modal-price').textContent    = total > 0 ? '₦' + total.toLocaleString('en-NG', {minimumFractionDigits: 2}) : 'Free';
+    document.getElementById('modal-balance').textContent  = '₦' + walletBalance.toLocaleString('en-NG', {minimumFractionDigits: 2});
 
     const warn = document.getElementById('modal-warn');
     const btn  = document.getElementById('rent-confirm-btn');
@@ -759,9 +604,6 @@ function openModal(serviceId, serviceName, price, country, countryCode) {
         btn.classList.remove('opacity-50','cursor-not-allowed');
     }
 
-    document.getElementById('f-provider').value   = currentProvider;
-    // grizzlysms, herosms and fivesim use their own servers — pass 'server2' as a neutral fallback
-    document.getElementById('f-server').value     = (currentProvider === 'herosms' || currentProvider === 'fivesim' || currentProvider === 'grizzlysms') ? 'server2' : currentServer;
     document.getElementById('f-service-id').value = serviceId;
     document.getElementById('f-country').value    = countryCode;
     document.getElementById('f-price').value      = price;
@@ -772,20 +614,17 @@ function openModal(serviceId, serviceName, price, country, countryCode) {
     modal.classList.add('flex');
     document.body.style.overflow = 'hidden';
 }
-
 function closeModal() {
     const modal = document.getElementById('rent-modal');
     modal.classList.add('hidden');
     modal.classList.remove('flex');
     document.body.style.overflow = '';
 }
-
-document.getElementById('rent-form')?.addEventListener('submit', function () {
+document.getElementById('rent-form')?.addEventListener('submit', function() {
     const btn = document.getElementById('rent-confirm-btn');
     btn.innerHTML = '<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg> Processing…';
     btn.disabled = true;
 });
-
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 // ── SMS polling ───────────────────────────────────────────────────────────────
@@ -809,71 +648,71 @@ async function checkSmsOnce(orderId, btn) {
                 setTimeout(() => codeEl.classList.remove('animate-pulse'), 3000);
             }
             if (statusEl) {
-                statusEl.textContent = data.sms_code ? '✓ Code received!' : 'Waiting for SMS…';
+                if (data.status === 'completed') statusEl.textContent = '✅ SMS received!';
+                else if (data.status === 'cancelled') statusEl.textContent = '❌ Cancelled';
+                else statusEl.textContent = '⏳ Waiting for SMS…';
             }
             if (data.status === 'completed' || data.status === 'cancelled') {
-                const card = document.getElementById('active-card-' + orderId);
-                if (card) {
-                    card.classList.add('opacity-50');
-                    setTimeout(() => { card.remove(); updateActiveBadge(); }, 2000);
-                }
+                document.getElementById('active-card-' + orderId)?.classList.add('opacity-50');
             }
         }
     } catch(e) { console.error('SMS check error:', e); }
     finally {
-        if (btn) { setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 3000); }
+        if (btn) { btn.innerHTML = orig; btn.disabled = false; }
     }
 }
 
-function startPolling() {
-    if (pollInterval || !activeOrderIds.length) return;
-    // Run once immediately then every 5s
-    activeOrderIds.forEach(id => checkSmsOnce(id, null));
-    pollInterval = setInterval(() => {
-        activeOrderIds.forEach(id => checkSmsOnce(id, null));
-    }, 5000);
+async function pollActiveOrders() {
+    for (const id of activeOrderIds) {
+        try {
+            const res  = await fetch(`/dashboard/virtual-numbers/${id}/sms`, {
+                credentials: 'same-origin',
+                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            const data = await res.json();
+            if (data.success) {
+                const codeEl   = document.getElementById('sms-code-' + id);
+                const statusEl = document.getElementById('poll-status-' + id);
+                if (data.sms_code && codeEl && !codeEl.textContent.trim().replace('—','')) {
+                    codeEl.textContent = data.sms_code;
+                }
+                if (statusEl) {
+                    if (data.status === 'completed') statusEl.textContent = '✅ SMS received!';
+                    else if (data.status === 'cancelled') statusEl.textContent = '❌ Cancelled';
+                    else statusEl.textContent = '⏳ Waiting for SMS…';
+                }
+            }
+        } catch(e) { /* ignore */ }
+    }
 }
-
+function startPolling() {
+    if (activeOrderIds.length && !pollInterval) {
+        pollActiveOrders();
+        pollInterval = setInterval(pollActiveOrders, 5000);
+    }
+}
 function stopPolling() {
     if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
 }
 
-function copyText(elementId, btn) {
-    const el = document.getElementById(elementId);
+// ── Copy helper ───────────────────────────────────────────────────────────────
+function copyText(elId, btn) {
+    const el = document.getElementById(elId);
     if (!el) return;
     const text = el.textContent.trim();
-    if (text === '—' || text === 'Assigning…' || !text) return;
-    const orig      = btn.innerHTML;
-    const checkIcon = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
-    function markDone() { btn.innerHTML = checkIcon; setTimeout(() => { btn.innerHTML = orig; }, 2000); }
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(markDone).catch(() => fallbackCopyText(text, markDone));
-    } else {
-        fallbackCopyText(text, markDone);
-    }
-}
-function fallbackCopyText(text, cb) {
-    const ta = document.createElement('textarea');
-    ta.value = text; ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none;';
-    document.body.appendChild(ta); ta.focus(); ta.select();
-    try { document.execCommand('copy'); if (cb) cb(); } catch(e) {}
-    document.body.removeChild(ta);
-}
-
-function updateActiveBadge() {
-    const remaining = document.querySelectorAll('#active-orders-list > [id^="active-card-"]').length;
-    const badge = document.getElementById('active-badge');
-    if (badge) badge.textContent = remaining;
+    if (!text || text === '—') return;
+    navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = '<svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+        setTimeout(() => btn.innerHTML = orig, 1500);
+    });
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-    loadCountries();
-
-    // Auto-go to active tab if there are active orders and we just ordered
-    @if(session('success') && $activeOrders->count())
-    setTimeout(() => switchTab('active'), 300);
-    @endif
-});
+loadCountries();
+if (activeOrderIds.length) {
+    startPolling();
+}
 </script>
+@endpush
 @endsection

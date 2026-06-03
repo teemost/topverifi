@@ -20,16 +20,11 @@ class VirtualNumberController extends Controller
         $enabled = Setting::get('virtual_number_enabled', '1') === '1';
 
         $grizzlyConfigured = (new GrizzlySmsService())->isConfigured();
-        $fiveSimConfigured = (new FiveSimService())->isConfigured();
-        $heroSmsConfigured = (new HeroSmsService())->isConfigured();
-        $configured        = $grizzlyConfigured || $fiveSimConfigured || $heroSmsConfigured;
+        $configured        = $grizzlyConfigured;
 
-        $availableProviders = [];
-        if ($grizzlyConfigured) $availableProviders[] = ['key' => 'grizzlysms', 'label' => 'Server 1'];
-        if ($fiveSimConfigured) $availableProviders[] = ['key' => 'fivesim',    'label' => 'Server 2'];
-        if ($heroSmsConfigured) $availableProviders[] = ['key' => 'herosms',    'label' => 'Server 3'];
-
-        $orders       = VirtualNumberOrder::where('user_id', auth()->id())->latest()->paginate(10);
+        $orders       = VirtualNumberOrder::where('user_id', auth()->id())
+                            ->where('provider', 'grizzlysms')
+                            ->latest()->paginate(10);
         $wallet       = Wallet::firstOrCreate(['user_id' => auth()->id()], ['balance' => 0]);
 
         $commissionType  = Setting::get('vn_commission_type', 'flat');
@@ -40,8 +35,33 @@ class VirtualNumberController extends Controller
         $historyOrders = $orders->getCollection()->filter(fn($o) => $o->status !== 'active');
 
         return view('dashboard.virtual-numbers', compact(
-            'enabled', 'configured', 'grizzlyConfigured', 'fiveSimConfigured', 'heroSmsConfigured',
-            'availableProviders', 'orders', 'wallet', 'commissionType', 'commissionValue', 'usdToNgn',
+            'enabled', 'configured', 'grizzlyConfigured',
+            'orders', 'wallet', 'commissionType', 'commissionValue', 'usdToNgn',
+            'activeOrders', 'historyOrders'
+        ));
+    }
+
+    public function server2()
+    {
+        $enabled = Setting::get('virtual_number_enabled', '1') === '1';
+
+        $heroSmsConfigured = (new HeroSmsService())->isConfigured();
+
+        $orders       = VirtualNumberOrder::where('user_id', auth()->id())
+                            ->where('provider', 'herosms')
+                            ->latest()->paginate(10);
+        $wallet       = Wallet::firstOrCreate(['user_id' => auth()->id()], ['balance' => 0]);
+
+        $commissionType  = Setting::get('vn_commission_type', 'flat');
+        $commissionValue = (float) Setting::get('vn_commission_value', '0');
+        $usdToNgn        = (float) Setting::get('usd_to_ngn_rate', '1600');
+
+        $activeOrders  = $orders->getCollection()->filter(fn($o) => $o->status === 'active');
+        $historyOrders = $orders->getCollection()->filter(fn($o) => $o->status !== 'active');
+
+        return view('dashboard.virtual-numbers-server2', compact(
+            'enabled', 'heroSmsConfigured',
+            'orders', 'wallet', 'commissionType', 'commissionValue', 'usdToNgn',
             'activeOrders', 'historyOrders'
         ));
     }

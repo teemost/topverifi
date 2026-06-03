@@ -14,6 +14,362 @@ class HeroSmsService
     private string $apiKey;
     private string $baseUrl = 'https://hero-sms.com/stubs/handler_api.php';
 
+    private const SERVICE_NAMES = [
+        'ab'  => 'Airbnb',
+        'am'  => 'Amazon',
+        'av'  => 'Avito',
+        'ay'  => 'AliExpress',
+        'az'  => 'Amazon',
+        'ba'  => 'Badoo',
+        'bb'  => 'Blizzard',
+        'bd'  => 'BandLab',
+        'bi'  => 'Binance',
+        'bk'  => 'Booking',
+        'bn'  => 'Binance',
+        'bo'  => 'Bolt',
+        'bt'  => 'BitCoin',
+        'bu'  => 'Bumble',
+        'bz'  => 'Bizznes',
+        'ca'  => 'Careem',
+        'cb'  => 'Coinbase',
+        'cc'  => 'Cash App',
+        'cf'  => 'Cloudflare',
+        'ci'  => 'Cian',
+        'ck'  => 'ClickUp',
+        'cl'  => 'Craigslist',
+        'cm'  => 'Clubmoss',
+        'cn'  => 'Canva',
+        'cp'  => 'Crypto.com',
+        'cs'  => 'Snapchat',
+        'dc'  => 'DoorDash',
+        'dl'  => 'Deliveroo',
+        'dm'  => 'DMarket',
+        'dn'  => 'Deezer',
+        'ds'  => 'Discord',
+        'dt'  => 'Dating',
+        'du'  => 'Dubsmash',
+        'dz'  => 'Dzen',
+        'ea'  => 'EA Sports',
+        'eb'  => 'eBay',
+        'ep'  => 'eBay',
+        'et'  => 'Etsy',
+        'ex'  => 'Exmo',
+        'ez'  => 'Ezzocard',
+        'fb'  => 'Facebook',
+        'fc'  => 'FoodClub',
+        'fd'  => 'Fiverr',
+        'fi'  => 'Fiverr',
+        'fk'  => 'Freelancer',
+        'fl'  => 'Freelancer',
+        'fm'  => 'FM Radio',
+        'fo'  => 'Foot Locker',
+        'ft'  => 'Fotostrana',
+        'fv'  => 'Fiver',
+        'ga'  => 'Google Ads',
+        'gb'  => 'Grab',
+        'gf'  => 'GreenFarm',
+        'gg'  => 'GaGa',
+        'gh'  => 'GitHub',
+        'gi'  => 'Grindr',
+        'gk'  => 'Gekko',
+        'gl'  => 'GitLab',
+        'gm'  => 'Gmail',
+        'gn'  => 'GreenMan',
+        'go'  => 'Google',
+        'gp'  => 'Google Pay',
+        'gr'  => 'Groupon',
+        'gs'  => 'Google Services',
+        'gt'  => 'GetApp',
+        'gu'  => 'Guru',
+        'gv'  => 'Google Voice',
+        'gy'  => 'Grubhub',
+        'hb'  => 'Habr',
+        'hh'  => 'HeadHunter',
+        'hm'  => 'H&M',
+        'hn'  => 'Honey',
+        'hp'  => 'HotPot',
+        'ht'  => 'Hitch',
+        'hv'  => 'Hive',
+        'hw'  => 'Huawei',
+        'hy'  => 'Hyundai',
+        'ia'  => 'Instagram Ads',
+        'ic'  => 'iCloud',
+        'ig'  => 'Instagram',
+        'im'  => 'iMessage',
+        'in'  => 'Indeed',
+        'iq'  => 'IQOption',
+        'is'  => 'iShot',
+        'it'  => 'iTunes',
+        'jk'  => 'Jike',
+        'jm'  => 'Jumia',
+        'kb'  => 'KuBit',
+        'kc'  => 'KuCoin',
+        'kk'  => 'Kakao',
+        'kr'  => 'Kraken',
+        'kt'  => 'Krait',
+        'ku'  => 'Kuaishou',
+        'kw'  => 'KiwiWallet',
+        'ky'  => 'KikMessenger',
+        'la'  => 'Lazada',
+        'lb'  => 'LeBonCoin',
+        'lc'  => 'LuckyCash',
+        'ld'  => 'LinkedIn',
+        'lf'  => 'Lyft',
+        'li'  => 'Line',
+        'lk'  => 'LinkedIn',
+        'lm'  => 'Lemon',
+        'ln'  => 'LinkedIn',
+        'lo'  => 'Lookout',
+        'lr'  => 'Lazr',
+        'ls'  => 'Lalafo',
+        'lt'  => 'Letgo',
+        'lv'  => 'Lovoo',
+        'lw'  => 'Lawgical',
+        'ma'  => 'Mail.ru',
+        'mb'  => 'MobiBase',
+        'mc'  => 'Microsoft',
+        'md'  => 'Mailchimp',
+        'me'  => 'Mercado',
+        'mf'  => 'MobFox',
+        'mg'  => 'MegaFon',
+        'mh'  => 'Mashup',
+        'mi'  => 'Mi (Xiaomi)',
+        'mk'  => 'Market',
+        'ml'  => 'Mail.ru',
+        'mm'  => 'Microsoft',
+        'mn'  => 'Monese',
+        'mo'  => 'Momo',
+        'mp'  => 'Moped',
+        'mr'  => 'Miro',
+        'ms'  => 'Microsoft',
+        'mt'  => 'Metaco',
+        'mu'  => 'MutualFund',
+        'mv'  => 'Movistar',
+        'mx'  => 'Mercado',
+        'my'  => 'MyLead',
+        'mz'  => 'Meizu',
+        'na'  => 'Napster',
+        'nb'  => 'Northbank',
+        'nc'  => 'NordVPN',
+        'nd'  => 'Nintendo',
+        'nf'  => 'Netflix',
+        'ni'  => 'Nike',
+        'nk'  => 'Nokia',
+        'nl'  => 'NordLayer',
+        'nm'  => 'Nium',
+        'no'  => 'Notion',
+        'np'  => 'Napier',
+        'ns'  => 'Nintendo Switch',
+        'nt'  => 'Neteller',
+        'nu'  => 'Nubank',
+        'nv'  => 'Nvidia',
+        'nw'  => 'NordWallet',
+        'nx'  => 'NordX',
+        'ny'  => 'Nayax',
+        'oa'  => 'OkadaAfrica',
+        'ob'  => 'OB Accounts',
+        'oc'  => 'OctaFX',
+        'od'  => 'Odnoklassniki',
+        'oe'  => 'OFX',
+        'of'  => 'OnlyFans',
+        'og'  => 'OG',
+        'oh'  => 'Ohm',
+        'oi'  => 'OI',
+        'ok'  => 'Odnoklassniki',
+        'ol'  => 'Olx',
+        'om'  => 'OLX',
+        'on'  => 'Ona',
+        'op'  => 'OpenAI',
+        'or'  => 'Orange',
+        'os'  => 'OsamuShip',
+        'ot'  => 'Other',
+        'ou'  => 'Outrider',
+        'ov'  => 'OVH',
+        'ow'  => 'Owlet',
+        'ox'  => 'OX',
+        'oy'  => 'Oyster',
+        'pa'  => 'PayPal',
+        'pb'  => 'Paytm',
+        'pc'  => 'PocketCard',
+        'pd'  => 'Pandora',
+        'pe'  => 'Perpay',
+        'pf'  => 'Pocketful',
+        'pg'  => 'PayGo',
+        'ph'  => 'Phemex',
+        'pi'  => 'Pinterest',
+        'pj'  => 'PJ',
+        'pk'  => 'PocketKnife',
+        'pl'  => 'PolyAI',
+        'pm'  => 'ProtonMail',
+        'pn'  => 'PineLabs',
+        'po'  => 'Poshmark',
+        'pp'  => 'PayPal',
+        'pr'  => 'Proton',
+        'ps'  => 'PlayStation',
+        'pt'  => 'Pinterest',
+        'pu'  => 'Pumu',
+        'pv'  => 'Paysafecard',
+        'pw'  => 'Powerbank',
+        'px'  => 'PaxFul',
+        'py'  => 'Paytm',
+        'qa'  => 'QA',
+        'qr'  => 'QR',
+        'rd'  => 'Reddit',
+        'ri'  => 'Riya',
+        'rk'  => 'Rakuten',
+        'rl'  => 'Revolut',
+        'rm'  => 'Rummy',
+        'ro'  => 'Robinhood',
+        'rp'  => 'Rapid',
+        'rs'  => 'Resy',
+        'rt'  => 'Rutube',
+        'ru'  => 'RuStore',
+        'rv'  => 'Revolut',
+        'rz'  => 'Razorpay',
+        'sa'  => 'Samsung',
+        'sb'  => 'Shopee',
+        'sc'  => 'Snapchat',
+        'sd'  => 'Shopify',
+        'se'  => 'SendBird',
+        'sf'  => 'Surfshark',
+        'sg'  => 'Signal',
+        'sh'  => 'Shopee',
+        'si'  => 'Signal',
+        'sk'  => 'Skype',
+        'sl'  => 'Slack',
+        'sm'  => 'SMS',
+        'sn'  => 'Sina',
+        'so'  => 'Shopify',
+        'sp'  => 'Spotify',
+        'sq'  => 'Square',
+        'sr'  => 'Stripe',
+        'ss'  => 'Samsung',
+        'st'  => 'Steam',
+        'su'  => 'Substack',
+        'sv'  => 'Skrill',
+        'sw'  => 'Sweatcoin',
+        'sx'  => 'SX',
+        'sy'  => 'Sympla',
+        'sz'  => 'Shazam',
+        'ta'  => 'Taobao',
+        'tb'  => 'Tubi',
+        'tc'  => 'TrueCaller',
+        'td'  => 'TikTok Shop',
+        'te'  => 'Telegram',
+        'tf'  => 'TrueFoundry',
+        'tg'  => 'Telegram',
+        'th'  => 'Thorn',
+        'ti'  => 'Tinder',
+        'tj'  => 'TJ',
+        'tk'  => 'TikTok',
+        'tl'  => 'Talabat',
+        'tm'  => 'Twitch',
+        'tn'  => 'Tantan',
+        'to'  => 'Tokopedia',
+        'tp'  => 'Tapatalk',
+        'tq'  => 'TQ',
+        'tr'  => 'Twitter / X',
+        'ts'  => 'TextShark',
+        'tt'  => 'TikTok',
+        'tu'  => 'Tumblr',
+        'tv'  => 'Twitch',
+        'tw'  => 'Twitter / X',
+        'tx'  => 'TextNow',
+        'ty'  => 'ToyCity',
+        'tz'  => 'Tazz',
+        'ub'  => 'Uber',
+        'uc'  => 'UCWeb',
+        'ud'  => 'Udemy',
+        'ue'  => 'UberEats',
+        'uf'  => 'UFO',
+        'ug'  => 'Upwork',
+        'uh'  => 'UHealth',
+        'ui'  => 'UI',
+        'uk'  => 'Uklon',
+        'ul'  => 'Ulmart',
+        'um'  => 'UM',
+        'un'  => 'Unnamed',
+        'uo'  => 'Uolo',
+        'up'  => 'Upwork',
+        'uq'  => 'UQ',
+        'ur'  => 'Urban',
+        'us'  => 'US',
+        'ut'  => 'Utair',
+        'uu'  => 'UU',
+        'uv'  => 'UV',
+        'uw'  => 'UW',
+        'ux'  => 'UX',
+        'uy'  => 'UY',
+        'uz'  => 'UZ',
+        'vb'  => 'Viber',
+        'vc'  => 'VKontakte',
+        'vg'  => 'VG',
+        'vi'  => 'Viber',
+        'vk'  => 'VKontakte',
+        'vl'  => 'VL',
+        'vm'  => 'Vimeo',
+        'vn'  => 'VN',
+        'vo'  => 'Vocalink',
+        'vp'  => 'VPN',
+        'vr'  => 'VR',
+        'vs'  => 'VS',
+        'vt'  => 'VT',
+        'vu'  => 'VU',
+        'vv'  => 'VV',
+        'vw'  => 'Volkswagen',
+        'vx'  => 'VX',
+        'vy'  => 'VY',
+        'vz'  => 'VZ',
+        'wa'  => 'WhatsApp',
+        'wb'  => 'WeBank',
+        'wc'  => 'WeChat',
+        'wd'  => 'WD',
+        'we'  => 'WeChat',
+        'wf'  => 'WF',
+        'wg'  => 'WG',
+        'wh'  => 'WH',
+        'wi'  => 'Wildberries',
+        'wj'  => 'WJ',
+        'wk'  => 'WK',
+        'wl'  => 'WL',
+        'wm'  => 'WM',
+        'wn'  => 'WN',
+        'wo'  => 'WO',
+        'wp'  => 'WordPress',
+        'wq'  => 'WQ',
+        'wr'  => 'WR',
+        'ws'  => 'WS',
+        'wt'  => 'WhatsApp Business',
+        'wu'  => 'WU',
+        'wv'  => 'WV',
+        'ww'  => 'WW',
+        'wx'  => 'WX',
+        'wy'  => 'WY',
+        'wz'  => 'WZ',
+        'xa'  => 'Xiaomi',
+        'xb'  => 'XBox',
+        'xi'  => 'Xiaomi',
+        'xm'  => 'XM',
+        'ya'  => 'Yandex',
+        'yk'  => 'Yandex',
+        'ym'  => 'YandexMoney',
+        'yo'  => 'YouTube',
+        'yt'  => 'YouTube',
+        'yu'  => 'YU',
+        'yy'  => 'YY',
+        'za'  => 'Zalo',
+        'zl'  => 'Zalo',
+        'zo'  => 'Zoom',
+        'zp'  => 'ZaloPay',
+        'zt'  => 'ZT',
+    ];
+
+    public static function serviceName(string $abbr): string
+    {
+        $key = strtolower(trim($abbr));
+        return self::SERVICE_NAMES[$key] ?? ucfirst($abbr);
+    }
+
     public function __construct()
     {
         $this->apiKey = trim(Setting::get('herosms_api_key', ''));
@@ -132,17 +488,16 @@ class HeroSmsService
     }
 
     /**
-     * Returns services available for a given country with pricing.
-     * Response: {"service_name":{"count":N,"cost":X.XX},...}
+     * Returns services for a specific country.
+     * Response: {"countryId": {"service": {"count":N,"cost":X.XX}, ...}}
      */
     public function getServices(?string $country = null): array
     {
-        $params = ['action' => 'getPrices'];
-        if ($country !== null && $country !== '') {
-            $params['country'] = $country;
+        if ($country === null || $country === '') {
+            return $this->getAllServices();
         }
 
-        $r = $this->call($params);
+        $r = $this->call(['action' => 'getPrices', 'country' => $country]);
         if (!$r['success']) return $r;
 
         $json = json_decode($r['body'], true);
@@ -152,28 +507,23 @@ class HeroSmsService
             return ['success' => false, 'message' => 'Unexpected services response.'];
         }
 
-        // If error JSON
         if (isset($json['title'])) {
             return ['success' => false, 'message' => $json['details'] ?? $json['title']];
         }
 
-        // When a country is specified, Hero-SMS wraps response as:
-        // {"countryId": {"service": {"count":N,"cost":X.XX,"physicalCount":N}, ...}}
-        // When no country, it's: {"service": {"countryId": {"count":N,...}, ...}}
-        // Detect the wrapped format by checking if the first value is itself a map of maps.
+        // Response is {"countryId": {"service_abbr": {"count":N,"cost":X}, ...}}
+        // Unwrap the country wrapper if present
         $firstValue = reset($json);
         if (is_array($firstValue) && !isset($firstValue['count']) && !isset($firstValue['cost'])) {
-            // Unwrap one level — use the first (and usually only) country block
             $json = $firstValue;
         }
 
-        // Convert to array of service objects
         $services = [];
-        foreach ($json as $name => $info) {
+        foreach ($json as $abbr => $info) {
             if (is_array($info) && isset($info['count']) && (int)($info['count']) > 0) {
                 $services[] = [
-                    'serviceId' => $name,
-                    'name'      => $name,
+                    'serviceId' => $abbr,
+                    'name'      => self::serviceName($abbr),
                     'count'     => (int) $info['count'],
                     'cost'      => (float) ($info['cost'] ?? 0),
                 ];
@@ -183,6 +533,86 @@ class HeroSmsService
         usort($services, fn($a, $b) => strcmp($a['name'], $b['name']));
 
         return ['success' => true, 'data' => $services];
+    }
+
+    /**
+     * Fetch ALL services across all countries, aggregating counts and using the min cost.
+     * Global response format: {"service_abbr": {"countryId": {"count":N,"cost":X}, ...}, ...}
+     */
+    public function getAllServices(): array
+    {
+        $r = $this->call(['action' => 'getPrices']);
+        if (!$r['success']) return $r;
+
+        $json = json_decode($r['body'], true);
+        if (!is_array($json)) {
+            $p = $this->parsePlain($r['body']);
+            if (!$p['ok']) return ['success' => false, 'message' => $p['detail'] ?: $p['code']];
+            return ['success' => false, 'message' => 'Unexpected services response.'];
+        }
+
+        if (isset($json['title'])) {
+            return ['success' => false, 'message' => $json['details'] ?? $json['title']];
+        }
+
+        // Detect format: global = {"abbr": {"countryId": {count,cost}}}
+        // country-scoped = {"countryId": {"abbr": {count,cost}}}
+        // We check if the first nested value has numeric string keys (country IDs)
+        $services = [];
+        $firstVal = reset($json);
+
+        if (is_array($firstVal)) {
+            $nestedFirst = reset($firstVal);
+            $isGlobal = is_array($nestedFirst) && isset($nestedFirst['count']);
+
+            if ($isGlobal) {
+                // Global format: {"abbr": {"countryId": {"count":N,"cost":X}, ...}, ...}
+                foreach ($json as $abbr => $byCountry) {
+                    if (!is_array($byCountry)) continue;
+                    $totalCount = 0;
+                    $minCost    = PHP_FLOAT_MAX;
+                    foreach ($byCountry as $countryData) {
+                        if (!is_array($countryData)) continue;
+                        $totalCount += (int) ($countryData['count'] ?? 0);
+                        $cost = (float) ($countryData['cost'] ?? 0);
+                        if ($cost > 0 && $cost < $minCost) $minCost = $cost;
+                    }
+                    if ($totalCount > 0) {
+                        $services[$abbr] = [
+                            'serviceId' => $abbr,
+                            'name'      => self::serviceName($abbr),
+                            'count'     => $totalCount,
+                            'cost'      => $minCost === PHP_FLOAT_MAX ? 0.0 : $minCost,
+                        ];
+                    }
+                }
+            } else {
+                // Country-scoped: {"countryId": {"abbr": {"count":N,"cost":X}}}
+                foreach ($json as $countryData) {
+                    if (!is_array($countryData)) continue;
+                    foreach ($countryData as $abbr => $info) {
+                        if (!is_array($info) || !isset($info['count'])) continue;
+                        $cnt  = (int) ($info['count'] ?? 0);
+                        $cost = (float) ($info['cost'] ?? 0);
+                        if (!isset($services[$abbr])) {
+                            $services[$abbr] = ['serviceId' => $abbr, 'name' => self::serviceName($abbr), 'count' => 0, 'cost' => PHP_FLOAT_MAX];
+                        }
+                        $services[$abbr]['count'] += $cnt;
+                        if ($cost > 0 && $cost < $services[$abbr]['cost']) {
+                            $services[$abbr]['cost'] = $cost;
+                        }
+                    }
+                }
+                foreach ($services as &$s) {
+                    if ($s['cost'] === PHP_FLOAT_MAX) $s['cost'] = 0.0;
+                }
+            }
+        }
+
+        $result = array_values(array_filter($services, fn($s) => $s['count'] > 0));
+        usort($result, fn($a, $b) => strcmp($a['name'], $b['name']));
+
+        return ['success' => true, 'data' => $result];
     }
 
     /**

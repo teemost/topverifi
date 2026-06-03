@@ -99,10 +99,30 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
             Wallet
         </a>
-        <a href="{{ route('dashboard.virtual-numbers') }}" class="sidebar-link {{ request()->routeIs('dashboard.virtual-numbers*') ? 'active' : '' }}">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-            Virtual Numbers
-        </a>
+        {{-- Virtual Numbers dropdown --}}
+        @php $vnActive = request()->routeIs('dashboard.virtual-numbers*'); @endphp
+        <div>
+            <button onclick="toggleVnMenu()" id="vn-menu-btn"
+                class="sidebar-link w-full justify-between {{ $vnActive ? 'active' : '' }}">
+                <span class="flex items-center gap-3">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    Virtual Numbers
+                </span>
+                <svg id="vn-chevron" class="w-3.5 h-3.5 flex-shrink-0 transition-transform duration-200 {{ $vnActive ? 'rotate-180' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div id="vn-submenu" class="ml-4 mt-0.5 space-y-0.5 {{ $vnActive ? '' : 'hidden' }}">
+                <a href="{{ route('dashboard.virtual-numbers') }}"
+                    class="sidebar-link text-xs {{ request()->routeIs('dashboard.virtual-numbers') && !request()->routeIs('dashboard.virtual-numbers.server2') ? 'active' : '' }}">
+                    <span class="w-1.5 h-1.5 rounded-full bg-current flex-shrink-0"></span>
+                    Server 1 — GrizzlySMS
+                </a>
+                <a href="{{ route('dashboard.virtual-numbers.server2') }}"
+                    class="sidebar-link text-xs {{ request()->routeIs('dashboard.virtual-numbers.server2') ? 'active' : '' }}">
+                    <span class="w-1.5 h-1.5 rounded-full bg-current flex-shrink-0"></span>
+                    Server 2 — HeroSMS
+                </a>
+            </div>
+        </div>
         <a href="{{ route('dashboard.boosting') }}" class="sidebar-link {{ request()->routeIs('dashboard.boosting*') ? 'active' : '' }}">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
             SMM Boosting
@@ -215,6 +235,13 @@ function closeMobileSidebar() {
     document.body.style.overflow = '';
 }
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMobileSidebar(); });
+function toggleVnMenu() {
+    var submenu = document.getElementById('vn-submenu');
+    var chevron = document.getElementById('vn-chevron');
+    var isHidden = submenu.classList.contains('hidden');
+    submenu.classList.toggle('hidden', !isHidden);
+    chevron.classList.toggle('rotate-180', isHidden);
+}
 function applyThemeIcons(theme) {
     var sun  = document.getElementById('icon-sun');
     var moon = document.getElementById('icon-moon');
