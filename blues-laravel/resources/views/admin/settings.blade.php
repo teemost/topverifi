@@ -289,6 +289,23 @@
                     min="1" step="1" placeholder="e.g. 1600" class="w-full">
                 <p class="text-xs text-slate-500 mt-1">Used to convert USD prices to Naira for display and billing. Update when the exchange rate changes.</p>
             </div>
+            {{-- Server 1 enable/disable toggle --}}
+            <div class="pt-4 border-t border-slate-700">
+                <label class="flex items-center gap-3 cursor-pointer">
+                    <div class="relative">
+                        <input type="checkbox" name="server1_enabled" value="1" id="server1-toggle"
+                            {{ $settings['server1_enabled'] === '1' ? 'checked' : '' }} class="sr-only">
+                        <div class="w-10 h-6 rounded-full transition-colors" id="server1-toggle-bg"
+                             style="background: {{ $settings['server1_enabled'] === '1' ? '#f97316' : '#475569' }}"></div>
+                        <div class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform" id="server1-toggle-dot"
+                             style="transform: {{ $settings['server1_enabled'] === '1' ? 'translateX(1rem)' : 'translateX(0)' }}"></div>
+                    </div>
+                    <div>
+                        <p class="text-sm text-white font-medium">Enable Server 1</p>
+                        <p class="text-xs text-slate-400">Turn Server 1 on or off independently without removing the API key</p>
+                    </div>
+                </label>
+            </div>
         </div>
     </div>
 
@@ -314,6 +331,23 @@
                     </button>
                 </div>
                 <p class="text-xs text-slate-500 mt-1">Obtain from your Server 2 provider account settings.</p>
+            </div>
+            {{-- Server 2 enable/disable toggle --}}
+            <div class="pt-4 border-t border-slate-700">
+                <label class="flex items-center gap-3 cursor-pointer">
+                    <div class="relative">
+                        <input type="checkbox" name="server2_enabled" value="1" id="server2-toggle"
+                            {{ $settings['server2_enabled'] === '1' ? 'checked' : '' }} class="sr-only">
+                        <div class="w-10 h-6 rounded-full transition-colors" id="server2-toggle-bg"
+                             style="background: {{ $settings['server2_enabled'] === '1' ? '#f97316' : '#475569' }}"></div>
+                        <div class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform" id="server2-toggle-dot"
+                             style="transform: {{ $settings['server2_enabled'] === '1' ? 'translateX(1rem)' : 'translateX(0)' }}"></div>
+                    </div>
+                    <div>
+                        <p class="text-sm text-white font-medium">Enable Server 2</p>
+                        <p class="text-xs text-slate-400">Turn Server 2 on or off independently without removing the API key</p>
+                    </div>
+                </label>
             </div>
         </div>
     </div>
@@ -616,6 +650,14 @@ document.getElementById('maintenance-toggle').addEventListener('change', functio
 document.getElementById('promo-banner-toggle').addEventListener('change', function() {
     document.getElementById('promo-toggle-bg').style.background  = this.checked ? '#f97316' : '#475569';
     document.getElementById('promo-toggle-dot').style.transform  = this.checked ? 'translateX(1.25rem)' : 'translateX(0)';
+});
+document.getElementById('server1-toggle').addEventListener('change', function() {
+    document.getElementById('server1-toggle-bg').style.background  = this.checked ? '#f97316' : '#475569';
+    document.getElementById('server1-toggle-dot').style.transform  = this.checked ? 'translateX(1rem)' : 'translateX(0)';
+});
+document.getElementById('server2-toggle').addEventListener('change', function() {
+    document.getElementById('server2-toggle-bg').style.background  = this.checked ? '#f97316' : '#475569';
+    document.getElementById('server2-toggle-dot').style.transform  = this.checked ? 'translateX(1rem)' : 'translateX(0)';
 });
 function toggleSecret() {
     const inp = document.getElementById('secret-key-input');

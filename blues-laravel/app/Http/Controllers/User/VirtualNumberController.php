@@ -17,7 +17,8 @@ class VirtualNumberController extends Controller
 {
     public function index()
     {
-        $enabled = Setting::get('virtual_number_enabled', '1') === '1';
+        $enabled  = Setting::get('virtual_number_enabled', '1') === '1';
+        $enabled  = $enabled && Setting::get('server1_enabled', '1') === '1';
 
         $grizzlyConfigured = (new GrizzlySmsService())->isConfigured();
         $configured        = $grizzlyConfigured;
@@ -43,7 +44,8 @@ class VirtualNumberController extends Controller
 
     public function server2()
     {
-        $enabled = Setting::get('virtual_number_enabled', '1') === '1';
+        $enabled  = Setting::get('virtual_number_enabled', '1') === '1';
+        $enabled  = $enabled && Setting::get('server2_enabled', '1') === '1';
 
         $heroSmsConfigured = (new HeroSmsService())->isConfigured();
 

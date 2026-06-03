@@ -24,6 +24,8 @@ class SettingsController extends Controller
             'boosting_markup_percent'  => Setting::get('boosting_markup_percent', '20'),
             'grizzlysms_api_key'       => Setting::get('grizzlysms_api_key', ''),
             'herosms_api_key'          => Setting::get('herosms_api_key', ''),
+            'server1_enabled'          => Setting::get('server1_enabled', '1'),
+            'server2_enabled'          => Setting::get('server2_enabled', '1'),
             'usd_to_ngn_rate'          => Setting::get('usd_to_ngn_rate', '1600'),
             'virtual_number_enabled'   => Setting::get('virtual_number_enabled', '1'),
             'whatsapp_number'          => Setting::get('whatsapp_number', ''),
@@ -71,6 +73,8 @@ class SettingsController extends Controller
             'boosting_markup_percent' => 'nullable|numeric|min:0|max:500',
             'grizzlysms_api_key'      => 'nullable|string',
             'herosms_api_key'         => 'nullable|string',
+            'server1_enabled'         => 'nullable|in:0,1',
+            'server2_enabled'         => 'nullable|in:0,1',
             'usd_to_ngn_rate'         => 'nullable|numeric|min:1',
             'virtual_number_enabled'  => 'nullable|in:0,1',
             'mail_mailer'             => 'nullable|string|in:smtp,sendmail,log',
@@ -115,6 +119,8 @@ class SettingsController extends Controller
         Setting::set('bank_transfer_enabled', $request->boolean('bank_transfer_enabled') ? '1' : '0');
         Setting::set('promo_banner_enabled', $request->boolean('promo_banner_enabled') ? '1' : '0');
         Setting::set('boosting_enabled', $request->boolean('boosting_enabled') ? '1' : '0');
+        Setting::set('server1_enabled', $request->boolean('server1_enabled') ? '1' : '0');
+        Setting::set('server2_enabled', $request->boolean('server2_enabled') ? '1' : '0');
 
         foreach ($keys as $key) {
             Setting::set($key, $request->input($key, ''));
