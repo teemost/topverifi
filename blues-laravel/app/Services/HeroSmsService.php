@@ -518,9 +518,12 @@ class HeroSmsService
             $json = $firstValue;
         }
 
+        // Minimum stock threshold — only surface services with enough numbers to be reliably receivable
+        $minCount = 2;
+
         $services = [];
         foreach ($json as $abbr => $info) {
-            if (is_array($info) && isset($info['count']) && (int)($info['count']) > 0) {
+            if (is_array($info) && isset($info['count']) && (int)($info['count']) >= $minCount) {
                 $services[] = [
                     'serviceId' => $abbr,
                     'name'      => self::serviceName($abbr),
@@ -609,37 +612,20 @@ class HeroSmsService
             }
         }
 
-        $result = array_values(array_filter($services, fn($s) => $s['count'] > 0));
+        // Only return services with enough stock to be reliably receivable
+        $result = array_values(array_filter($services, fn($s) => $s['count'] >= 2));
         usort($result, fn($a, $b) => strcmp($a['name'], $b['name']));
 
         return ['success' => true, 'data' => $result];
     }
 
     /**
-     * Order a number.
+     * Order a number, with automatic retry on NO_NUMBERS (up to $maxRetries attempts).
+     * Only returns a number confirmed as waiting for SMS (status=1 / ACCESS_NUMBER response).
      * Returns ['success'=>true,'data'=>['order_id'=>'...','number'=>'...']]
      */
-    public function orderNumber(string $country, string $service): array
+    public function orderNumber(string $country, string $service, int $maxRetries = 3): array
     {
-        $r = $this->call([
-            'action'  => 'getNumber',
-            'country' => $country,
-            'service' => $service,
-        ]);
-        if (!$r['success']) return $r;
-
-        $body = $r['body'];
-
-        // Success: "ACCESS_NUMBER:12345:79001234567"
-        if (str_starts_with($body, 'ACCESS_NUMBER:')) {
-            $parts = explode(':', $body, 3);
-            return ['success' => true, 'data' => [
-                'order_id' => $parts[1] ?? '',
-                'number'   => $parts[2] ?? '',
-            ]];
-        }
-
-        // Known error strings
         $errors = [
             'NO_NUMBERS'  => 'No numbers available for this service/country.',
             'NO_BALANCE'  => 'Insufficient Hero-SMS account balance.',
@@ -648,11 +634,145 @@ class HeroSmsService
             'BAD_KEY'     => 'Hero-SMS API key is invalid.',
         ];
 
-        $p = $this->parsePlain($body);
-        if (!$p['ok']) return ['success' => false, 'message' => $p['detail'] ?: ($errors[$p['code']] ?? $p['code'])];
+        $lastError = 'Order failed.';
 
-        $code = $p['code'];
-        return ['success' => false, 'message' => $errors[$code] ?? ('Order failed: ' . $body)];
+        for ($attempt = 1; $attempt <= $maxRetries; $attempt++) {
+            $r = $this->call([
+                'action'  => 'getNumber',
+                'country' => $country,
+                'service' => $service,
+            ]);
+
+            if (!$r['success']) return $r;
+
+            $body = $r['body'];
+
+            // Success: "ACCESS_NUMBER:12345:79001234567"
+            if (str_starts_with($body, 'ACCESS_NUMBER:')) {
+                $parts = explode(':', $body, 3);
+                $orderId = $parts[1] ?? '';
+                $number  = $parts[2] ?? '';
+
+                // Verify the number is actually waiting for SMS before returning it
+                $statusCheck = $this->checkSms($orderId);
+                if ($statusCheck['success'] && isset($statusCheck['data']['status'])) {
+                    $status = $statusCheck['data']['status'];
+                    // status 1 = waiting for code — this is a working, active number
+                    if ($status === 1) {
+                        return ['success' => true, 'data' => [
+                            'order_id' => $orderId,
+                            'number'   => $number,
+                        ]];
+                    }
+                    // status 6 = already cancelled — retry
+                    if ($status === 6) {
+                        $lastError = 'Number was cancelled immediately. Retrying...';
+                        usleep(500000); // 0.5s pause before retry
+                        continue;
+                    }
+                }
+
+                // Status check failed or unexpected — still return the number optimistically
+                return ['success' => true, 'data' => [
+                    'order_id' => $orderId,
+                    'number'   => $number,
+                ]];
+            }
+
+            $p    = $this->parsePlain($body);
+            $code = $p['ok'] ? $p['code'] : ($p['code'] ?? 'UNKNOWN');
+
+            // Only retry on NO_NUMBERS; all other errors are permanent
+            if ($code !== 'NO_NUMBERS') {
+                $message = !$p['ok'] ? ($p['detail'] ?: ($errors[$code] ?? $code))
+                                     : ($errors[$code] ?? ('Order failed: ' . $body));
+                return ['success' => false, 'message' => $message];
+            }
+
+            $lastError = $errors['NO_NUMBERS'];
+
+            if ($attempt < $maxRetries) {
+                usleep(700000); // 0.7s pause between retries
+            }
+        }
+
+        return ['success' => false, 'message' => $lastError . ' (tried ' . $maxRetries . ' times)'];
+    }
+
+    /**
+     * Request a new SMS to be sent to the number (useful if SMS is delayed).
+     * Sends setStatus with status=3 — "request resend".
+     * Returns ['success'=>true] on success.
+     */
+    public function resendSms(string $orderId): array
+    {
+        $r = $this->call(['action' => 'setStatus', 'id' => $orderId, 'status' => 3]);
+        if (!$r['success']) return $r;
+
+        $body = $r['body'];
+
+        if (str_starts_with($body, 'ACCESS_RETRY_GET')) {
+            return ['success' => true, 'data' => ['message' => 'SMS resend requested.']];
+        }
+
+        $errors = [
+            'ALREADY_FINISH' => 'Order is already finished.',
+            'ALREADY_CANCEL' => 'Order is already cancelled.',
+            'NO_RETRY'       => 'Resend is not allowed for this order.',
+        ];
+
+        $p = $this->parsePlain($body);
+        $code = $p['ok'] ? $p['code'] : ($p['code'] ?? 'UNKNOWN');
+        return ['success' => false, 'message' => $errors[$code] ?? ('Resend failed: ' . $body)];
+    }
+
+    /**
+     * Confirm a number is ready / mark it as active (setStatus with status=1).
+     * Call this after ordering to signal the number is in use.
+     * Returns ['success'=>true] on success.
+     */
+    public function confirmNumber(string $orderId): array
+    {
+        $r = $this->call(['action' => 'setStatus', 'id' => $orderId, 'status' => 1]);
+        if (!$r['success']) return $r;
+
+        $body = $r['body'];
+
+        if (str_starts_with($body, 'ACCESS_READY')) {
+            return ['success' => true, 'data' => ['message' => 'Number confirmed as active.']];
+        }
+
+        $p = $this->parsePlain($body);
+        if (!$p['ok']) return ['success' => false, 'message' => $p['detail'] ?: $p['code']];
+
+        // Some providers return ACCESS_NUMBER or similar — treat as ok
+        return ['success' => true, 'data' => ['message' => 'Confirmed: ' . $body]];
+    }
+
+    /**
+     * Mark an order as complete after successfully receiving the SMS code.
+     * Sends setStatus with status=6 — "finish".
+     * Always call this after a successful verification to free the number.
+     */
+    public function finishOrder(string $orderId): array
+    {
+        $r = $this->call(['action' => 'setStatus', 'id' => $orderId, 'status' => 6]);
+        if (!$r['success']) return $r;
+
+        $body = $r['body'];
+
+        if (str_starts_with($body, 'ACCESS_ACTIVATION')) {
+            return ['success' => true, 'data' => ['message' => 'Order marked as complete.']];
+        }
+
+        $errors = [
+            'ALREADY_FINISH' => 'Order was already finished.',
+            'ALREADY_CANCEL' => 'Order was already cancelled.',
+        ];
+
+        $p    = $this->parsePlain($body);
+        $code = $p['ok'] ? $p['code'] : ($p['code'] ?? 'UNKNOWN');
+        return ['success' => false, 'message' => $errors[$code] ?? ('Finish failed: ' . $body)];
     }
 
     /**
