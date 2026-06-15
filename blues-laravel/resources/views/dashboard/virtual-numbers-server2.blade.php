@@ -173,9 +173,12 @@
                 <form method="POST" action="{{ route('dashboard.virtual-numbers.cancel', $order->id) }}"
                     onsubmit="return confirm('Cancel this rental?')" class="flex-1">
                     @csrf @method('DELETE')
-                    <button type="submit" class="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-red-900/20 hover:bg-red-900/40 text-red-400 border border-red-700/30 rounded-xl text-sm font-semibold transition-colors">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                        Cancel
+                    <button type="submit"
+                        data-created-at="{{ $order->created_at->timestamp }}"
+                        disabled
+                        class="cancel-countdown-btn w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-colors">
+                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        <span class="cancel-btn-text">Cancel (<span class="cancel-countdown">2:00</span>)</span>
                     </button>
                 </form>
             </div>
@@ -304,6 +307,24 @@
 }
 .rent-btn:hover { opacity: 0.9; transform: scale(1.02); }
 .rent-btn:active { transform: scale(0.98); }
+
+/* Cancel countdown button */
+.cancel-countdown-btn:disabled {
+    background: rgba(51, 65, 85, 0.4);
+    color: rgb(100, 116, 139);
+    border: 1px solid rgba(71, 85, 105, 0.3);
+    cursor: not-allowed;
+    opacity: 1;
+}
+.cancel-countdown-btn:not(:disabled) {
+    background: rgba(127, 29, 29, 0.2);
+    color: rgb(248, 113, 113);
+    border: 1px solid rgba(185, 28, 28, 0.3);
+    cursor: pointer;
+}
+.cancel-countdown-btn:not(:disabled):hover {
+    background: rgba(127, 29, 29, 0.4);
+}
 </style>
 
 @push('scripts')
@@ -708,11 +729,45 @@ function copyText(elId, btn) {
     });
 }
 
+// ── Cancel countdown ──────────────────────────────────────────────────────────
+function initCancelCountdowns() {
+    const WAIT_MS = 2 * 60 * 1000; // 2 minutes
+    document.querySelectorAll('.cancel-countdown-btn[data-created-at]').forEach(btn => {
+        if (btn.dataset.countdownStarted) return;
+        btn.dataset.countdownStarted = '1';
+
+        const createdAt = parseInt(btn.dataset.createdAt) * 1000;
+
+        function tick() {
+            const remaining = Math.max(0, WAIT_MS - (Date.now() - createdAt));
+            const totalSecs = Math.ceil(remaining / 1000);
+            const mins = Math.floor(totalSecs / 60);
+            const secs = totalSecs % 60;
+
+            const countdownEl = btn.querySelector('.cancel-countdown');
+            const labelEl     = btn.querySelector('.cancel-btn-text');
+
+            if (remaining <= 0) {
+                btn.disabled = false;
+                if (labelEl) labelEl.innerHTML = 'Cancel';
+                return;
+            }
+
+            if (countdownEl) {
+                countdownEl.textContent = mins + ':' + String(secs).padStart(2, '0');
+            }
+            setTimeout(tick, 1000);
+        }
+        tick();
+    });
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 loadCountries();
 if (activeOrderIds.length) {
     startPolling();
 }
+initCancelCountdowns();
 </script>
 @endpush
 @endsection
