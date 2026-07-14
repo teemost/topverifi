@@ -1,0 +1,62 @@
+Act as a senior Laravel 12 and PHP 8.3 backend engineer.
+
+Analyze my Laravel project that integrates with the Hero-SMS API for purchasing WhatsApp verification numbers.
+
+There is an issue where the API frequently returns numbers with a "restricted" status, and these numbers are still being processed or shown to users.
+
+Your objectives:
+
+- Review the entire Hero-SMS integration, including controllers, services, jobs, routes, middleware, models, and configuration.
+- Refactor the integration to follow Laravel best practices by creating a dedicated "HeroSmsService" class if one does not already exist.
+- Parse every API response correctly and handle all possible statuses, including:
+  - success
+  - restricted
+  - unavailable
+  - banned
+  - sold
+  - expired
+  - invalid
+  - pending
+  - failed
+- Never assign or display numbers whose status is "restricted".
+- If a restricted or unavailable number is returned:
+  - Automatically request another number (up to a configurable retry limit).
+  - Apply exponential backoff between retries.
+  - Stop after the retry limit is reached and return a meaningful error message.
+- Handle:
+  - HTTP exceptions
+  - API timeouts
+  - Rate limiting
+  - Invalid JSON responses
+  - Empty responses
+  - Network failures
+- Store all Hero-SMS credentials in the ".env" file and access them only through Laravel's configuration system.
+- Add comprehensive logging using Laravel's logging facilities, including:
+  - Request timestamps
+  - API endpoint
+  - HTTP status
+  - API response
+  - Retry count
+  - Error details
+- Improve performance by using dependency injection, configuration files, queues where appropriate, and clean service architecture.
+- Ensure the code follows SOLID principles and Laravel coding conventions.
+- Add feature and unit tests covering:
+  - Successful purchases
+  - Restricted numbers
+  - Retry logic
+  - API failures
+  - Rate limiting
+  - Timeout scenarios
+- Remove duplicate or dead code.
+- Keep the existing UI and routes working without breaking compatibility.
+- Document every code change with clear comments.
+
+At the end, generate a report that explains:
+
+1. The root cause of the issue.
+2. The files that were modified.
+3. The improvements made.
+4. Any remaining limitations caused by the Hero-SMS API itself.
+5. Recommendations for improving reliability and maintainability.
+
+Do not attempt to bypass or circumvent restrictions imposed by the Hero-SMS API. The goal is to make the Laravel application correctly detect and handle legitimate API responses.
