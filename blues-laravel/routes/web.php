@@ -183,6 +183,11 @@ Route::middleware(\App\Http\Middleware\AdminAuth::class)->prefix('admin')->name(
     Route::post('/virtual-numbers/{order}/status',             [VirtualNumberOrdersController::class, 'updateStatus'])->name('virtual-numbers.status');
     Route::delete('/virtual-numbers/{order}',                  [VirtualNumberOrdersController::class, 'destroy'])->name('virtual-numbers.destroy');
 
+    // Purchase Error Logs
+    Route::get('/purchase-errors',                             [\App\Http\Controllers\Admin\PurchaseErrorLogsController::class, 'index'])->name('purchase-errors');
+    Route::delete('/purchase-errors/clear',                    [\App\Http\Controllers\Admin\PurchaseErrorLogsController::class, 'clearAll'])->name('purchase-errors.clear');
+    Route::delete('/purchase-errors/{log}',                    [\App\Http\Controllers\Admin\PurchaseErrorLogsController::class, 'destroy'])->name('purchase-errors.destroy');
+
     Route::get('/announcements',  [AnnouncementsController::class, 'index'])->name('announcements');
     Route::post('/announcements', [AnnouncementsController::class, 'store'])->name('announcements.store');
 

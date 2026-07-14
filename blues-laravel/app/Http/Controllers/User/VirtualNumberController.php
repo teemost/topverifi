@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\PurchaseErrorLog;
 use App\Models\Setting;
 use App\Models\VirtualNumberOrder;
 use App\Models\Wallet;
@@ -180,6 +181,9 @@ class VirtualNumberController extends Controller
 
         $enabled = Setting::get('virtual_number_enabled', '1') === '1';
         if (!$enabled) {
+            PurchaseErrorLog::record('system', 'order', 'Virtual numbers are currently unavailable.', [
+                'provider' => $request->provider,
+            ], auth()->id());
             return back()->with('error', 'Virtual numbers are currently unavailable.');
         }
 
@@ -191,6 +195,11 @@ class VirtualNumberController extends Controller
         $cost       = round($apiCost + $commission, 2);
 
         if ($cost > 0 && $wallet->balance < $cost) {
+            PurchaseErrorLog::record($request->provider, 'order', 'Insufficient wallet balance.', [
+                'service'  => $request->service_id,
+                'required' => $cost,
+                'balance'  => $wallet->balance,
+            ], auth()->id());
             return back()->with('error', 'Insufficient wallet balance. Please top up your wallet.');
         }
 
@@ -205,11 +214,16 @@ class VirtualNumberController extends Controller
     {
         $svc = new GrizzlySmsService();
         if (!$svc->isConfigured()) {
+            PurchaseErrorLog::record('grizzlysms', 'order', 'GrizzlySMS API not configured.', [], auth()->id());
             return back()->with('error', 'Virtual number service is currently unavailable. Please try again later.');
         }
 
         $result = $svc->orderNumber($request->country ?? '', $request->service_id);
         if (!$result['success']) {
+            PurchaseErrorLog::record('grizzlysms', 'order', $result['message'], [
+                'country' => $request->country,
+                'service' => $request->service_id,
+            ], auth()->id());
             return back()->with('error', $result['message']);
         }
 
@@ -249,11 +263,16 @@ class VirtualNumberController extends Controller
     {
         $svc = new FiveSimService();
         if (!$svc->isConfigured()) {
+            PurchaseErrorLog::record('fivesim', 'order', '5sim API not configured.', [], auth()->id());
             return back()->with('error', 'Virtual number service is currently unavailable. Please try again later.');
         }
 
         $result = $svc->orderNumber($request->country ?? '', $request->service_id);
         if (!$result['success']) {
+            PurchaseErrorLog::record('fivesim', 'order', $result['message'], [
+                'country' => $request->country,
+                'service' => $request->service_id,
+            ], auth()->id());
             return back()->with('error', $result['message']);
         }
 
@@ -293,11 +312,16 @@ class VirtualNumberController extends Controller
     {
         $svc = new HeroSmsService();
         if (!$svc->isConfigured()) {
+            PurchaseErrorLog::record('herosms', 'order', 'Hero-SMS API not configured.', [], auth()->id());
             return back()->with('error', 'Virtual number service is currently unavailable. Please try again later.');
         }
 
         $result = $svc->orderNumber($request->country ?? '', $request->service_id);
         if (!$result['success']) {
+            PurchaseErrorLog::record('herosms', 'order', $result['message'], [
+                'country' => $request->country,
+                'service' => $request->service_id,
+            ], auth()->id());
             return back()->with('error', $result['message']);
         }
 
@@ -468,6 +492,10 @@ class VirtualNumberController extends Controller
             return back()->with('success', 'Order cancelled and wallet refunded.');
         }
 
+        PurchaseErrorLog::record('grizzlysms', 'cancel', $result['message'] ?? 'Could not cancel order.', [
+            'order_id' => $order->id,
+            'external_order_id' => $order->external_order_id,
+        ], $order->user_id);
         return back()->with('error', $result['message'] ?? 'Could not cancel order.');
     }
 
@@ -488,6 +516,10 @@ class VirtualNumberController extends Controller
             return back()->with('success', 'Order cancelled and wallet refunded.');
         }
 
+        PurchaseErrorLog::record('fivesim', 'cancel', $result['message'] ?? 'Could not cancel order.', [
+            'order_id' => $order->id,
+            'external_order_id' => $order->external_order_id,
+        ], $order->user_id);
         return back()->with('error', $result['message'] ?? 'Could not cancel order.');
     }
 
@@ -508,6 +540,10 @@ class VirtualNumberController extends Controller
             return back()->with('success', 'Order cancelled and wallet refunded.');
         }
 
+        PurchaseErrorLog::record('herosms', 'cancel', $result['message'] ?? 'Could not cancel order.', [
+            'order_id' => $order->id,
+            'external_order_id' => $order->external_order_id,
+        ], $order->user_id);
         return back()->with('error', $result['message'] ?? 'Could not cancel order.');
     }
 
