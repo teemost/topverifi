@@ -296,10 +296,7 @@ class VirtualNumberController extends Controller
             return back()->with('error', 'Virtual number service is currently unavailable. Please try again later.');
         }
 
-        $country  = $request->country ?? '';
-        $service  = $request->service_id;
-        $operator = ($country === '16' && strtolower($service) === 'wa') ? 'ee' : '';
-        $result = $svc->orderNumber($country, $service, null, $operator);
+        $result = $svc->orderNumber($request->country ?? '', $request->service_id);
         if (!$result['success']) {
             return back()->with('error', $result['message']);
         }
