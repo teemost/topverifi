@@ -30,10 +30,10 @@
         <table class="w-full text-sm">
             <thead><tr class="border-b border-slate-700 text-slate-400 text-xs uppercase bg-slate-800/80">
                 <th class="px-5 py-3 text-left">User</th>
-                <th class="px-5 py-3 text-left">Status</th>
-                <th class="px-5 py-3 text-left">Wallet</th>
+                <th class="px-5 py-3 text-left hidden sm:table-cell">Status</th>
+                <th class="px-5 py-3 text-left hidden sm:table-cell">Wallet</th>
                 <th class="px-5 py-3 text-left hidden md:table-cell">Last Login</th>
-                <th class="px-5 py-3 text-left">Joined</th>
+                <th class="px-5 py-3 text-left hidden sm:table-cell">Joined</th>
                 <th class="px-5 py-3 text-left">Actions</th>
             </tr></thead>
             <tbody>
@@ -50,10 +50,10 @@
                             </div>
                         </div>
                     </td>
-                    <td class="px-5 py-3">
+                    <td class="px-5 py-3 hidden sm:table-cell">
                         <span class="status-{{ $user->status }}">{{ ucfirst($user->status) }}</span>
                     </td>
-                    <td class="px-5 py-3 text-white font-medium">₦{{ number_format($user->wallet?->balance ?? 0, 2) }}</td>
+                    <td class="px-5 py-3 text-white font-medium hidden sm:table-cell">₦{{ number_format($user->wallet?->balance ?? 0, 2) }}</td>
                     <td class="px-5 py-3 text-slate-400 text-xs hidden md:table-cell">
                         @if($user->last_login_at)
                             <span title="{{ $user->last_login_at->format('d M Y H:i') }}">{{ $user->last_login_at->diffForHumans() }}</span>
@@ -64,9 +64,9 @@
                             <span class="text-slate-600">Never</span>
                         @endif
                     </td>
-                    <td class="px-5 py-3 text-slate-400 text-xs">{{ $user->created_at->format('d M Y') }}</td>
+                    <td class="px-5 py-3 text-slate-400 text-xs hidden sm:table-cell">{{ $user->created_at->format('d M Y') }}</td>
                     <td class="px-5 py-3">
-                        <div class="flex items-center gap-1">
+                        <div class="flex items-center gap-0.5 flex-wrap">
                             {{-- View Dashboard --}}
                             <a href="{{ route('admin.impersonate.dashboard', $user) }}" target="_blank"
                                title="View user dashboard"
