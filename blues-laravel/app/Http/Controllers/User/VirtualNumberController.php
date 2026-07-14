@@ -296,7 +296,8 @@ class VirtualNumberController extends Controller
             return back()->with('error', 'Virtual number service is currently unavailable. Please try again later.');
         }
 
-        $result = $svc->orderNumber($request->country ?? '', $request->service_id);
+        $operator = trim(Setting::get('herosms_operator', ''));
+        $result = $svc->orderNumber($request->country ?? '', $request->service_id, null, $operator);
         if (!$result['success']) {
             return back()->with('error', $result['message']);
         }

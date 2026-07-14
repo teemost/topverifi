@@ -594,7 +594,7 @@ class HeroSmsService
      * @return array  ['success' => true,  'data' => ['order_id' => string, 'number' => string]]
      *              | ['success' => false, 'message' => string]
      */
-    public function orderNumber(string $country, string $service, ?int $maxRetries = null): array
+    public function orderNumber(string $country, string $service, ?int $maxRetries = null, string $operator = ''): array
     {
         $maxRetries = $maxRetries ?? $this->maxRetries;
         $lastError  = 'Order failed.';
@@ -605,9 +605,14 @@ class HeroSmsService
                 'max'        => $maxRetries,
                 'country'    => $country,
                 'service'    => $service,
+                'operator'   => $operator ?: 'any',
             ]);
 
-            $r = $this->call(['action' => 'getNumber', 'country' => $country, 'service' => $service], $attempt);
+            $params = ['action' => 'getNumber', 'country' => $country, 'service' => $service];
+            if (!empty($operator)) {
+                $params['operator'] = $operator;
+            }
+            $r = $this->call($params, $attempt);
 
             // ── Network / HTTP failure ─────────────────────────────────────
             if (!$r['success']) {
