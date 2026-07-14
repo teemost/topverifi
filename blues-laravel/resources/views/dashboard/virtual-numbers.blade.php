@@ -201,6 +201,49 @@
         @endforeach
     </div>
     <p class="text-xs text-slate-500 text-center mt-4">SMS codes are checked automatically every 5 seconds.</p>
+
+    {{-- ── No-code tips ──────────────────────────────────────────────────── --}}
+    <div class="mt-5 bg-slate-800/60 border border-slate-700 rounded-2xl p-4">
+        <button onclick="this.nextElementSibling.classList.toggle('hidden');this.querySelector('svg').classList.toggle('rotate-180')"
+                class="w-full flex items-center gap-2 text-left group">
+            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-yellow-500/15 flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                </svg>
+            </span>
+            <span class="text-sm font-semibold text-yellow-400 flex-1">What to do if no code is delivered?</span>
+            <svg class="w-4 h-4 text-slate-400 transition-transform duration-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+        </button>
+
+        <ul class="hidden mt-3 space-y-2.5 text-sm text-slate-300">
+            <li class="flex items-start gap-2.5">
+                <span class="flex-shrink-0 w-5 h-5 mt-0.5 rounded-full bg-brand/15 flex items-center justify-center text-brand text-xs font-bold">1</span>
+                <span><span class="font-medium text-white">Change the number</span> — cancel this rental and order a new one.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+                <span class="flex-shrink-0 w-5 h-5 mt-0.5 rounded-full bg-brand/15 flex items-center justify-center text-brand text-xs font-bold">2</span>
+                <span><span class="font-medium text-white">Use a high-quality VPN / Proxy</span> — many services block registrations from datacenter IPs.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+                <span class="flex-shrink-0 w-5 h-5 mt-0.5 rounded-full bg-brand/15 flex items-center justify-center text-brand text-xs font-bold">3</span>
+                <span><span class="font-medium text-white">Match VPN country to the number's country</span> — a mismatch is a common reason codes are blocked.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+                <span class="flex-shrink-0 w-5 h-5 mt-0.5 rounded-full bg-brand/15 flex items-center justify-center text-brand text-xs font-bold">4</span>
+                <span><span class="font-medium text-white">Pick a high-delivery country</span> — refer to the <span class="text-brand">Top 10 countries by SMS delivery rate</span> when choosing your number's country.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+                <span class="flex-shrink-0 w-5 h-5 mt-0.5 rounded-full bg-brand/15 flex items-center justify-center text-brand text-xs font-bold">5</span>
+                <span><span class="font-medium text-white">Use an anti-detect browser</span> — when registering manually, many services fingerprint your browser to spot non-unique users.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+                <span class="flex-shrink-0 w-5 h-5 mt-0.5 rounded-full bg-brand/15 flex items-center justify-center text-brand text-xs font-bold">6</span>
+                <span><span class="font-medium text-white">Use a mobile app or emulator</span> — some services (e.g., Telegram) require registration via a mobile app or Android emulator, not a browser.</span>
+            </li>
+        </ul>
+    </div>
     @endif
 </div>
 
