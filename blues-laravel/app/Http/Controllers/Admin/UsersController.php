@@ -5,8 +5,10 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Wallet;
 use App\Models\WalletTransaction;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UsersController extends Controller
 {
@@ -115,6 +117,42 @@ class UsersController extends Controller
         $wishlist  = $user->wishlists()->with('listing')->latest()->take(10)->get();
         $notifs    = $user->notifications()->latest()->take(10)->get();
         return view('admin.user-dashboard', compact('user', 'wallet', 'orders', 'tickets', 'wishlist', 'notifs'));
+    }
+
+    public function sendEmail(Request $request, User $user)
+    {
+        $request->validate([
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string|max:5000',
+        ]);
+
+        $siteName    = Setting::get('site_name', 'TopVerifi');
+        $fromAddress = Setting::get('mail_from_address', config('mail.from.address'));
+        $fromName    = Setting::get('mail_from_name', $siteName);
+
+        try {
+            $html = view('emails.admin-direct', [
+                'user'        => $user,
+                'subject'     => $request->subject,
+                'messageBody' => $request->message,
+                'siteName'    => $siteName,
+            ])->render();
+
+            Mail::html($html, function ($msg) use ($user, $request, $fromAddress, $fromName) {
+                $msg->to($user->email, $user->name)
+                    ->from($fromAddress, $fromName)
+                    ->subject($request->subject);
+            });
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Failed to send email: ' . $e->getMessage());
+        }
+
+        \App\Helpers\AuditHelper::log(
+            "Sent email to {$user->name} ({$user->email}) — Subject: {$request->subject}",
+            'user', $user->id
+        );
+
+        return back()->with('success', "Email sent to {$user->name} ({$user->email}).");
     }
 
     public function destroy(User $user)

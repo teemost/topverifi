@@ -88,6 +88,11 @@
                                 class="p-1.5 rounded text-slate-400 hover:text-yellow-400 hover:bg-slate-700 transition-colors">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             </button>
+                            {{-- Email --}}
+                            <button onclick="openModal('modal-email-{{ $user->id }}')" title="Send email"
+                                class="p-1.5 rounded text-slate-400 hover:text-sky-400 hover:bg-slate-700 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            </button>
                             {{-- Delete --}}
                             <button onclick="openModal('modal-delete-{{ $user->id }}')" title="Delete user"
                                 class="p-1.5 rounded text-slate-400 hover:text-red-400 hover:bg-slate-700 transition-colors">
@@ -189,6 +194,32 @@
                             </form>
                         </div>
                         <button onclick="closeModal('modal-status-{{ $user->id }}')" class="btn-primary w-full" style="background:#475569;">Close</button>
+                    </div>
+                </div>
+
+                {{-- Email Modal --}}
+                <div id="modal-email-{{ $user->id }}" class="modal-overlay" style="display:none;">
+                    <div class="modal-box">
+                        <div class="flex items-center justify-between mb-5">
+                            <h3 class="font-semibold text-white text-lg">Email {{ $user->name }}</h3>
+                            <button onclick="closeModal('modal-email-{{ $user->id }}')" class="text-slate-400 hover:text-white text-xl leading-none">&times;</button>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">To: <span class="text-slate-300">{{ $user->email }}</span></p>
+                        <form method="POST" action="{{ route('admin.users.email', $user) }}" class="space-y-4">
+                            @csrf
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1.5">Subject</label>
+                                <input type="text" name="subject" required placeholder="Email subject" maxlength="255">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1.5">Message</label>
+                                <textarea name="message" required rows="6" placeholder="Write your message here…" maxlength="5000" style="resize:vertical;"></textarea>
+                            </div>
+                            <div class="flex gap-3 pt-2">
+                                <button type="submit" class="btn-primary" style="background:#0ea5e9;">Send Email</button>
+                                <button type="button" onclick="closeModal('modal-email-{{ $user->id }}')" class="btn-primary" style="background:#475569;">Cancel</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
 

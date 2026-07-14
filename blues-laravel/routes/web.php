@@ -152,6 +152,7 @@ Route::middleware(\App\Http\Middleware\AdminAuth::class)->prefix('admin')->name(
     Route::post('/users/{user}/password',       [UsersController::class, 'changePassword'])->name('users.password');
     Route::post('/users/{user}/wallet',         [UsersController::class, 'walletAdjust'])->name('users.wallet');
     Route::get('/users/{user}/dashboard',       [UsersController::class, 'impersonateDashboard'])->name('impersonate.dashboard');
+    Route::post('/users/{user}/email',          [UsersController::class, 'sendEmail'])->name('users.email');
     Route::delete('/users/{user}',              [UsersController::class, 'destroy'])->name('users.destroy');
 
     // SMM Boosting Orders
