@@ -3,7 +3,6 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\BoostingOrder;
-use App\Models\PurchaseErrorLog;
 use App\Models\Wallet;
 use App\Models\WalletTransaction;
 use App\Models\Setting;
@@ -110,14 +109,6 @@ class BoostingController extends Controller
                 ->with('success', 'Order placed successfully! Your order is now being processed.');
         } catch (\Exception $e) {
             DB::rollBack();
-            PurchaseErrorLog::record('jap', 'boosting', $e->getMessage(), [
-                'service_id'   => $request->service_id,
-                'service_name' => $request->service_name,
-                'link'         => $request->link,
-                'quantity'     => $request->quantity,
-                'charge'       => $request->charge,
-            ], Auth::id());
-            Log::error('Boosting order failed: ' . $e->getMessage());
             return back()->with('error', 'Order failed: ' . $e->getMessage());
         }
     }
