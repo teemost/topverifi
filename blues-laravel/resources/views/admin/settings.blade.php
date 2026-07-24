@@ -334,7 +334,7 @@
             </div>
             <div>
                 <label class="block text-xs text-slate-400 mb-1.5">Default Operator <span class="text-slate-500">(optional)</span></label>
-                <input type="text" name="herosms_operator" value="{{ $settings['herosms_operator'] }}"
+                <input type="text" name="herosms_operator" value="{{ $settings['herosms_operator'] ?? ''}}"
                     placeholder="e.g. ee, vodafone, o2, three — leave blank for any">
                 <p class="text-xs text-slate-500 mt-1">Pin all Server 2 number orders to a specific carrier. Leave blank to let the API pick any available operator.</p>
             </div>
